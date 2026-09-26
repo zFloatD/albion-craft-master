@@ -77,11 +77,11 @@
 <section id="favorites" class="page"><div class="card"><div class="row between"><h2>★ Favoritos</h2><button class="btn" onclick="clearFavs()">Limpar</button></div><div id="favBody"></div></div></section>
 <section id="history" class="page"><div class="card"><div class="row between"><h2>◷ Histórico</h2><button class="btn" onclick="localStorage.removeItem('acm_hist');renderHistory()">Limpar</button></div><div id="histBody"></div></div></section>
 <section id="settings" class="page"><div class="card"><h2>⚙ Configurações</h2><div class="form"><div class="field"><label>Servidor</label><input value="Américas / West" disabled></div><div class="field"><label>Cidade padrão</label><select id="defaultCity"></select></div><div class="field"><label>RR padrão</label><input id="defaultRR" value="15"></div><div class="field"><label>Taxa de venda</label><input id="defaultTax" value="4"></div></div><div class="section row"><button class="btn primary" onclick="saveSettings()">Salvar</button><button class="btn" onclick="loadCatalog(true)">↻ Recarregar catálogo</button><button class="btn" onclick="loadRecipes(true)">↻ Recarregar receitas</button></div><div class="section note"><b>Privacidade:</b> configurações, favoritos e histórico ficam no navegador. Não há bot do Discord.</div></div></section>
-</main></div><footer class="app-footer">Versão: <b>1.4.3</b> • Desenvolvedor: <b>zFloat</b></footer>
+</main></div><footer class="app-footer">Versão: <b>1.4.4</b> • Desenvolvedor: <b>zFloat</b></footer>
 <div class="mobile"><button onclick="go('home')"><b>⌂</b>Início</button><button onclick="go('market')"><b>▣</b>Mercado & Craft</button><button onclick="go('scanner')"><b>🔥</b>Scanner</button><button onclick="go('favorites')"><b>★</b>Favoritos</button><button onclick="go('settings')"><b>⚙</b>Config.</button></div>
 
 <script>
-const APP_VERSION="1.4.3";
+const APP_VERSION="1.4.4";
 const API="https://west.albion-online-data.com/api/v2/stats/";
 const ITEMS="https://raw.githubusercontent.com/ao-data/ao-bin-dumps/master/formatted/items.json";
 const RECIPES="https://raw.githubusercontent.com/vkorne-web/albion-market/main/recipes.json";
@@ -123,18 +123,52 @@ function bindSearch(input,box,mode="market"){
 function filtered(q){let t=$("filterTier")?.value||"",e=$("filterEnchant")?.value||"",c=$("filterCat")?.value||"";return catalog.filter(o=>{let id=itemId(o),n=itemName(o)||"";return (id.toLowerCase().includes(q)||n.toLowerCase().includes(q))&&(!t||tier(id)===t)&&(!e||enchant(id)===e)&&(!c||category(id)===c)})}
 function browserBaseId(id){return id.replace(/^T[4-8]_/, "").replace(/@\d+$/, "")}
 function browserItemButton(o){let id=itemId(o);return '<button class="browserItem" data-browser-id="'+safe(id)+'"><img src="'+iconUrl(id,128)+'"><span>'+safe(itemName(o))+'</span></button>'}
+function browserBaseId(id){return id.replace(/^T[4-8]_/, "").replace(/^ARTEFACT_/, "").replace(/@\d+$/, "")}
+function browserItemButton(o){let id=itemId(o);return '<button class="browserItem" data-browser-id="'+safe(id)+'"><img src="'+iconUrl(id,128)+'"><span>'+safe(itemName(o))+'</span></button>'}
 function browserGroup(title,items){if(!items.length)return "";let m=new Map();items.forEach(o=>{let base=browserBaseId(itemId(o));if(!m.has(base))m.set(base,o)});let arr=[...m.values()].sort((x,y)=>itemName(x).localeCompare(itemName(y),"pt-BR"));return '<details class="browserGroup"><summary>'+safe(title)+' <span class="tiny">('+arr.length+')</span></summary><div class="browserItems">'+arr.map(browserItemButton).join("")+'</div></details>'}
 function browserArmorGroup(title,items){let slots=[["Capote",/HEAD_/],["Robe",/ARMOR_/],["Sandálias",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
 function browserLeatherGroup(title,items){let slots=[["Capuz",/HEAD_/],["Casaco",/ARMOR_/],["Sapatos",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
 function browserPlateGroup(title,items){let slots=[["Elmo",/HEAD_/],["Armadura",/ARMOR_/],["Botas",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
-function browserItemButton(o){let id=itemId(o);return '<button class="browserItem" data-browser-id="'+safe(id)+'"><img src="'+iconUrl(id,128)+'"><span>'+safe(itemName(o))+'</span></button>'}
 function browserWeaponsGroup(groups){return '<details class="browserRoot"><summary>⚔️ Armas</summary>'+groups.map(x=>browserGroup(x[0],x[1])).filter(Boolean).join("")+'</details>'}
-function renderItemBrowser(){let h=$("browserGroups");if(!h||!catalog.length)return;let eq=catalog.filter(o=>/^T[4-8]_/.test(itemId(o))&&enchant(itemId(o))==="0"&&recipes[itemId(o)]);let armor=eq.filter(o=>/(HEAD|ARMOR|SHOES)_/.test(itemId(o))),weap=eq.filter(o=>/(^|_)(MAIN|2H)_/.test(itemId(o))),off=eq.filter(o=>/_OFF_/.test(itemId(o))),bags=eq.filter(o=>/(^|_)(BAG|CAPE)/.test(itemId(o)));let g=[];
-g.push(browserArmorGroup("Pano",armor.filter(o=>/CLOTH/.test(itemId(o)))));
-g.push(browserLeatherGroup("Couro",armor.filter(o=>/LEATHER/.test(itemId(o)))));
-g.push(browserPlateGroup("Placa",armor.filter(o=>/PLATE/.test(itemId(o)))));
-let weaponDefs=[["Machados",/AXE/],["Espadas",/SWORD/],["Arcos",/BOW/],["Maças",/MACE/],["Adagas",/DAGGER/],["Lanças",/SPEAR/],["Cajados de Fogo",/FIRESTAFF/],["Cajados de Gelo",/FROSTSTAFF/],["Cajados Amaldiçoados",/CURSEDSTAFF/],["Cajados da Natureza",/NATURESTAFF/],["Cajados Sagrados",/HOLYSTAFF/],["Cajados Arcanos",/ARCANESTAFF/],["Bestas",/CROSSBOW/],["Martelos",/HAMMER/],["Bordões",/QUARTERSTAFF/],["Armas de Punho",/(FIST|BRAWLER)/],["Gadanhas",/SCYTHE/],["Foices",/SICKLE/],["Tochas",/TORCH/],["Livros",/BOOK/],["Escudos",/SHIELD/]];g.push(browserWeaponsGroup(weaponDefs.map(x=>[x[0],weap.filter(o=>x[1].test(itemId(o)))])));
-g.push(browserGroup("Off-hands",off),browserGroup("Bolsas e Capas",bags));h.innerHTML=g.filter(Boolean).join("");h.querySelectorAll("[data-browser-id]").forEach(x=>x.onclick=()=>openItem(x.dataset.browserId))}
+function browserWeaponFamily(id){
+  let x=browserBaseId(id).replace(/^2H_/,"").replace(/^MAIN_/,"");
+  if(/^CROSSBOW/.test(x))return "Bestas";
+  if(/^(BOW|WARBOW|LONGBOW)/.test(x))return "Arcos";
+  if(/^(AXE|DUALAXE|HALBERD|SCYTHE|SICKLE|TWINSCYTHE)/.test(x))return /SCYTHE|SICKLE/.test(x)?"Gadanhas e Foices":"Machados";
+  if(/^(SWORD|CLAYMORE|DUALSCIMITAR|SCIMITAR|CLEAVER)/.test(x))return "Espadas";
+  if(/^(MACE|ROCKMACE)/.test(x))return "Maças";
+  if(/^(DAGGER|DAGGERPAIR|CLAWPAIR|RAPIER)/.test(x))return "Adagas";
+  if(/^(SPEAR|GLAIVE|TRIDENT|HARPOON)/.test(x))return "Lanças";
+  if(/^(FIRESTAFF|INFERNOSTAFF)/.test(x))return "Cajados de Fogo";
+  if(/^(FROSTSTAFF|ICECRYSTAL)/.test(x))return "Cajados de Gelo";
+  if(/^(CURSEDSTAFF|SKULLORB)/.test(x))return "Cajados Amaldiçoados";
+  if(/^(NATURESTAFF|WILDSTAFF)/.test(x))return "Cajados da Natureza";
+  if(/^(HOLYSTAFF)/.test(x))return "Cajados Sagrados";
+  if(/^(ARCANESTAFF|ROCKSTAFF|ENIGMATICORB)/.test(x))return "Cajados Arcanos";
+  if(/^(HAMMER|DUALHAMMER)/.test(x))return "Martelos";
+  if(/^(QUARTERSTAFF|IRONCLAD|DOUBLEBLADED|COMBATSTAFF)/.test(x))return "Bordões";
+  if(/(GAUNTLETS|FIST|BRAWLER|IRONGAUNTLETS)/.test(x))return "Armas de Punho";
+  return null;
+}
+function renderItemBrowser(){
+ let h=$("browserGroups");if(!h||!catalog.length)return;
+ let tierFilter=$("filterTier")?.value||"",enchantFilter=$("filterEnchant")?.value||"";
+ let eq=catalog.filter(o=>{let id=itemId(o);return /^T[4-8]_/.test(id)&&(!tierFilter||tier(id)===tierFilter)&&(!enchantFilter||enchant(id)===enchantFilter)&&recipes[id]});
+ let armor=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(HEAD|ARMOR|SHOES)_/.test(itemId(o)));
+ let weap=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(MAIN|2H)_/.test(itemId(o)));
+ let off=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?OFF_/.test(itemId(o)));
+ let bags=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(BAG|CAPE)/.test(itemId(o)));
+ let g=[];
+ g.push(browserArmorGroup("Pano",armor.filter(o=>/CLOTH/.test(itemId(o)))));
+ g.push(browserLeatherGroup("Couro",armor.filter(o=>/LEATHER/.test(itemId(o)))));
+ g.push(browserPlateGroup("Placa",armor.filter(o=>/PLATE/.test(itemId(o)))));
+ let familyNames=["Machados","Espadas","Arcos","Maças","Adagas","Lanças","Cajados de Fogo","Cajados de Gelo","Cajados Amaldiçoados","Cajados da Natureza","Cajados Sagrados","Cajados Arcanos","Bestas","Martelos","Bordões","Armas de Punho","Gadanhas e Foices"];
+ let groups=familyNames.map(n=>[n,weap.filter(o=>browserWeaponFamily(itemId(o))===n)]);
+ g.push(browserWeaponsGroup(groups));
+ g.push(browserGroup("Off-hands",off),browserGroup("Bolsas e Capas",bags));
+ h.innerHTML=g.filter(Boolean).join("");
+ h.querySelectorAll("[data-browser-id]").forEach(x=>x.onclick=()=>openItem(x.dataset.browserId));
+}
 function openItem(id){selectedItem=id;$("homeItem").textContent=displayName(id);$("marketTitle").textContent=displayName(id);$("marketName").textContent=displayName(id);$("marketId").textContent=id;$("marketMeta").textContent=tier(id)+" • encantamento ."+enchant(id);$("marketIcon").src=iconUrl(id,217);go("market");selectCraft(id);loadMarket()}
 function searchHome(){let q=$("homeSearch").value.trim().toLowerCase();let o=filtered(q)[0];if(o)openItem(itemId(o));else alert("Nenhum item encontrado. Aguarde o catálogo terminar de carregar ou tente o ID técnico.");}
 function performSearch(){let q=$("itemSearch").value.trim().toLowerCase();if(!catalog.length){$("searchBody").innerHTML='<tr><td colspan="6" class="empty"><span class="loader"></span> Catálogo ainda carregando…</td></tr>';return}let arr=filtered(q);$("searchBody").innerHTML=arr.slice(0,+$("filterLimit").value).map(o=>{let id=itemId(o);return`<tr><td><b>${itemName(o)}</b></td><td>${id}</td><td>${tier(id)}</td><td>${category(id)}</td><td>${recipes[id]?"✓":"—"}</td><td><button class="btn" onclick="openItem('${id.replaceAll("'","")}')">Abrir</button></td></tr>`}).join("")||`<tr><td colspan="6" class="empty">Nenhum resultado.</td></tr>`}
@@ -163,5 +197,5 @@ function buildUnified(){const market=$("market"),search=$("search"),craft=$("cra
 window.addEventListener("error",e=>{const s=document.getElementById("status");const h=document.getElementById("homeStatus");if(s)s.textContent="● erro JS";if(h)h.innerHTML="<b>Erro JavaScript:</b> "+String(e.message||e.error||"desconhecido");}); window.addEventListener("unhandledrejection",e=>{const s=document.getElementById("status");const h=document.getElementById("homeStatus");if(s)s.textContent="● erro";if(h)h.innerHTML="<b>Erro de carregamento:</b> "+String(e.reason?.message||e.reason||"desconhecido");}); async function boot(){fillCities();renderFavs();renderHistory();buildUnified();$("homeStatus").innerHTML='<span class="loader"></span> Carregando catálogo e receitas…';try{await Promise.all([loadCatalog(),loadRecipes()]);renderItemBrowser();$("homeRecipes").textContent=Object.keys(recipes||{}).length.toLocaleString("pt-BR");$("homeStatus").innerHTML=`Catálogo ${catalog.length?"carregado":"indisponível"} • <b>${catalog.length.toLocaleString("pt-BR")}</b> itens • <b>${Object.keys(recipes).length.toLocaleString("pt-BR")}</b> receitas.`}catch(e){$("homeStatus").textContent="Catálogo parcialmente carregado.";console.error(e)}}
 boot();
 setInterval(()=>{if(selectedItem&&$("market").classList.contains("active"))loadMarket().catch(()=>{});},30000);
-if($("filterTier"))$("filterTier").onchange=performSearch;if($("filterEnchant"))$("filterEnchant").onchange=performSearch;if($("filterCat"))$("filterCat").onchange=performSearch;if($("filterLimit"))$("filterLimit").onchange=performSearch;
+if($("filterTier"))$("filterTier").onchange=renderItemBrowser;if($("filterEnchant"))$("filterEnchant").onchange=renderItemBrowser;
 </script></body></html>
