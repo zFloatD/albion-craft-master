@@ -159,7 +159,7 @@
 <div class="mobile"><button onclick="go('home')"><b>⌂</b>Início</button><button onclick="go('market')"><b>▣</b>Mercado</button><button onclick="go('select')"><b>▦</b>Itens</button><button onclick="go('scanner')"><b>🔥</b>Scanner</button></div>
 
 <script>
-const APP_VERSION="1.4";
+const APP_VERSION="1.4.1";
 const API="https://west.albion-online-data.com/api/v2/stats/";
 const ITEMS="https://raw.githubusercontent.com/ao-data/ao-bin-dumps/master/formatted/items.json";
 const RECIPES="https://raw.githubusercontent.com/vkorne-web/albion-market/main/recipes.json";
@@ -188,9 +188,19 @@ function pretty(id){
  return "T"+(tier(id).slice(1)||"?")+" "+n+(e!=="0"&&!n.includes("."+e)?"."+e:"");
 }
 function category(id){if(/^(T[4-8]_)(MAIN_|2H_|OFF_)/.test(id))return"weapon";if(/HEAD_|ARMOR_|SHOES_/.test(id))return"armor";if(/_BAR|_PLANK|_CLOTH|_LEATHER|_ORE|_WOOD|_HIDE|_FIBER|_ROCK/.test(id))return"resource";if(/POTION|FOOD|MEAL|STEW|SOUP/.test(id))return"consumable";return"other"}
-function setAppVersion(){if($("appVersion"))$("appVersion").textContent=`Versão: ${APP_VERSION}`;}
+function setAppVersion(){if($("appVersion"))$("appVersion").textContent=`Versão: ${APP_VERSION}`;document.title="Albion Craft Master";}
 function fillCities(){["marketCity","scanCity","arbFrom","arbTo","craftCity","refineCity","defaultCity"].forEach(id=>$(id).innerHTML=CITIES.map(c=>`<option>${c}</option>`).join(""));let d=localStorage.getItem("acm_city")||"Martlock";["marketCity","scanCity","craftCity","refineCity","defaultCity"].forEach(id=>$(id).value=d)}
-function go(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(p).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));$("title").textContent={home:"Início",select:"Selecionar item",search:"Mercado & Craft",market:"Mercado & Craft",scanner:"Oportunidades",arb:"Comparar cidades",craft:"Mercado & Craft",refine:"Refinamento",favorites:"Favoritos",history:"Histórico",settings:"Configurações"}[p];if(p==="select")renderSelector();if(p==="favorites")renderFavs();if(p==="history")renderHistory()}
+function go(p){
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  const page=$(p); if(!page)return;
+  page.classList.add("active");
+  document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));
+  const titles={home:"Início",select:"Selecionar item",search:"Mercado & Craft",market:"Mercado & Craft",scanner:"Scanner de oportunidades",arb:"Comparar cidades",craft:"Mercado & Craft",refine:"Refinamento",favorites:"Favoritos",history:"Histórico",settings:"Configurações"};
+  if($("title"))$("title").textContent=titles[p]||"Albion Craft Master";
+  if(p==="select")renderSelector();
+  if(p==="favorites")renderFavs();
+  if(p==="history")renderHistory();
+}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
 async function loadCatalog(force=false){
   try{
@@ -252,7 +262,14 @@ function variantId(base,t,en){let id=t+"_"+base;return en&&en!=="0"?id+"@"+en:id
 function setVariantControls(id){let t=tier(id),e=enchant(id),vt=$("variantTier"),ve=$("variantEnchant");if(vt)vt.value=t&&t!=="—"?t:"T6";if(ve)ve.value=e||"0"}
 function changeVariant(){if(!selectedItem)return;let id=variantId(baseId(selectedItem),$("variantTier").value,$("variantEnchant").value);if(!catalog.some(o=>itemId(o)===id) && !recipes[id]){alert("Essa combinação de Tier/encantamento não está disponível no banco de dados.");return}openItem(id)}
 function openItem(id){selectedItem=id;setVariantControls(id);$("homeItem").textContent=pretty(id);$("marketTitle").textContent=pretty(id);$("marketName").textContent=pretty(id);$("marketId").textContent=id;$("marketIcon").src=iconUrl(id,217);$("marketIcon").className="ench-icon ench-"+enchant(id);$("marketMeta").textContent=(recipes[id]?"Craftável":"Sem receita cadastrada")+" • Tier "+tier(id)+" • Encanto ."+enchant(id);go("market");loadMarket();loadRecipeDetail()}
-function searchHome(){let q=$("homeSearch").value.toLowerCase();let o=filtered(q)[0];if(o)openItem(itemId(o));}
+async function searchHome(){
+  const q=$("homeSearch").value.trim();
+  let o=v07SearchResults(q,1)[0];
+  if(o){openItem(itemId(o));return}
+  const remote=await remoteItemSearch(q,12);
+  if(remote[0])openItem(itemId(remote[0]));
+  else $("homeStatus").textContent="Nenhum item encontrado. Tente o nome em português ou o ID técnico.";
+}
 async function performSearch(){
  let q=$("itemSearch").value.toLowerCase().trim(),arr=filtered(q),shown=arr.slice(0,+$("filterLimit").value);
  $("searchBody").innerHTML=shown.map(o=>{let id=itemId(o);return`<tr><td><img class="recipe-icon" src="${iconUrl(id,40)}" loading="lazy"></td><td><b>${safe(itemName(o))}</b></td><td>${safe(id)}</td><td>${tier(id)}</td><td>${category(id)}</td><td class="search-price" data-id="${safe(id)}"><span class="loader"></span></td><td>${recipes[id]?"✓":"—"}</td><td><button class="btn" onclick="openItem('${id.replaceAll("'","")}')">Abrir</button></td></tr>`}).join("")||`<tr><td colspan="8" class="empty">Nenhum resultado.</td></tr>`;
@@ -467,7 +484,7 @@ async function renderSelector(){
    let city=$('marketCity')?.value||localStorage.getItem('acm_city')||'Martlock';
    let ps=await getPrices(ids,city,2);
    ps.forEach(p=>{
-     let el=document.querySelector('.price-'+CSS.escape(String(p.item_id).replace(/[^A-Za-z0-9]/g,'_')));
+     let el=document.querySelector('.price-'+String(p.item_id).replace(/[^A-Za-z0-9]/g,'_'));
      if(el){let s=choose(p,'sell');el.textContent=s.v?money(s.v):'Sem preço';}
    });
  }catch(e){}
