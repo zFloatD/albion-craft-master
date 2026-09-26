@@ -340,36 +340,52 @@ async function loadMarket(force=false){
 async function loadHistory(){if(!selectedItem)return;let city=$("marketCity").value,q=$("marketQuality").value,scale=$("historyScale").value;try{let u=API+"history/"+encodeURIComponent(selectedItem)+".json?locations="+encodeURIComponent(city)+"&qualities="+q+"&time-scale="+scale;let r=await fetch(u+"&_="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error(r.status);let j=await r.json();let data=(j[0]?.data||j.data||[]).slice(-30);let vals=data.map(x=>+x.avg_price||0),mx=Math.max(...vals,1);$("chart").innerHTML=vals.map(v=>`<i class="bar" style="height:${Math.max(3,v/mx*100)}%" title="${money(v)}"></i>`).join("")||'<div class="empty">Sem histórico.</div>';$("historyInfo").textContent=data.length?`Últimos ${data.length} pontos • média atual aproximada: ${money(vals.reduce((a,b)=>a+b,0)/vals.length)}`:"Sem histórico disponível."}catch(e){$("chart").innerHTML='<div class="empty">Histórico indisponível.</div>'}}
 $("variantTier").addEventListener("change",changeVariant);$("variantEnchant").addEventListener("change",changeVariant);$("marketCity").addEventListener("change",()=>loadMarket(true));$("marketQuality").addEventListener("change",()=>loadMarket(true));$("historyScale").addEventListener("change",()=>{loadHistory();loadMarket(true)});
 async function compareCities(){let id=$("arbItem").value.trim(),q=$("arbQuality").value,mode=$("arbMode").value;$("arbBody").innerHTML='<tr><td colspan="5" class="empty"><span class="loader"></span> consultando...</td></tr>';try{let ps=await getPrices([id],CITIES,q);$("arbBody").innerHTML=CITIES.map(c=>{let p=ps.find(x=>x.city===c),x=choose(p,mode),m=mins(x.d);return`<tr><td>${c}</td><td class="${cls(m)}">${money(x.v)}</td><td>${x.d?new Date(x.d).toLocaleString("pt-BR"):"—"}</td><td class="${cls(m)}">${age(m)}</td><td><button class="btn" onclick="openItem('${id}')">Abrir</button></td></tr>`}).join("")}catch(e){$("arbBody").innerHTML=`<tr><td colspan="5" class="empty">Erro: ${e.message}</td></tr>`}}
-async function remoteItemSearch(q,limit=12){
-  q=(q||'').trim(); if(!q)return [];
+async async function remoteItemSearch(q,limit=12){
+  q=(q||'').trim();
+  if(!q)return [];
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),7000);
   try{
-    let u='https://gameinfo.albiononline.com/api/gameinfo/items/search?search='+encodeURIComponent(q)+'&limit='+limit;
-    let r=await fetch(u,{cache:'no-store'}); if(!r.ok)throw Error(r.status);
-    let j=await r.json();
-    if(Array.isArray(j)){
-      for(const o of j){let id=itemId(o); if(id&&!catalog.some(x=>itemId(x)===id))catalog.push(o)}
-      try{localStorage.setItem('acm_catalog',JSON.stringify(catalog))}catch(_){ }
-      return j;
+    const u='/.netlify/functions/item-search?q='+encodeURIComponent(q)+'&limit='+Math.min(40,Math.max(1,limit||12));
+    const r=await fetch(u,{cache:'no-store',signal:controller.signal});
+    if(!r.ok)throw Error('Busca online HTTP '+r.status);
+    const j=await r.json();
+    const arr=Array.isArray(j)?j:[];
+    for(const o of arr){
+      const id=itemId(o);
+      if(id&&!catalog.some(x=>itemId(x)===id))catalog.push(o);
     }
-  }catch(e){console.warn('Busca remota indisponível',e)}
-  return [];
+    try{if(arr.length)localStorage.setItem('acm_catalog_v141',JSON.stringify(catalog))}catch(_){}
+    return arr;
+  }catch(e){
+    console.warn('Busca online indisponível',e);
+    return [];
+  }finally{clearTimeout(timer)}
 }
 async function ensureRemoteRecipe(id){
   if(recipes[id])return true;
   try{
-    let u='https://gameinfo.albiononline.com/api/gameinfo/items/'+encodeURIComponent(id)+'/data';
-    let r=await fetch(u,{cache:'no-store'}); if(!r.ok)throw Error(r.status);
-    let j=await r.json();
-    let d=j.response||j.data||j;
-    let cr=d.craftingRequirements||d.craftingrequirements||j.craftingRequirements;
+    const u='/.netlify/functions/item-data?id='+encodeURIComponent(id);
+    const r=await fetch(u,{cache:'no-store'});
+    if(!r.ok)throw Error('Receita online HTTP '+r.status);
+    const j=await r.json();
+    const d=j.response||j.data||j;
+    const cr=d.craftingRequirements||d.craftingrequirements||j.craftingRequirements;
     let list=cr?.craftResourceList||cr?.craftresource||cr?.craftResource||[];
     if(!Array.isArray(list))list=[list];
-    let mats=list.filter(Boolean).map(x=>({id:x.uniqueName||x.unique_name||x['@uniquename']||x.id,count:+(x.count||x['@count']||0),ret:(x.maxreturnamount??x['@maxreturnamount'])!=='0'})).filter(x=>x.id&&x.count>0);
+    const mats=list.filter(Boolean).map(x=>({
+      id:x.uniqueName||x.unique_name||x['@uniquename']||x.id,
+      count:+(x.count||x['@count']||0),
+      ret:(x.maxreturnamount??x['@maxreturnamount'])!=='0'
+    })).filter(x=>x.id&&x.count>0);
     if(!mats.length)return false;
     recipes[id]={materials:mats};
-    try{localStorage.setItem('acm_recipes',JSON.stringify(recipes))}catch(_){ }
+    try{localStorage.setItem('acm_recipes_v141',JSON.stringify(recipes))}catch(_){}
     return true;
-  }catch(e){console.warn('Receita remota indisponível',id,e);return false}
+  }catch(e){
+    console.warn('Receita online indisponível',id,e);
+    return false;
+  }
 }
 async function selectCraftItem(id){
  if(!id)return;
