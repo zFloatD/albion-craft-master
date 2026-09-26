@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080d12"><link rel="manifest" href="manifest.json"><title>Albion Craft Master</title>
+<style>
+:root{--bg:#080d12;--p:#10161d;--p2:#151d26;--line:#27323d;--txt:#e8eef4;--muted:#8794a2;--green:#39d98a;--green2:#1cae6b;--red:#ff6868;--gold:#d6a64c;--blue:#67aaff;--orange:#e4a24f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 25% -10%,#17232e 0,#080d12 40%);color:var(--txt);font:14px system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.app{display:flex;min-height:100vh}.side{width:235px;background:#0b1016;border-right:1px solid var(--line);padding:16px 11px;position:sticky;top:0;height:100vh}.logo{font-size:18px;font-weight:800;padding:8px 10px 20px}.logo b{color:var(--green)}nav button{display:block;width:100%;border:0;background:none;color:var(--muted);text-align:left;border-radius:9px;padding:11px 12px;margin:2px 0;cursor:pointer}nav button:hover,nav button.active{background:var(--p2);color:var(--txt)}nav .group{font-size:10px;text-transform:uppercase;color:#5f6b78;padding:16px 12px 5px}.main{width:100%;max-width:1500px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}h1{font-size:23px;margin:0}h2{font-size:16px;margin:0 0 13px}.muted{color:var(--muted)}.tiny{font-size:11px;color:var(--muted)}.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.between{justify-content:space-between}.btn{background:var(--p);border:1px solid var(--line);color:var(--txt);padding:9px 12px;border-radius:8px;cursor:pointer}.btn:hover{border-color:#3b4a58}.btn.primary{background:var(--green2);border-color:var(--green2);color:#04140d;font-weight:800}.pill{font-size:11px;padding:4px 8px;border-radius:99px;background:#18222c;color:var(--muted)}.pill.green{background:#103a29;color:var(--green)}.pill.warn{background:#3b3018;color:#e8c46a}.pill.red{background:#3d181b;color:var(--red)}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.two{display:grid;grid-template-columns:1.3fr .7fr;gap:12px}.card{background:linear-gradient(180deg,#121a23,#0f151b);border:1px solid var(--line);border-radius:12px;padding:15px}.kpi .value{font-size:23px;font-weight:800;margin-top:4px}.green{color:var(--green)}.red{color:var(--red)}.gold{color:var(--gold)}.blue{color:var(--blue)}.orange{color:var(--orange)}.section{margin-top:13px}.form{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.field label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}.field input,.field select{width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);background:#0a1016;color:var(--txt);outline:0}.field input:focus,.field select:focus{border-color:var(--green2)}.bigsearch{display:flex;gap:8px}.bigsearch input{flex:1;padding:13px 14px;background:#0a1016;border:1px solid var(--line);border-radius:9px;color:var(--txt);font-size:15px}.suggest{position:absolute;left:0;right:0;top:49px;z-index:20;background:#111923;border:1px solid var(--line);border-radius:9px;max-height:330px;overflow:auto;box-shadow:0 18px 40px #000b}.searchwrap{position:relative}.suggest div{padding:10px 12px;border-bottom:1px solid #202a34;cursor:pointer}.suggest div:hover{background:#18232e}.itemhead{display:flex;gap:13px;align-items:center}.icon{width:62px;height:62px;object-fit:contain;background:#090e14;border-radius:9px}.statline{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#0c1218;border:1px solid var(--line);border-radius:8px;padding:10px}.stat b{display:block;font-size:16px;margin-top:3px}table{width:100%;border-collapse:collapse}th,td{padding:9px 7px;border-bottom:1px solid var(--line);text-align:left}th{font-size:10px;color:var(--muted);text-transform:uppercase}td{font-size:12px}.scroll{overflow:auto}.empty{text-align:center;padding:28px;color:var(--muted)}.note{padding:11px;border-radius:9px;background:#111a22;border:1px solid var(--line);color:var(--muted);line-height:1.5}.chart{height:150px;display:flex;align-items:flex-end;gap:3px;padding:10px 2px}.bar{flex:1;background:var(--green2);min-width:2px;opacity:.8;border-radius:3px 3px 0 0}.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}.tab{background:#0d141b;border:1px solid var(--line);color:var(--muted);padding:8px 10px;border-radius:7px;cursor:pointer}.tab.active{background:#183325;color:var(--green);border-color:#236d4b}.mobile{display:none}.loader{width:12px;height:12px;border:2px solid #71808d;border-top-color:transparent;border-radius:50%;display:inline-block;animation:r .8s linear infinite}@keyframes r{to{transform:rotate(360deg)}}@media(max-width:900px){.side{display:none}.main{padding:13px 11px 76px}.mobile{display:flex;position:fixed;z-index:30;bottom:0;left:0;right:0;background:#0b1016;border-top:1px solid var(--line);justify-content:space-around;padding:6px}.mobile button{background:none;border:0;color:var(--muted);font-size:10px}.mobile b{display:block;font-size:18px}.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.form{grid-template-columns:repeat(2,1fr)}.top h1{font-size:20px}}@media(max-width:480px){.grid{gap:8px}.card{padding:12px}.form{grid-template-columns:1fr 1fr}.statline{grid-template-columns:1fr}.kpi .value{font-size:19px}}
+.itemgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}.itemcard{background:#0c131a;border:1px solid var(--line);border-radius:10px;padding:9px;cursor:pointer;transition:.15s;min-height:145px}.itemcard:hover{border-color:var(--green2);transform:translateY(-1px);background:#111b23}.itemcard img{display:block;width:72px;height:72px;object-fit:contain;margin:0 auto 5px}.itemcard .iname{font-size:12px;font-weight:700;line-height:1.2;min-height:30px}.itemcard .iid{font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.itemcard .badges{margin-top:5px;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}.itemcard .badge{font-size:9px;padding:2px 5px;border-radius:99px;background:#18222c;color:#aeb8c2}.recipe-icon{width:38px;height:38px;object-fit:contain;background:#090e14;border-radius:6px}.recipe-art{color:var(--gold)}@media(max-width:1100px){.itemgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:650px){.itemgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.itemcard{padding:7px;min-height:128px}.itemcard img{width:58px;height:58px}}@media(max-width:420px){.itemgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* v1.0 autocomplete */
+.searchwrap{position:relative}
+.suggest{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:1000;max-height:62vh;overflow-y:auto;background:#0b1218;border:1px solid #263542;border-radius:12px;box-shadow:0 16px 35px rgba(0,0,0,.48);padding:6px}
+.suggest .ac-item{cursor:pointer;padding:10px;border-bottom:1px solid #17222c}
+.suggest .ac-item:last-child{border-bottom:0}
+.suggest .ac-item:active,.suggest .ac-item:hover{background:#17242e}
+.suggest .autocomplete-card img{width:52px;height:52px;flex:0 0 52px}
+.suggest .ac-name{font-size:14px}
+.suggest .ac-id{font-size:10px;color:#8ea0af}
+.suggest .more-results{padding:9px 10px;color:#79dca4;font-size:11px;text-align:center;border-bottom:1px solid #17222c}
+.craft-hit{display:flex;align-items:center;gap:10px}
+.craft-hit .hit-text{min-width:0}
+.craft-hit .hit-name{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.craft-hit .hit-meta{font-size:10px;color:#8ea0af}
+
+.market-hero{margin-left:auto;text-align:right;min-width:110px}.market-hero b{display:block;font-size:20px;color:var(--gold);margin-top:2px}@media(max-width:700px){.market-hero{min-width:95px}.market-hero b{font-size:17px}}
+</style>
+<style>
+.unified-search .card,.unified-market .card,.unified-craft .card{box-shadow:0 8px 28px rgba(0,0,0,.16)}
+.unified-craft> .card>h2,.unified-market h2{letter-spacing:.1px}
+.unified-search{border-color:#2b3946}
+.online-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:5px}
+.offline-dot{background:var(--red)}
+</style>
+
+<style>
+.autocomplete-card{display:flex;align-items:center;gap:10px}.autocomplete-card img{width:44px;height:44px;object-fit:contain;background:#090e14;border-radius:7px}.autocomplete-card .ac-main{min-width:0}.autocomplete-card .ac-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.autocomplete-card .ac-id{font-size:10px;color:var(--muted)}.suggest{padding:4px}.suggest .ac-item{padding:7px 8px;border-radius:7px;border-bottom:0}.suggest .ac-item:hover{background:#18232e}.analysis-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.mini-kpi{background:#0b1218;border:1px solid var(--line);border-radius:8px;padding:10px}.mini-kpi b{display:block;font-size:15px;margin-top:3px}.recipe-icon{width:40px;height:40px;object-fit:contain;vertical-align:middle}.recipe-art{color:var(--gold)}.quality-grid{display:flex;gap:5px;flex-wrap:wrap}.quality-grid button{min-width:52px}.positive{border-color:#2a8c5b!important}.negative{border-color:#8d3b42!important}@media(max-width:900px){.analysis-grid{grid-template-columns:repeat(2,1fr)}}
+
+.ench-icon{width:88px;height:88px;object-fit:contain;background:#090e14;border-radius:10px;padding:3px}
+.ench-0{border:1px solid #3b4650}.ench-1{border:2px solid #4aa3ff;box-shadow:0 0 8px #4aa3ff33}
+.ench-2{border:2px solid #9b59ff;box-shadow:0 0 8px #9b59ff33}
+.ench-3{border:2px solid #e7b84b;box-shadow:0 0 10px #e7b84b44}
+.ench-4{border:2px solid #ff6b35;box-shadow:0 0 12px #ff6b3544}
+.item-value{font-size:13px;font-weight:800;color:var(--gold);margin:3px 0 6px}
+.price-box{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.price-box .pbox{background:#0b1218;border:1px solid var(--line);border-radius:9px;padding:9px}
+.price-box .pbox b{display:block;font-size:16px;margin-top:3px}
+.rr-control{display:flex;gap:8px;align-items:end;flex-wrap:wrap}
+.rr-control .field{min-width:150px}
+@media(max-width:700px){.price-box{grid-template-columns:repeat(2,1fr)}}
+
+.autocomplete-card{display:flex;align-items:center;gap:10px}
+.suggest{max-height:430px}
+.suggest .ac-item{padding:8px 10px}
+.suggest .ac-item:nth-child(-n+4){background:#111d18}
+.suggest .ac-item:nth-child(-n+4) .ac-name{font-weight:800}
+.suggest .ac-item img{width:50px;height:50px;object-fit:contain;flex:0 0 50px}
+.suggest .ac-main{min-width:0}
+.suggest .ac-name{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.suggest .ac-id{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.more-results{padding:8px 10px;text-align:center;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
+.price-option{display:flex;align-items:center;gap:8px}
+.price-option img{width:38px;height:38px;object-fit:contain}
+.item-price-big{font-size:18px;font-weight:900;color:var(--gold)}
+.price-source{font-size:10px;color:var(--muted)}
+.recipe-name{font-weight:700}
+.app-footer{padding:28px 8px 84px;text-align:center;color:#687684;font-size:11px}
+.app-footer b{color:#8b98a6}
+.market-price-line{margin-top:5px}
+
+/* v1.1 professional polish */
+.app-footer{width:100%;padding:14px 18px;text-align:center;background:#090e13;border-top:1px solid var(--line);color:#9aa7b3;font-size:12px}.app-footer b{color:var(--green)}
+.data-live{display:inline-flex;align-items:center;gap:6px}.data-live:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px #39d98a66}.data-loading:before{background:var(--gold);box-shadow:none}.data-error:before{background:var(--red);box-shadow:none}
+.refreshing{opacity:.65;pointer-events:none}.price-updated{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="logo">⚒ Albion <b>Craft Master</b></div>
+<nav>
+<button class="active" data-page="home">⌂ &nbsp; Início</button>
+<button data-page="select">▦ &nbsp; Selecionar item</button>
+<div class="group">Mercado &amp; Produção</div>
+<button data-page="market">▣ &nbsp; Mercado &amp; Craft</button>
+<button data-page="arb">⇄ &nbsp; Comparar cidades</button>
+<button data-page="refine">◇ &nbsp; Refinamento</button>
+<div class="group">Sistema</div>
+<button data-page="favorites">★ &nbsp; Favoritos</button>
+<button data-page="history">◷ &nbsp; Histórico</button>
+<button data-page="settings">⚙ &nbsp; Configurações</button>
+<div class="group">Análise</div>
+<button data-page="scanner">🔥 &nbsp; Scanner de oportunidades</button>
+</nav></aside>
+
+<main class="main">
+<header class="top"><div><h1 id="title">Início</h1><div class="muted">Américas • crafting • mercado</div></div><div class="row"><span id="status" class="pill data-live">● pronto</span><button class="btn primary" onclick="refreshData()">↻ Atualizar</button></div></header>
+
+<section id="home" class="page active">
+<div class="grid">
+<div class="card kpi"><div class="muted">Receitas carregadas</div><div id="homeRecipes" class="value">—</div><div class="tiny">banco local</div></div>
+<div class="card kpi"><div class="muted">Item pesquisado</div><div id="homeItem" class="value gold">Nenhum</div><div class="tiny">última consulta</div></div>
+<div class="card kpi"><div class="muted">Melhor oportunidade</div><div id="homeProfit" class="value green">—</div><div class="tiny">lucro estimado/unid.</div></div>
+<div class="card kpi"><div class="muted">Servidor</div><div class="value blue">Américas</div><div class="tiny">West</div></div>
+</div>
+<div class="section two">
+<div class="card"><h2>🔎 Pesquisar qualquer item</h2><div class="bigsearch"><div class="searchwrap" style="flex:1"><input id="homeSearch" placeholder="Digite nome ou ID do item..."><div id="homeSuggest" class="suggest" hidden></div></div><button class="btn" onclick="go('select')">Selecionar</button><button class="btn primary" onclick="searchHome()">Pesquisar</button></div><div class="section tiny">Ex.: Machado, T8_MAIN_AXE, Barra de Aço, Poção...</div></div>
+<div class="card"><h2>📡 Estado</h2><div id="homeStatus" class="note">Carregando catálogo de itens e receitas...</div></div>
+</div>
+<div class="section card"><div class="row between"><h2>★ Seus favoritos</h2><button class="btn" onclick="go('favorites')">Ver todos</button></div><div id="homeFav"><div class="empty">Nenhum favorito.</div></div></div>
+</section>
+
+<section id="select" class="page">
+<div class="card">
+<div class="row between"><div><h2>▦ Selecionar item</h2><div class="muted">Painel de equipamentos — escolha a peça como no inventário/destino.</div></div><span id="selectCount" class="pill">carregando…</span></div>
+<div class="section bigsearch"><div class="searchwrap" style="flex:1"><input id="selectSearch" placeholder="Pesquisar arma, armadura ou peça..."></div></div>
+<div class="section tabs" id="selectCats"><button class="tab active" data-cat="all">Todos</button><button class="tab" data-cat="weapon">⚔ Armas</button><button class="tab" data-cat="armor">🛡 Armaduras</button><button class="tab" data-cat="other">Outros equipamentos</button></div>
+<div class="section form"><div class="field"><label>Tier</label><select id="selectTier"><option value="all">Todos</option><option>T4</option><option>T5</option><option>T6</option><option>T7</option><option>T8</option></select></div><div class="field"><label>Encantamento</label><select id="selectEnchant"><option value="all">Todos</option><option value="0">.0</option><option value="1">.1</option><option value="2">.2</option><option value="3">.3</option><option value="4">.4</option></select></div><div class="field"><label>Exibir</label><select id="selectLimit"><option>48</option><option selected>96</option><option>180</option></select></div><div class="field"><label>Somente craftáveis</label><select id="selectCraftable"><option value="yes" selected>Sim</option><option value="no">Não</option></select></div></div>
+<div class="section itemgrid" id="selectGrid"></div>
+</div>
+</section>
+
+<section id="market" class="page">
+<div class="card unified-search">
+  <div class="row between"><div><h2>⌕ Mercado &amp; Craft</h2><div class="muted">Pesquise o item, veja o mercado e calcule a operação no mesmo painel.</div></div><span class="pill green">● online</span></div>
+  <div class="section"><div class="card"><h2>⌕ Pesquisar item</h2><div class="bigsearch"><div class="searchwrap" style="flex:1"><input id="itemSearch" placeholder="Nome do item ou ID técnico..."><div id="itemSuggest" class="suggest" hidden></div></div><button class="btn primary" onclick="performSearch()">Pesquisar</button></div>
+<div class="section form"><div class="field"><label>Tier</label><select id="filterTier"><option value="">Todos</option><option>T4</option><option>T5</option><option>T6</option><option>T7</option><option>T8</option></select></div><div class="field"><label>Encantamento</label><select id="filterEnchant"><option value="">Todos</option><option value="0">.0</option><option value="1">.1</option><option value="2">.2</option><option value="3">.3</option><option value="4">.4</option></select></div><div class="field"><label>Categoria</label><select id="filterCat"><option value="">Todas</option><option value="weapon">Armas</option><option value="armor">Armaduras</option><option value="resource">Recursos</option><option value="consumable">Consumíveis</option><option value="other">Outros</option></select></div><div class="field"><label>Mostrar</label><select id="filterLimit"><option>30</option><option>60</option><option>100</option></select></div></div>
+<div class="section scroll"><table><thead><tr><th>Imagem</th><th>Item</th><th>ID</th><th>Tier</th><th>Tipo</th><th>Preço</th><th>Craft?</th><th></th></tr></thead><tbody id="searchBody"></tbody></table></div></div></div>
+</div>
+<div class="section unified-market">
+<div class="card"><div class="row between"><div><h2 id="marketName">Mercado</h2><div id="marketId" class="tiny">—</div></div><div class="row"><button class="btn" onclick="go('select')">▦ Selecionar outro</button><button class="btn" onclick="toggleFav()">★ Favoritar</button><button id="marketRefreshBtn" class="btn primary" onclick="loadMarket(true)">↻ Atualizar preço</button></div></div><div class="section tiny" id="marketRefreshInfo">Preços: aguardando consulta</div>
+<div class="section itemhead"><img id="marketIcon" class="icon"><div style="flex:1"><b id="marketTitle">Selecione um item</b><div id="marketMeta" class="tiny"></div></div><div class="market-hero"><span class="tiny">MENOR VENDA</span><b id="marketHeroPrice">—</b></div></div>
+<div class="section form"><div class="field"><label>Tier</label><select id="variantTier"><option>T4</option><option>T5</option><option selected>T6</option><option>T7</option><option>T8</option></select></div><div class="field"><label>Encantamento</label><select id="variantEnchant"><option value="0">.0</option><option value="1">.1</option><option value="2">.2</option><option value="3">.3</option><option value="4">.4</option></select></div><div class="field"><label>Qualidade</label><select id="marketQuality"><option value="1">Normal</option><option value="2" selected>Bom</option><option value="3">Excepcional</option><option value="4">Excelente</option><option value="5">Obra-prima</option></select></div><div class="field"><label>Cidade</label><select id="marketCity"></select></div><div class="field"><label>Histórico</label><select id="historyScale"><option value="24">Diário</option><option value="6">6 horas</option><option value="1">Horário</option></select></div></div>
+<div class="section statline"><div class="stat"><span class="muted">Menor venda</span><b id="sellMin">—</b><span id="sellAge" class="tiny">—</span></div><div class="stat"><span class="muted">Maior compra</span><b id="buyMax">—</b><span id="buyAge" class="tiny">—</span></div><div class="stat"><span class="muted">Spread</span><b id="spread" class="green">—</b><span class="tiny">bruto</span></div></div>
+<div class="section card"><h2>📈 Histórico de preço</h2><div id="chart" class="chart"></div><div id="historyInfo" class="tiny"></div></div>
+<div class="section card" id="recipePanel"><div class="row between"><div><h2>⚒ Receita e lucro da operação</h2><div class="muted">Somente recursos e venda do item — construção/estação e transporte ficam fora deste cálculo.</div></div><span id="recipeStatus" class="pill">selecione um item craftável</span></div><div class="section rr-control"><div class="field"><label>Retorno de recursos (%)</label><input id="detailRR" type="number" min="0" max="100" step="0.1" value="15" oninput="loadRecipeDetail()"></div><div class="field"><label>Qualidade do item</label><select id="detailQuality" onchange="loadRecipeDetail()"><option value="1">Normal</option><option value="2" selected>Bom</option><option value="3">Excepcional</option><option value="4">Excelente</option><option value="5">Obra-prima</option></select></div></div><div class="field"><label>Comprar recursos</label><select id="detailBuyMode" onchange="loadRecipeDetail()"><option value="city" selected>Na cidade selecionada</option><option value="cheapest">Menor preço entre cidades</option></select></div><div class="section grid" id="recipeSummary"><div class="stat"><span class="muted">Gasto em recursos</span><b id="recipeCost">—</b></div><div class="stat"><span class="muted">Venda do item</span><b id="recipeSale" class="green">—</b></div><div class="stat"><span class="muted">Lucro bruto</span><b id="recipeProfit" class="green">—</b></div><div class="stat"><span class="muted">ROI</span><b id="recipeROI" class="blue">—</b></div></div><div class="section scroll"><table><thead><tr><th>Imagem</th><th>Recurso / ornamento</th><th>Qtd.</th><th>Compra</th><th>Gasto</th><th>Retorno</th><th>Dados</th></tr></thead><tbody id="recipeBody"></tbody></table></div></div>
+<div class="section note">Os dados de mercado são comunitários. O AODP informa os pedidos que foram carregados por clientes participantes; uma cotação ausente não significa necessariamente que não exista uma ordem no jogo.</div>
+</div>
+</div>
+<div class="section unified-craft">
+<div class="card"><h2>⚒ Calculadora de crafting</h2><div class="bigsearch"><div class="searchwrap" style="flex:1"><input id="craftSearch" autocomplete="off" placeholder="Digite o nome do item..."><div id="craftSuggest" class="suggest" hidden></div></div><button class="btn primary" onclick="craftFromSearch()">Selecionar</button></div><div class="tiny" style="margin-top:6px">Digite o nome e escolha uma das sugestões. As 4 primeiras aparecem no topo e você pode rolar para ver mais.</div><div class="section" id="craftSelected"></div><div class="section form"><div class="field"><label>Cidade</label><select id="craftCity"></select></div><div class="field"><label>Qualidade</label><select id="craftQuality"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></div><div class="field"><label>RR materiais (%)</label><input id="craftRR" type="number" value="15"></div><div class="field"><label>Taxa venda (%)</label><input id="craftTax" type="number" value="4"></div><div class="field"><label>Setup (%)</label><input id="craftSetup" type="number" value="2.5"></div><div class="field"><label>Fee estação</label><input id="craftFee" type="number" value="0"></div><div class="field"><label>Quantidade</label><input id="craftQty" type="number" value="1"></div></div><div class="section card" style="padding:12px;background:#0b1117"><div class="row between"><b>⚙ Motor econômico avançado</b><span class="pill">estimativa</span></div><div class="section form"><div class="field"><label>Foco</label><select id="advFocus"><option value="off">Sem foco</option><option value="on">Usar foco</option></select></div><div class="field"><label>Bônus diário (%)</label><input id="advDaily" type="number" value="0" min="0" max="20"></div><div class="field"><label>Bônus da cidade (%)</label><input id="advCityBonus" type="number" value="auto"></div><div class="field"><label>Especialização (%)</label><input id="advSpec" type="number" value="0" min="0"></div><div class="field"><label>Modo de preço</label><select id="advPriceMode"><option value="sellbuy">Comprar materiais / vender item</option><option value="sellbuybest">Melhor preço disponível</option></select></div></div><div class="section tiny">A especialização entra principalmente na eficiência do foco; o cálculo de retorno usa os bônus de produção aplicáveis. Custos de transporte, construção e estação continuam fora por padrão.</div></div>
+<div class="section"><button id="craftBtn" class="btn primary" disabled onclick="calculateCraft()">Calcular operação</button></div><div class="section grid"><div class="card kpi"><div class="muted">Materiais</div><div id="ccost" class="value">—</div></div><div class="card kpi"><div class="muted">Venda líquida</div><div id="crev" class="value">—</div></div><div class="card kpi"><div class="muted">Lucro</div><div id="cprofit" class="value green">—</div></div><div class="card kpi"><div class="muted">ROI</div><div id="croi" class="value blue">—</div></div></div><div class="section scroll"><table><thead><tr><th>Material</th><th>Quantidade</th><th>Preço</th><th>Custo</th><th>RR</th><th>Idade</th></tr></thead><tbody id="craftMats"></tbody></table></div></div>
+</div>
+</section><section id="scanner" class="page">
+<div class="card"><div class="row between"><h2>🔥 Oportunidades de crafting</h2><button id="scanBtn" class="btn primary" onclick="runScanner()">Escanear agora</button></div>
+<div class="section form"><div class="field"><label>Cidade</label><select id="scanCity"></select></div><div class="field"><label>Tier mínimo</label><select id="scanTier"><option>T4</option><option>T5</option><option selected>T6</option><option>T7</option><option>T8</option></select></div><div class="field"><label>ROI mínimo</label><input id="scanRoi" type="number" value="8"></div><div class="field"><label>Lucro mínimo</label><input id="scanProfit" type="number" value="5000"></div><div class="field"><label>RR (%)</label><input id="scanRR" type="number" value="15"></div><div class="field"><label>Receitas analisadas</label><select id="scanCount"><option>50</option><option selected>100</option><option>200</option></select></div></div>
+<div class="section note">Resultado: somente recursos comprados + preço de venda do item. Transporte, estação/construção e outros custos ficam fora desta indicação. Os dados do mercado são estimativas comunitárias.</div>
+<div class="section scroll"><table><thead><tr><th>Item</th><th>Custo</th><th>Venda líquida</th><th>Lucro</th><th>ROI</th><th>Dados</th><th></th></tr></thead><tbody id="scanBody"></tbody></table></div></div>
+</section>
+
+<section id="arb" class="page"><div class="card"><h2>⇄ Comparar cidades</h2><div class="form"><div class="field"><label>Item ID</label><input id="arbItem" value="T8_MAIN_AXE"></div><div class="field"><label>Qualidade</label><select id="arbQuality"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></div><div class="field"><label>Modo</label><select id="arbMode"><option value="sell">Venda → venda</option><option value="buy">Compra → compra</option></select></div><div class="field"><label>—</label><button class="btn primary" onclick="compareCities()">Comparar</button></div></div><div class="section scroll"><table><thead><tr><th>Cidade</th><th>Preço</th><th>Data</th><th>Idade</th><th></th></tr></thead><tbody id="arbBody"></tbody></table></div></div></section>
+
+<section id="refine" class="page"><div class="card"><h2>◇ Refinamento</h2><div class="note">Módulo preparado para comparar comprar matéria-prima → refinar → vender. A mesma lógica de preço/idade do mercado será usada aqui.</div><div class="section form"><div class="field"><label>Item refinado</label><input id="refineItem" placeholder="Ex.: T8_METALBAR"></div><div class="field"><label>Cidade</label><select id="refineCity"></select></div><div class="field"><label>RR (%)</label><input id="refineRR" value="15"></div><div class="field"><label>Quantidade</label><input id="refineQty" value="1"></div></div><div class="section note">O banco atual prioriza receitas de crafting. Para refinamento completo, o próximo banco deve incluir as receitas de refino e seus custos de transmutação/estação.</div></div></section>
+
+<section id="favorites" class="page"><div class="card"><div class="row between"><h2>★ Favoritos</h2><button class="btn" onclick="clearFavs()">Limpar</button></div><div id="favBody"></div></div></section>
+<section id="history" class="page"><div class="card"><div class="row between"><h2>◷ Histórico</h2><button class="btn" onclick="localStorage.removeItem('acm_hist');renderHistory()">Limpar</button></div><div id="histBody"></div></div></section>
+<section id="settings" class="page"><div class="card"><h2>⚙ Configurações</h2><div class="form"><div class="field"><label>Servidor</label><input value="Américas / West" disabled></div><div class="field"><label>Cidade padrão</label><select id="defaultCity"></select></div><div class="field"><label>RR padrão</label><input id="defaultRR" value="15"></div><div class="field"><label>Taxa de venda</label><input id="defaultTax" value="4"></div></div><div class="section row"><button class="btn primary" onclick="saveSettings()">Salvar</button><button class="btn" onclick="loadCatalog(true)">↻ Recarregar catálogo</button><button class="btn" onclick="loadRecipes(true)">↻ Recarregar receitas</button></div><div class="section note"><b>Privacidade:</b> configurações, favoritos e histórico ficam no navegador. Não há bot do Discord.</div></div></section>
+</main></div>
+<footer class="app-footer"><span id="appVersion"></span> &nbsp;•&nbsp; Desenvolvedor: <b>zFloat</b> <span class="tiny">• Dados de mercado: Albion Data Project</span></footer>
+<div class="mobile"><button onclick="go('home')"><b>⌂</b>Início</button><button onclick="go('market')"><b>▣</b>Mercado</button><button onclick="go('select')"><b>▦</b>Itens</button><button onclick="go('scanner')"><b>🔥</b>Scanner</button></div>
+
+<script>
+const APP_VERSION="1.3";
+const API="https://west.albion-online-data.com/api/v2/stats/";
+const ITEMS="https://raw.githubusercontent.com/ao-data/ao-bin-dumps/master/formatted/items.json";
+const RECIPES="https://raw.githubusercontent.com/vkorne-web/albion-market/main/recipes.json";
+const CITIES=["Bridgewatch","Caerleon","Fort Sterling","Lymhurst","Martlock","Thetford","Brecilien"];
+let catalog=[],recipes={},selectedItem=null,selectedCraft=null,priceMem=new Map();
+let marketRequest=0, craftRequest=0, lastPriceUpdate=0;
+
+const $=x=>document.getElementById(x);
+const money=n=>isFinite(n)?"$"+Number(n).toLocaleString("pt-BR",{maximumFractionDigits:0}):"—";
+function mins(d){if(!d||d.startsWith("0001"))return Infinity;return (Date.now()-new Date(d).getTime())/60000}
+function age(m){return !isFinite(m)?"sem dado":m<1?"agora":m<60?Math.round(m)+" min":Math.round(m/60)+" h"}
+function cls(m){return !isFinite(m)?"red":m<=30?"green":m<=180?"orange":"red"}
+function tier(id){let m=id.match(/^T([4-8])_/);return m?"T"+m[1]:"—"}
+function enchant(id){let m=id.match(/@(\d)$/);return m?m[1]:"0"}
+function pretty(id){
+ let e=enchant(id), x=id.replace(/@\d$/,"").replace(/^T[4-8]_?/,"");
+ const map={
+  "MAIN_HOLYSTAFF_AVALON":"Cajado Sagrado Principal de Avalon",
+  "2H_BEARPAWS":"Patas de Urso",
+  "PLANKS_LEVEL3":"Pranchas .3",
+  "METALBAR_LEVEL3":"Barras de Metal .3",
+  "ARTIFACT_2H_DUALAXE_KEEPER":"Artefato do Machado Duplo do Guardião"
+ };
+ let base=x.replaceAll("_"," ").replace(/LEVEL(\d)/,'.$1');
+ let n=map[x]||base.replace(/\bMAIN\b/,'').replace(/\b2H\b/,'').trim();
+ return "T"+(tier(id).slice(1)||"?")+" "+n+(e!=="0"&&!n.includes("."+e)?"."+e:"");
+}
+function category(id){if(/^(T[4-8]_)(MAIN_|2H_|OFF_)/.test(id))return"weapon";if(/HEAD_|ARMOR_|SHOES_/.test(id))return"armor";if(/_BAR|_PLANK|_CLOTH|_LEATHER|_ORE|_WOOD|_HIDE|_FIBER|_ROCK/.test(id))return"resource";if(/POTION|FOOD|MEAL|STEW|SOUP/.test(id))return"consumable";return"other"}
+function setAppVersion(){if($("appVersion"))$("appVersion").textContent=`Versão: ${APP_VERSION}`;}
+function fillCities(){["marketCity","scanCity","arbFrom","arbTo","craftCity","refineCity","defaultCity"].forEach(id=>$(id).innerHTML=CITIES.map(c=>`<option>${c}</option>`).join(""));let d=localStorage.getItem("acm_city")||"Martlock";["marketCity","scanCity","craftCity","refineCity","defaultCity"].forEach(id=>$(id).value=d)}
+function go(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(p).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));$("title").textContent={home:"Início",select:"Selecionar item",search:"Mercado & Craft",market:"Mercado & Craft",scanner:"Oportunidades",arb:"Comparar cidades",craft:"Mercado & Craft",refine:"Refinamento",favorites:"Favoritos",history:"Histórico",settings:"Configurações"}[p];if(p==="select")renderSelector();if(p==="favorites")renderFavs();if(p==="history")renderHistory()}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
+async function loadCatalog(force=false){
+  try{
+    let raw=!force&&localStorage.getItem("acm_catalog");
+    if(raw){catalog=JSON.parse(raw);}
+    else{
+      let r=await fetch(ITEMS+"?v="+Date.now(),{cache:"no-store"});
+      if(!r.ok)throw Error(r.status);
+      let j=await r.json();
+      catalog=Array.isArray(j)?j:(j.items||j.Items||Object.values(j));
+      localStorage.setItem("acm_catalog",JSON.stringify(catalog));
+    }
+    $("homeRecipes").textContent=Object.keys(recipes||{}).length.toLocaleString("pt-BR");
+    $("homeStatus").innerHTML=`Catálogo carregado: <b>${catalog.length.toLocaleString("pt-BR")}</b> itens • <b>${Object.keys(recipes||{}).length.toLocaleString("pt-BR")}</b> receitas.`;
+    renderSelector();
+    v07SetupAuto();
+    return true;
+  }catch(e){
+    $("homeStatus").textContent="Catálogo remoto indisponível neste momento. O app continuará tentando atualizar quando estiver online.";
+    console.error(e);
+    v07SetupAuto();
+    return false;
+  }
+}
+function itemId(o){return o.UniqueName||o.uniqueName||o.unique_name||o.id||o.Id||""}
+const PT_FALLBACK={
+ "T8_PLANKS_LEVEL3":"Pranchas de Madeira Encantadas .3",
+ "T8_METALBAR_LEVEL3":"Barras de Metal Encantadas .3",
+ "T8_ARTIFACT_2H_DUALAXE_KEEPER":"Artefato: Machado Duplo do Guardião",
+ "T8_MAIN_HOLYSTAFF_AVALON":"Cajado Sagrado Principal de Avalon",
+ "T8_2H_BEARPAWS":"Patas de Urso"
+};
+function localizedPT(n){
+ if(!n)return "";
+ if(typeof n==="string")return n;
+ const keys=["PT-BR","pt-BR","PT_BR","pt_br","PT","pt","Portuguese (Brazil)","Português (Brasil)","PTBR"];
+ for(const k of keys) if(typeof n[k]==="string"&&n[k].trim()) return n[k];
+ // Some dumps use locale names as nested objects.
+ for(const [k,v] of Object.entries(n)){if(typeof v==="string"&&/portugu|brasil|pt[-_]?br/i.test(k))return v}
+ return "";
+}
+function itemName(o){
+ let id=itemId(o), n=o.LocalizedNames||o.localizedNames||o.names||o.Name||o.name;
+ let pt=localizedPT(n);
+ if(pt)return pt;
+ let base=id.replace(/@\d$/,"");
+ if(PT_FALLBACK[base])return PT_FALLBACK[base];
+ // Do not expose raw internal IDs as the primary display name.
+ return pretty(id);
+}
+function iconUrl(id,size=217){return `https://render.albiononline.com/v1/item/${encodeURIComponent(id)}.png?size=${size}`}
+function gearOnly(o){let id=itemId(o);return /^(T[4-8]_)(MAIN_|2H_|OFF_|HEAD_|ARMOR_|SHOES_|BAG|CAPE|TOOL_)/.test(id)}
+function gearItems(){return catalog.filter(gearOnly)}
+function safe(s){return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;")}
+function bindSearch(input,box){input.addEventListener("input",()=>{let q=input.value.trim().toLowerCase();if(q.length<2){box.hidden=true;return}let f=filtered(q).slice(0,35);box.innerHTML=f.map(o=>`<div data-id="${itemId(o)}"><b>${itemName(o)}</b><br><span class="tiny">${itemId(o)} • ${tier(itemId(o))}${enchant(itemId(o))!=="0"?"."+enchant(itemId(o)):""}</span></div>`).join("")||"<div>Nenhum item encontrado</div>";box.hidden=false;box.querySelectorAll("[data-id]").forEach(x=>x.onclick=()=>openItem(x.dataset.id))})}
+function filtered(q){let t=$("filterTier")?.value||"",e=$("filterEnchant")?.value||"",c=$("filterCat")?.value||"";return catalog.filter(o=>{let id=itemId(o),n=itemName(o)||"";return (id.toLowerCase().includes(q)||n.toLowerCase().includes(q))&&(!t||tier(id)===t)&&(!e||enchant(id)===e)&&(!c||category(id)===c)})}
+function baseId(id){return id.replace(/^T[4-8]_/,"").replace(/@\d$/,"")}
+function variantId(base,t,en){let id=t+"_"+base;return en&&en!=="0"?id+"@"+en:id}
+function setVariantControls(id){let t=tier(id),e=enchant(id),vt=$("variantTier"),ve=$("variantEnchant");if(vt)vt.value=t&&t!=="—"?t:"T6";if(ve)ve.value=e||"0"}
+function changeVariant(){if(!selectedItem)return;let id=variantId(baseId(selectedItem),$("variantTier").value,$("variantEnchant").value);if(!catalog.some(o=>itemId(o)===id) && !recipes[id]){alert("Essa combinação de Tier/encantamento não está disponível no banco de dados.");return}openItem(id)}
+function openItem(id){selectedItem=id;setVariantControls(id);$("homeItem").textContent=pretty(id);$("marketTitle").textContent=pretty(id);$("marketName").textContent=pretty(id);$("marketId").textContent=id;$("marketIcon").src=iconUrl(id,217);$("marketIcon").className="ench-icon ench-"+enchant(id);$("marketMeta").textContent=(recipes[id]?"Craftável":"Sem receita cadastrada")+" • Tier "+tier(id)+" • Encanto ."+enchant(id);go("market");loadMarket();loadRecipeDetail()}
+function searchHome(){let q=$("homeSearch").value.toLowerCase();let o=filtered(q)[0];if(o)openItem(itemId(o));}
+async function performSearch(){
+ let q=$("itemSearch").value.toLowerCase().trim(),arr=filtered(q),shown=arr.slice(0,+$("filterLimit").value);
+ $("searchBody").innerHTML=shown.map(o=>{let id=itemId(o);return`<tr><td><img class="recipe-icon" src="${iconUrl(id,40)}" loading="lazy"></td><td><b>${safe(itemName(o))}</b></td><td>${safe(id)}</td><td>${tier(id)}</td><td>${category(id)}</td><td class="search-price" data-id="${safe(id)}"><span class="loader"></span></td><td>${recipes[id]?"✓":"—"}</td><td><button class="btn" onclick="openItem('${id.replaceAll("'","")}')">Abrir</button></td></tr>`}).join("")||`<tr><td colspan="8" class="empty">Nenhum resultado.</td></tr>`;
+ if(!shown.length)return;
+ try{
+   let ps=await getPrices(shown.map(itemId),$("marketCity")?.value||localStorage.getItem("acm_city")||"Martlock",2);
+   ps.forEach(p=>{let el=[...document.querySelectorAll('.search-price')].find(x=>x.dataset.id===p.item_id);if(el){let s=choose(p,"sell");el.textContent=s.v?money(s.v):"Sem preço";}});
+ }catch(e){document.querySelectorAll('.search-price').forEach(el=>el.textContent="Sem preço");}
+}
+async function loadRecipes(force=false){
+  try{
+    let raw=!force&&localStorage.getItem("acm_recipes");
+    let parsed=raw?JSON.parse(raw):null;
+    if(parsed && typeof parsed==="object" && Object.keys(parsed).length){recipes=parsed;return true}
+    let r=await fetch(RECIPES+"?v="+Date.now(),{cache:"no-store"});
+    if(!r.ok)throw Error("Receitas "+r.status);
+    let j=await r.json();
+    recipes=j&&typeof j==="object"?j:{};
+    if(Object.keys(recipes).length)localStorage.setItem("acm_recipes",JSON.stringify(recipes));
+    return Object.keys(recipes).length>0;
+  }catch(e){
+    console.error(e); recipes={};
+    return false;
+  }
+}
+async function getPrices(ids,locations,quality){ids=[...new Set(ids.filter(Boolean))];let out=[];for(let i=0;i<ids.length;i+=35){let u=API+"prices/"+ids.slice(i,i+35).map(encodeURIComponent).join(",")+".json?locations="+encodeURIComponent(locations)+(quality?"&qualities="+quality:"")+"&_="+Date.now();let r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error("AODP "+r.status);out.push(...await r.json())}lastPriceUpdate=Date.now();return out}async function getPricesAllCities(ids,quality=1){
+ let out=[]; for(let i=0;i<ids.length;i+=25){
+  let u=API+"prices/"+ids.slice(i,i+25).map(encodeURIComponent).join(",")+".json?locations="+encodeURIComponent(CITIES.join(","))+(quality?"&qualities="+quality:"");
+  let r=await fetch(u+"&_="+Date.now(),{cache:"no-store"}); if(!r.ok)throw Error("AODP "+r.status); out.push(...await r.json());
+ } return out;
+}
+function cheapestSell(rows,id,q=1){let a=rows.filter(x=>x.item_id===id&&(!q||+x.quality===q)&&+x.sell_price_min>0);a.sort((x,y)=>+x.sell_price_min-+y.sell_price_min);return a[0]?choose(a[0],"sell"):{v:0,d:""}}
+function cheapestBuy(rows,id,q=1){let a=rows.filter(x=>x.item_id===id&&(!q||+x.quality===q)&&+x.buy_price_max>0);a.sort((x,y)=>+y.buy_price_max-+x.buy_price_max);return a[0]?choose(a[0],"buy"):{v:0,d:""}}
+function priceLabel(v){return v?money(v):"Sem preço"}
+function choose(p,mode){if(!p)return{v:0,d:""};return mode==="buy"?{v:+p.buy_price_max||0,d:p.buy_price_max_date}:{v:+p.sell_price_min||0,d:p.sell_price_min_date}}
+async function loadMarket(force=false){
+ if(!selectedItem)return;
+ const req=++marketRequest,btn=$("marketRefreshBtn");
+ const city=$("marketCity").value,q=$("marketQuality").value;
+ $("status").textContent="● consultando preços";
+ $("status").className="pill warn data-live data-loading";
+ $("marketRefreshInfo").textContent="Atualizando preços agora…";
+ btn?.classList.add("refreshing");
+ try{
+   let ps=await getPrices([selectedItem],city,q);
+   if(req!==marketRequest)return;
+   let p=ps.find(x=>x.item_id===selectedItem&&+x.quality===+q)||ps.find(x=>x.item_id===selectedItem);
+   let s=choose(p,"sell"),b=choose(p,"buy");
+   $("sellMin").textContent=s.v?money(s.v):"Sem preço";
+   $("marketHeroPrice").textContent=s.v?money(s.v):"Sem preço";
+   $("buyMax").textContent=b.v?money(b.v):"Sem preço";
+   $("sellAge").textContent=age(mins(s.d));$("buyAge").textContent=age(mins(b.d));
+   $("sellAge").className="tiny "+cls(mins(s.d));$("buyAge").className="tiny "+cls(mins(b.d));
+   $("spread").textContent=(s.v&&b.v)?money(s.v-b.v):"—";
+   await loadHistory();
+   if(req!==marketRequest)return;
+   await loadRecipeDetail();
+   if(req!==marketRequest)return;
+   let now=new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+   $("status").textContent="● preços atualizados";$("status").className="pill green data-live";
+   $("marketRefreshInfo").innerHTML=`<span class="price-updated">● Atualizado às ${now}</span> • ${city} • qualidade ${q}`;
+ }catch(e){
+   if(req!==marketRequest)return;
+   $("status").textContent="● erro nos preços";$("status").className="pill red data-live data-error";
+   $("marketRefreshInfo").textContent="Não foi possível atualizar os preços agora.";console.error(e);
+ }finally{btn?.classList.remove("refreshing")}
+}
+async function loadHistory(){if(!selectedItem)return;let city=$("marketCity").value,q=$("marketQuality").value,scale=$("historyScale").value;try{let u=API+"history/"+encodeURIComponent(selectedItem)+".json?locations="+encodeURIComponent(city)+"&qualities="+q+"&time-scale="+scale;let r=await fetch(u+"&_="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error(r.status);let j=await r.json();let data=(j[0]?.data||j.data||[]).slice(-30);let vals=data.map(x=>+x.avg_price||0),mx=Math.max(...vals,1);$("chart").innerHTML=vals.map(v=>`<i class="bar" style="height:${Math.max(3,v/mx*100)}%" title="${money(v)}"></i>`).join("")||'<div class="empty">Sem histórico.</div>';$("historyInfo").textContent=data.length?`Últimos ${data.length} pontos • média atual aproximada: ${money(vals.reduce((a,b)=>a+b,0)/vals.length)}`:"Sem histórico disponível."}catch(e){$("chart").innerHTML='<div class="empty">Histórico indisponível.</div>'}}
+$("variantTier").addEventListener("change",changeVariant);$("variantEnchant").addEventListener("change",changeVariant);$("marketCity").addEventListener("change",()=>loadMarket(true));$("marketQuality").addEventListener("change",()=>loadMarket(true));$("historyScale").addEventListener("change",()=>{loadHistory();loadMarket(true)});
+async function compareCities(){let id=$("arbItem").value.trim(),q=$("arbQuality").value,mode=$("arbMode").value;$("arbBody").innerHTML='<tr><td colspan="5" class="empty"><span class="loader"></span> consultando...</td></tr>';try{let ps=await getPrices([id],CITIES,q);$("arbBody").innerHTML=CITIES.map(c=>{let p=ps.find(x=>x.city===c),x=choose(p,mode),m=mins(x.d);return`<tr><td>${c}</td><td class="${cls(m)}">${money(x.v)}</td><td>${x.d?new Date(x.d).toLocaleString("pt-BR"):"—"}</td><td class="${cls(m)}">${age(m)}</td><td><button class="btn" onclick="openItem('${id}')">Abrir</button></td></tr>`}).join("")}catch(e){$("arbBody").innerHTML=`<tr><td colspan="5" class="empty">Erro: ${e.message}</td></tr>`}}
+async function remoteItemSearch(q,limit=12){
+  q=(q||'').trim(); if(!q)return [];
+  try{
+    let u='https://gameinfo.albiononline.com/api/gameinfo/items/search?search='+encodeURIComponent(q)+'&limit='+limit;
+    let r=await fetch(u,{cache:'no-store'}); if(!r.ok)throw Error(r.status);
+    let j=await r.json();
+    if(Array.isArray(j)){
+      for(const o of j){let id=itemId(o); if(id&&!catalog.some(x=>itemId(x)===id))catalog.push(o)}
+      return j;
+    }
+  }catch(e){console.warn('Busca remota indisponível',e)}
+  return [];
+}
+async function ensureRemoteRecipe(id){
+  if(recipes[id])return true;
+  try{
+    let u='https://gameinfo.albiononline.com/api/gameinfo/items/'+encodeURIComponent(id)+'/data';
+    let r=await fetch(u,{cache:'no-store'}); if(!r.ok)throw Error(r.status);
+    let j=await r.json();
+    let d=j.response||j.data||j;
+    let cr=d.craftingRequirements||d.craftingrequirements||j.craftingRequirements;
+    let list=cr?.craftResourceList||cr?.craftresource||cr?.craftResource||[];
+    if(!Array.isArray(list))list=[list];
+    let mats=list.filter(Boolean).map(x=>({id:x.uniqueName||x.unique_name||x['@uniquename']||x.id,count:+(x.count||x['@count']||0),ret:(x.maxreturnamount??x['@maxreturnamount'])!=='0'})).filter(x=>x.id&&x.count>0);
+    if(!mats.length)return false;
+    recipes[id]={materials:mats};
+    try{localStorage.setItem('acm_recipes',JSON.stringify(recipes))}catch(_){ }
+    return true;
+  }catch(e){console.warn('Receita remota indisponível',id,e);return false}
+}
+async function selectCraftItem(id){
+ if(!id)return;
+ if(!recipes[id]){
+   $('craftSelected').innerHTML=`<div class="note"><span class="loader"></span> Consultando a receita oficial/dinâmica de <b>${safe(v07Name(id))}</b>…</div>`;
+   $('craftBtn').disabled=true;
+   try{
+     let ok=await ensureRemoteRecipe(id);
+     if(!ok){
+       $('craftSelected').innerHTML=`<div class="note">⚠️ <b>${safe(v07Name(id))}</b> não possui uma receita disponível no banco atual.</div>`;
+       selectedCraft=null; return;
+     }
+   }catch(e){
+     $('craftSelected').innerHTML=`<div class="note">⚠️ Não foi possível carregar a receita agora. Tente novamente quando estiver conectado.</div>`;
+     selectedCraft=null; return;
+   }
+ }
+ selectedCraft=id;
+ $('craftSearch').value=v07Name(id);
+ $('craftBtn').disabled=false;
+ $('craftSelected').innerHTML=`
+   <div class="itemhead">
+     <img class="ench-icon ench-${enchant(id)}" src="${iconUrl(id,217)}" onerror="this.style.opacity='.25'">
+     <div>
+       <div class="tiny">ITEM SELECIONADO</div>
+       <h3 style="margin:3px 0">${safe(v07Name(id))}</h3>
+       <div class="tiny">${safe(id)} · ${tier(id)} · .${enchant(id)}</div>
+       <div class="tiny green">✓ Receita encontrada</div>
+     </div>
+   </div>`;
+ v07CraftSummary();
+ v07CalculateCraft();
+}
+async function craftFromSearch(){
+ let q=$('craftSearch').value.trim();
+ let r=v07SearchResults(q,1)[0];
+ if(r){await selectCraftItem(itemId(r));return}
+ let remote=await remoteItemSearch(q,12);
+ if(remote[0]) await selectCraftItem(itemId(remote[0]));
+}
+async function calculateCraft(){if(!selectedCraft)return;let rec=recipes[selectedCraft],city=$("craftCity").value,qty=+$("craftQty").value||1,rr=+$("craftRR").value/100,tax=+$("craftTax").value/100,setup=+$("craftSetup").value/100,fee=+$("craftFee").value||0,q=$("craftQuality").value;try{let ids=[selectedCraft,...(rec.materials||[]).map(x=>x.id)],ps=await getPrices(ids,city);let prod=choose(ps.find(x=>x.item_id===selectedCraft&&x.quality==q)||ps.find(x=>x.item_id===selectedCraft),"sell"),cost=0,rows=[];for(let m of rec.materials||[]){let p=choose(ps.find(x=>x.item_id===m.id&&x.quality==1)||ps.find(x=>x.item_id===m.id),"buy"),need=+m.count*qty,after=m.ret?need*(1-rr):need,c=after*p.v;cost+=c;rows.push({m,p,need,after,c})}let rev=prod.v*qty*(1-tax-setup),profit=rev-cost-fee*qty,roi=cost?profit/cost*100:0;$("ccost").textContent=money(cost);$("crev").textContent=money(rev);$("cprofit").textContent=money(profit);$("croi").textContent=roi.toFixed(1)+"%";$("craftMats").innerHTML=rows.map(x=>`<tr><td>${x.m.id}</td><td>${x.need}</td><td>${money(x.p.v)}</td><td>${money(x.c)}</td><td>${x.m.ret?"sim":"não"}</td><td class="${cls(mins(x.p.d))}">${age(mins(x.p.d))}</td></tr>`).join("");saveHist(selectedCraft,profit,roi,city)}catch(e){alert("Erro ao calcular: "+e.message)}}
+async function runScanner(){let city=$("scanCity").value,minTier=parseInt($("scanTier").value.replace("T",""),10),minR=+$("scanRoi").value,minP=+$("scanProfit").value,rr=+$("scanRR").value/100,n=+$("scanCount").value;let ids=Object.keys(recipes).filter(id=>{let t=+tier(id).slice(1);return t>=minTier&&t<=8&&recipes[id]?.materials?.length}).slice(0,n);$("scanBtn").disabled=true;$("scanBtn").textContent="Analisando…";try{let all=[];ids.forEach(id=>all.push(id,...recipes[id].materials.map(m=>m.id)));let ps=await getPrices(all,city);let res=[];for(let id of ids){let prod=choose(ps.find(x=>x.item_id===id&&x.quality==2)||ps.find(x=>x.item_id===id),"sell");if(!prod.v)continue;let cost=0,stale=mins(prod.d);for(let m of recipes[id].materials){let p=choose(ps.find(x=>x.item_id===m.id&&x.quality==1)||ps.find(x=>x.item_id===m.id),"buy");cost+=(m.ret?m.count*(1-rr):m.count)*p.v;stale=Math.max(stale,mins(p.d))}let net=prod.v,profit=net-cost,roi=cost?profit/cost*100:0;if(profit>=minP&&roi>=minR)res.push({id,cost,net,profit,roi,stale})}res.sort((a,b)=>b.profit-a.profit);$("scanBody").innerHTML=res.map(x=>`<tr><td><b>${pretty(x.id)}</b><br><span class="tiny">${x.id}</span></td><td>${money(x.cost)}</td><td>${money(x.net)}</td><td class="green">${money(x.profit)}</td><td class="blue">${x.roi.toFixed(1)}%</td><td class="${cls(x.stale)}">${age(x.stale)}</td><td><button class="btn" onclick="openItem('${x.id}')">Abrir</button></td></tr>`).join("")||'<tr><td colspan="7" class="empty">Nenhuma oportunidade encontrada.</td></tr>';if(res[0]){$("homeProfit").textContent=money(res[0].profit)} }catch(e){$("scanBody").innerHTML=`<tr><td colspan="7" class="empty">Erro: ${e.message}</td></tr>`}finally{$("scanBtn").disabled=false;$("scanBtn").textContent="Escanear agora"}}
+function favs(){return JSON.parse(localStorage.getItem("acm_favs")||"[]")}
+function toggleFav(){if(!selectedItem)return;let a=favs();a=a.includes(selectedItem)?a.filter(x=>x!==selectedItem):[...a,selectedItem];localStorage.setItem("acm_favs",JSON.stringify(a));renderFavs()}
+function renderFavs(){let a=favs();$("favBody").innerHTML=a.length?a.map(id=>`<div class="row between" style="padding:10px;border-bottom:1px solid var(--line)"><span>${pretty(id)}<br><span class="tiny">${id}</span></span><button class="btn" onclick="openItem('${id}')">Abrir</button></div>`).join(""):'<div class="empty">Nenhum favorito. Abra um item e toque em ★ Favoritar.</div>';$("homeFav").innerHTML=a.slice(0,5).map(id=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><span>${pretty(id)}</span><button class="btn" onclick="openItem('${id}')">Abrir</button></div>`).join("")||'<div class="empty">Nenhum favorito.</div>'}
+function clearFavs(){localStorage.removeItem("acm_favs");renderFavs()}
+function saveHist(id,p,r,city){let a=JSON.parse(localStorage.getItem("acm_hist")||"[]");a.unshift({id,p,r,city,d:new Date().toLocaleString("pt-BR")});localStorage.setItem("acm_hist",JSON.stringify(a.slice(0,100)))}
+function renderHistory(){let a=JSON.parse(localStorage.getItem("acm_hist")||"[]");$("histBody").innerHTML=a.length?a.map(x=>`<div class="row between" style="padding:10px;border-bottom:1px solid var(--line)"><span>${pretty(x.id)}<br><span class="tiny">${x.city} • ${x.d}</span></span><span class="${x.p>=0?"green":"red"}">${money(x.p)}<br><span class="tiny">${(+x.r).toFixed(1)}% ROI</span></span></div>`).join(""):'<div class="empty">Nenhum cálculo registrado.</div>'}
+function saveSettings(){localStorage.setItem("acm_city",$("defaultCity").value);localStorage.setItem("acm_rr",$("defaultRR").value);localStorage.setItem("acm_tax",$("defaultTax").value);alert("Configurações salvas.")}
+function refreshData(){priceMem.clear();if(selectedItem)loadMarket();if($("scanner").classList.contains("active"))runScanner()}
+async function boot(){
+  setAppVersion();
+  fillCities();
+  renderFavs();
+  renderHistory();
+  // Recipes must finish before the selector is rendered; this fixes the empty Craft tab race.
+  const [recipeOk,catalogOk]=await Promise.all([loadRecipes(),loadCatalog()]);
+  $('homeRecipes').textContent=Object.keys(recipes||{}).length.toLocaleString('pt-BR');
+  if(recipeOk) $('homeStatus').innerHTML=`Catálogo pronto • <b>${catalog.length.toLocaleString('pt-BR')}</b> itens • <b>${Object.keys(recipes).length.toLocaleString('pt-BR')}</b> receitas.`;
+  else $('homeStatus').innerHTML=`Catálogo ${catalogOk?'pronto':'indisponível'} • receitas serão sincronizadas quando a conexão estiver disponível.`;
+  renderSelector();
+  v07SetupAuto();
+}
+function updateOnlineState(){
+  const online=navigator.onLine;
+  const s=$("status");
+  if(s){s.className='pill '+(online?'green':'red');s.innerHTML=online?'● online':'● offline';}
+  document.querySelectorAll('.unified-search .pill.green').forEach(x=>{x.innerHTML=online?'● online':'● offline';x.className='pill '+(online?'green':'red')});
+}
+window.addEventListener('online',()=>{updateOnlineState();refreshData()});
+window.addEventListener('offline',updateOnlineState);
+updateOnlineState();
+
+boot();
+let autoRefreshSeconds=30, autoRefreshTimer=null;
+function startAutoRefresh(){
+ clearInterval(autoRefreshTimer);
+ autoRefreshTimer=setInterval(async()=>{
+   try{
+     if(selectedItem && $('market').classList.contains('active')) await loadMarket(true);
+     else if(selectedCraft && $('market').classList.contains('active')) await v07CalculateCraft();
+     else if($('market').classList.contains('active')) await performSearch();
+   }catch(e){console.warn('auto refresh',e)}
+ },autoRefreshSeconds*1000);
+}
+startAutoRefresh();
+if('serviceWorker' in navigator && location.protocol!=='content:'){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+$("filterTier").onchange=performSearch;$("filterEnchant").onchange=performSearch;$("filterCat").onchange=performSearch;$("filterLimit").onchange=performSearch;
+
+function selectorPool(){let q=($('selectSearch')?.value||'').trim().toLowerCase(),cat=$('selectCats')?.querySelector('.active')?.dataset.cat||'all',t=$('selectTier')?.value||'all',e=$('selectEnchant')?.value||'all',craft=$('selectCraftable')?.value||'yes',arr=gearItems();return arr.filter(o=>{let id=itemId(o),n=itemName(o)||'';return (!q||id.toLowerCase().includes(q)||n.toLowerCase().includes(q))&&(cat==='all'||category(id)===cat)&&(t==='all'||tier(id)===t)&&(e==='all'||enchant(id)===e)&&(craft==='no'||!!recipes[id])})}
+async function renderSelector(){
+ if(!$('selectGrid'))return;
+ let arr=selectorPool(),limit=+$('selectLimit').value||96;
+ $('selectCount').textContent=`${arr.length.toLocaleString('pt-BR')} itens`;
+ let shown=arr.slice(0,limit);
+ $('selectGrid').innerHTML=shown.map(o=>{
+   let id=itemId(o),nm=itemName(o);
+   return `<div class="itemcard" onclick="openItem('${id.replaceAll("'","\\'")}')">
+     <img class="ench-icon ench-${enchant(id)}" loading="lazy" src="${iconUrl(id,217)}" onerror="this.style.opacity=.25">
+     <div class="iname">${safe(nm)}</div>
+     <div class="item-value price-${id.replaceAll(/[^A-Za-z0-9]/g,'_')}">—</div>
+     <div class="iid">${safe(id)}</div>
+     <div class="badges"><span class="badge">${tier(id)}</span><span class="badge">.${enchant(id)}</span></div>
+   </div>`;
+ }).join('')||'<div class="empty" style="grid-column:1/-1">Nenhum item encontrado.</div>';
+ // Prices are loaded after rendering so the selector stays responsive.
+ try{
+   let ids=shown.map(itemId);
+   if(!ids.length)return;
+   let city=$('marketCity')?.value||localStorage.getItem('acm_city')||'Martlock';
+   let ps=await getPrices(ids,city,2);
+   ps.forEach(p=>{
+     let el=document.querySelector('.price-'+CSS.escape(String(p.item_id).replace(/[^A-Za-z0-9]/g,'_')));
+     if(el){let s=choose(p,'sell');el.textContent=s.v?money(s.v):'Sem preço';}
+   });
+ }catch(e){}
+}
+function setupSelector(){['selectSearch','selectTier','selectEnchant','selectLimit','selectCraftable'].forEach(id=>$(id)?.addEventListener('input',renderSelector));$('selectCats')?.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{$('selectCats').querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderSelector()}))}
+async function loadRecipeDetail(){
+ if(!selectedItem||!$('recipeBody'))return;
+ let rec=recipes[selectedItem];
+ if(!rec){$('recipeStatus').textContent='sem receita';$('recipeBody').innerHTML='<tr><td colspan="7" class="empty">Este item não possui uma receita disponível no banco atual.</td></tr>';return}
+ let city=$('marketCity').value||localStorage.getItem('acm_city')||'Martlock',
+ quality=+$('detailQuality')?.value||+$('marketQuality')?.value||2,
+ rr=Math.max(0,Math.min(100,+$('detailRR')?.value||0))/100,
+ mode=$('detailBuyMode')?.value||'city',
+ mats=rec.materials||[];
+ $('recipeStatus').textContent='consultando preços…';
+ $('recipeBody').innerHTML='<tr><td colspan="7" class="empty"><span class="loader"></span> buscando receita e preços…</td></tr>';
+ try{
+   let ids=[selectedItem,...mats.map(m=>m.id)], ps=mode==='cheapest'?await getPricesAllCities(ids,1):await getPrices(ids,city);
+   let prodRows=mode==='cheapest'?ps:ps.filter(x=>x.city===city);
+   let prod=mode==='cheapest'?cheapestSell(ps,selectedItem,quality):choose(ps.find(x=>x.item_id===selectedItem&&+x.quality===quality)||ps.find(x=>x.item_id===selectedItem),'sell');
+   let cost=0,rows=[];
+   for(let m of mats){
+     let p=mode==='cheapest'?cheapestBuy(ps,m.id,1):choose(ps.find(x=>x.item_id===m.id&&+x.quality===1)||ps.find(x=>x.item_id===m.id),'buy');
+     let qty=+m.count||0,eligible=m.ret!==false,eff=eligible?qty*(1-rr):qty,line=eff*(p.v||0);
+     cost+=line; rows.push({m,p,qty,eff,line,eligible});
+   }
+   let sale=prod.v||0,profit=sale-cost,roi=cost?profit/cost*100:0;
+   $('recipeCost').textContent=priceLabel(cost);
+   $('recipeSale').textContent=priceLabel(sale);
+   $('recipeProfit').textContent=money(profit);
+   $('recipeProfit').className=profit>=0?'green':'red';
+   $('recipeROI').textContent=cost?roi.toFixed(1)+'%':'—';
+   $('recipeStatus').textContent=prod.v?(mode==='cheapest'?'preços mínimos encontrados':'preços da cidade atual'):'sem preço de venda';
+   $('marketHeroPrice').textContent=priceLabel(sale);
+   $('recipeBody').innerHTML=rows.map(x=>{
+     let ornament=!x.eligible;
+     return `<tr>
+       <td><img class="recipe-icon" src="${iconUrl(x.m.id,217)}" loading="lazy"></td>
+       <td><b class="recipe-name ${ornament?'recipe-art':''}">${safe(v07Name(x.m.id))}</b><br><span class="tiny">${safe(x.m.id)}</span>${ornament?'<br><span class="tiny recipe-art">ornamento/artefato — sem retorno</span>':''}</td>
+       <td>${x.qty}${x.eff!==x.qty?`<br><span class="tiny">efetivo: ${x.eff.toFixed(2)}</span>`:''}</td>
+       <td class="item-price-big">${priceLabel(x.p.v)}</td>
+       <td class="item-price-big">${priceLabel(x.line)}</td>
+       <td>${x.eligible?'sim':'não'}</td>
+       <td class="${cls(mins(x.p.d))}">${age(mins(x.p.d))}</td>
+     </tr>`;
+   }).join('')||'<tr><td colspan="7" class="empty">Receita sem recursos.</td></tr>';
+ }catch(e){
+   $('recipeStatus').textContent='erro';
+   $('recipeBody').innerHTML=`<tr><td colspan="7" class="empty">Não foi possível consultar os preços: ${safe(e.message)}</td></tr>`;
+ }
+}
+setupSelector();
+
+// ===== V0.7 PREMIUM ENGINE =====
+const V07_CITY_BONUS={
+  "Fort Sterling":["HAMMER","SPEAR","HOLY","PLATE_HEAD","CLOTH_ARMOR"],
+  "Lymhurst":["SWORD","BOW","ARCANE","LEATHER_HEAD","LEATHER_SHOES"],
+  "Bridgewatch":["CROSSBOW","DAGGER","CURSED","PLATE_ARMOR","CLOTH_SHOES"],
+  "Martlock":["AXE","QUARTERSTAFF","FROST","PLATE_SHOES","OFF_"],
+  "Thetford":["MACE","FIRE","NATURE","LEATHER_ARMOR","CLOTH_HEAD"],
+  "Caerleon":["FOOD","GATHER","TOOL","WAR_GLOVE","SHAPESHIFTER"],
+  "Brecilien":["CAPE","BAG","POTION"]
+};
+function v07CityBonus(city,id){let a=V07_CITY_BONUS[city]||[];let u=(id||'').toUpperCase();return a.some(x=>u.includes(x))?15:0}
+function v07RR(city,id,focus,daily){let production=18+v07CityBonus(city,id)+(+daily||0)+(focus?59:0);return production/(100+production)*100}
+function v07Name(id){let o=catalog.find(x=>itemId(x)===id);return o?itemName(o):pretty(id)}
+function v07SearchResults(q,limit=30){
+ q=(q||'').trim().toLowerCase();
+ if(!q)return [];
+ let arr=catalog.filter(o=>{
+   let id=itemId(o).toLowerCase();
+   let n=(itemName(o)||'').toLowerCase();
+   return id.includes(q)||n.includes(q);
+ });
+ arr.sort((a,b)=>{
+   let ai=itemId(a).toLowerCase(),bi=itemId(b).toLowerCase();
+   let an=(itemName(a)||'').toLowerCase(),bn=(itemName(b)||'').toLowerCase();
+   const score=x=>x===q?0:x.startsWith(q)?1:x.includes(q)?2:3;
+   return score(an)-score(bn)||score(ai)-score(bi)||an.localeCompare(bn,'pt-BR');
+ });
+ return arr.slice(0,limit);
+}
+function v07RenderSuggestion(o, craftMode=false){
+ let id=itemId(o),nm=v07Name(id),has=!!recipes[id];
+ return `<div class="ac-item" data-id="${safe(id)}">
+   <div class="autocomplete-card">
+     <img loading="lazy" src="${iconUrl(id,217)}" onerror="this.style.opacity='.25'">
+     <div class="ac-main">
+       <div class="ac-name">${safe(nm)}</div>
+       <div class="ac-id">${safe(id)} · ${tier(id)} · .${enchant(id)}${has?' · ⚒ receita':''}</div>
+     </div>
+   </div>
+ </div>`;
+}
+function v07BindAutocomplete(input,box,mode='market'){
+ if(!input||!box)return;
+ if(input.dataset.v10Bound==='1')return;
+ input.dataset.v10Bound='1';
+ let timer=null;
+ const close=()=>{box.hidden=true};
+ input.addEventListener('input',()=>{
+   clearTimeout(timer);
+   timer=setTimeout(()=>{
+     let q=input.value.trim();
+     if(!q){box.innerHTML='';close();return}
+     let arr=v07SearchResults(q,40);
+     if(!arr.length){
+       box.innerHTML='<div class="empty"><span class="loader"></span> Buscando online…</div>';
+       box.hidden=false;
+       remoteItemSearch(q,40).then(remote=>{
+         if(input.value.trim()!==q)return;
+         arr=remote;
+         if(!arr.length){box.innerHTML='<div class="empty">Nenhum item encontrado.</div>';return;}
+         let top=arr.slice(0,4),more=arr.slice(4);
+         box.innerHTML=top.map(o=>v07RenderSuggestion(o,mode==='craft')).join('')+(more.length?'<div class="more-results">↓ Mais resultados — role para ver</div>'+more.map(o=>v07RenderSuggestion(o,mode==='craft')).join(''):'');
+         box.querySelectorAll('.ac-item').forEach(el=>el.addEventListener('click',async()=>{let id=el.dataset.id;input.value=v07Name(id);close();if(mode==='craft')await selectCraftItem(id);else openItem(id)}));
+       });
+       return;
+     }
+     let top=arr.slice(0,4),more=arr.slice(4);
+     box.innerHTML=top.map(o=>v07RenderSuggestion(o,mode==='craft')).join('')+
+       (more.length?'<div class="more-results">↓ Mais resultados — role para ver</div>'+more.map(o=>v07RenderSuggestion(o,mode==='craft')).join(''):'');
+     box.hidden=false;
+     box.querySelectorAll('.ac-item').forEach(el=>{
+       el.addEventListener('click',()=>{
+         let id=el.dataset.id;
+         input.value=v07Name(id);
+         close();
+         if(mode==='craft'){
+           selectCraftItem(id);
+         }else{
+           openItem(id);
+         }
+       });
+     });
+   },35);
+ });
+ input.addEventListener('keydown',e=>{
+   if(e.key==='Escape'){close();return}
+   if(e.key==='Enter'){
+     let r=v07SearchResults(input.value,1)[0];
+     if(r){
+       e.preventDefault();
+       close();
+       if(mode==='craft')selectCraftItem(itemId(r));
+       else openItem(itemId(r));
+     }
+   }
+ });
+ input.addEventListener('focus',()=>{
+   if(input.value.trim().length>=1) input.dispatchEvent(new Event('input'));
+ });
+ document.addEventListener('click',e=>{
+   if(!box.contains(e.target)&&e.target!==input)close();
+ });
+}
+function v07SetupAuto(){
+ v07BindAutocomplete($('homeSearch'),$('homeSuggest'),'market');
+ v07BindAutocomplete($('itemSearch'),$('itemSuggest'),'market');
+ v07BindAutocomplete($('craftSearch'),$('craftSuggest'),'craft');
+}
+function v07CraftSummary(){if(!selectedCraft||!recipes[selectedCraft])return;let city=$('craftCity').value||'Martlock',focus=$('advFocus')?.value==='on',daily=+$('advDaily')?.value||0,rr=v07RR(city,selectedCraft,focus,daily);if($('craftRR'))$('craftRR').value=rr.toFixed(2);let cb=v07CityBonus(city,selectedCraft);if($('advCityBonus'))$('advCityBonus').value=cb}
+async function v07CalculateCraft(){
+ if(!selectedCraft||!recipes[selectedCraft])return;
+ const req=++craftRequest;
+ let rec=recipes[selectedCraft],city=$('craftCity').value,qty=+$('craftQty').value||1,q=+$('craftQuality').value||2,
+ focus=$('advFocus')?.value==='on',daily=+$('advDaily')?.value||0,
+ rr=(Math.max(0,Math.min(100,+$('craftRR').value||0)))/100,
+ tax=+$('craftTax').value/100,setup=+$('craftSetup').value/100,fee=+$('craftFee').value||0;
+ try{
+   let mats=rec.materials||[],ids=[selectedCraft,...mats.map(m=>m.id)],ps=await getPrices(ids,city);
+   if(req!==craftRequest)return;
+   let prod=choose(ps.find(x=>x.item_id===selectedCraft&&+x.quality===q)||ps.find(x=>x.item_id===selectedCraft),'sell');
+   let missing=false,cost=0,rows=[];
+   for(let m of mats){
+     let p=choose(ps.find(x=>x.item_id===m.id&&+x.quality===1)||ps.find(x=>x.item_id===m.id),'buy');
+     let need=(+m.count||0)*qty,eligible=m.ret!==false,eff=eligible?need*(1-rr):need;
+     let hasPrice=!!(p&&p.v>0),line=hasPrice?eff*p.v:0;
+     if(!hasPrice)missing=true;
+     cost+=line;
+     rows.push({m,p:p||{},need,eff,line,eligible,hasPrice});
+   }
+   let hasProduct=!!(prod&&prod.v>0);
+   if(!hasProduct)missing=true;
+   let gross=hasProduct?prod.v*qty:0,net=hasProduct?gross*(1-tax-setup):0;
+   let profit=missing?null:net-cost-fee*qty,roi=(profit!==null&&cost)?profit/cost*100:null;
+   $('ccost').textContent=missing?'Dados incompletos':money(cost);
+   $('crev').textContent=hasProduct?money(net):'Sem preço';
+   $('cprofit').textContent=profit===null?'—':money(profit);
+   $('cprofit').className='value '+(profit===null?'':(profit>=0?'green':'red'));
+   $('croi').textContent=roi===null?'—':roi.toFixed(1)+'%';
+   $('craftRR').value=(rr*100).toFixed(2);
+   $('craftMats').innerHTML=rows.map(x=>`<tr>
+     <td><img class="recipe-icon" src="${iconUrl(x.m.id,217)}"><br><span class="tiny">${safe(v07Name(x.m.id))}</span></td>
+     <td>${x.need}${x.eff!==x.need?`<br><span class="tiny">efetivo ${x.eff.toFixed(2)}</span>`:''}</td>
+     <td>${x.hasPrice?money(x.p.v):'<span class="red">Sem preço</span>'}</td>
+     <td>${x.hasPrice?money(x.line):'<span class="red">—</span>'}</td>
+     <td>${x.eligible?'sim':'não'}</td>
+     <td>${x.hasPrice?`<span class="${cls(mins(x.p.d))}">${age(mins(x.p.d))}</span>`:'<span class="red">sem dado</span>'}
+   </td></tr>`).join('');
+   let art=rows.filter(x=>!x.eligible&&x.hasPrice).reduce((a,x)=>a+x.line,0);
+   let detail=document.getElementById('v07Summary');
+   if(!detail){detail=document.createElement('div');detail.id='v07Summary';$('craftMats').parentElement.parentElement.appendChild(detail)}
+   detail.className='section analysis-grid';
+   detail.innerHTML=`<div class="mini-kpi"><span class="tiny">RR aplicado</span><b class="green">${(rr*100).toFixed(2)}%</b></div>
+   <div class="mini-kpi"><span class="tiny">Bônus cidade</span><b>${v07CityBonus(city,selectedCraft)}%</b></div>
+   <div class="mini-kpi"><span class="tiny">Foco</span><b>${focus?'Ativo':'Desativado'}</b></div>
+   <div class="mini-kpi"><span class="tiny">Ornamentos/artefatos</span><b>${money(art)}</b></div>
+   <div class="mini-kpi"><span class="tiny">Venda bruta</span><b>${hasProduct?money(gross):'Sem preço'}</b></div>`;
+   if(profit!==null)saveHist(selectedCraft,profit,roi,city);
+ }catch(e){$('craftMats').innerHTML=`<tr><td colspan="6" class="empty">Erro ao calcular: ${safe(e.message)}</td></tr>`}
+}
+// Use the advanced engine whenever the user calculates crafting.
+calculateCraft=v07CalculateCraft;
+if($('craftCity'))$('craftCity').addEventListener('change',()=>{v07CraftSummary();if(selectedCraft)v07CalculateCraft()});
+if($('advFocus'))$('advFocus').addEventListener('change',()=>{v07CraftSummary();if(selectedCraft)v07CalculateCraft()});
+if($('advDaily'))$('advDaily').addEventListener('input',()=>{v07CraftSummary();if(selectedCraft)v07CalculateCraft()});
+['craftQuality','craftRR','craftTax','craftSetup','craftFee','craftQty','advSpec','advPriceMode'].forEach(id=>{let el=$(id);if(el){el.addEventListener(el.tagName==='SELECT'?'change':'input',()=>{if(selectedCraft){clearTimeout(window.__craftRefreshTimer);window.__craftRefreshTimer=setTimeout(()=>v07CalculateCraft(),120)}})}});
+// Improve selector search: instant results with no need to press Enter.
+if($('selectSearch')){let s=$('selectSearch');s.addEventListener('input',()=>{renderSelector();let q=s.value.trim();if(q.length>=2){let arr=v07SearchResults(q,12);s.title=arr.map(x=>itemName(x)||itemId(x)).join(' | ')}})}
+v07SetupAuto();setTimeout(()=>{if($("craftSearch")&&!$("craftSearch").dataset.v10Bound){v07SetupAuto()}},2500);
+
+</script></body></html>
