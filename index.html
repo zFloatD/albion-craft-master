@@ -851,7 +851,7 @@ const BREED_RECIPES={
 };
 
 function brName(id){return typeof displayName==="function"?displayName(id):id}
-function brIcon(id){return typeof iconUrl==="function"?iconUrl(id,128):"https://render.albiononline.com/v1/item/"+encodeURIComponent(id)+".png?size=128"}
+function brIcon(id){const gameInfoIds=new Set(["T8_MOUNT_ARMORED_HORSE_MORGANA@1","T8_MOUNTUPGRADE_HORSE_MORGANA","QUESTITEM_TOKEN_AVALON"]);if(gameInfoIds.has(id)||id.includes("@"))return "https://gameinfo.albiononline.com/api/gameinfo/items/"+id+"@0.png";return typeof iconUrl==="function"?iconUrl(id,128):"https://render.albiononline.com/v1/item/"+encodeURIComponent(id)+".png?size=128"}
 function brHours(h){let d=Math.floor(h/24),r=h%24;return d?d+"d "+r+"h":h+"h"}
 function brRecipe(id,tier){
  let base=BREED_RECIPES[id]; if(base)return base;
