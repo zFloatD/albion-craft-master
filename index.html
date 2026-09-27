@@ -814,7 +814,7 @@ function renderBreedDetail(){
    '</div>';
  }).join("");
  el.innerHTML=
- sourceHtml+'+'<div><div class="breedHero"><img src="'+brIcon(x.id)+'"><div><h2>'+safe(brName(x.id))+'</h2><div class="muted">T'+x.tier+' • '+x.place+'</div><div class="tiny" style="margin-top:5px">Depois de crescido: <b>'+safe(grownName)+'</b></div></div></div>'+
+ sourceHtml+'<div><div class="breedHero"><img src="'+brIcon(x.id)+'"><div><h2>'+safe(brName(x.id))+'</h2><div class="muted">T'+x.tier+' • '+x.place+'</div><div class="tiny" style="margin-top:5px">Depois de crescido: <b>'+safe(grownName)+'</b></div></div></div>'+
  '<div class="breedNotice">A alimentação é mostrada em unidades do alimento usado para completar a nutrição. A quantidade é a referência desta ficha; o jogo calcula o crescimento por nutrição.</div></div>'+
  '<div><div class="breedStats">'+
  '<div class="breedStat breedFoodStat"><div class="label">Alimentação total</div><div class="breedFoodLine"><img src="'+brIcon(x.foodId||x.id)+'"><div><div class="val">'+x.foodQty.toLocaleString("pt-BR")+'×</div><div class="tiny">'+safe(x.foodName)+' • dieta '+food+'</div></div></div></div>'+
