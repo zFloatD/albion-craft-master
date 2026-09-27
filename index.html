@@ -55,6 +55,40 @@
 #market .green,#craft .green{color:#55f0ad}
 #market .blue,#craft .blue{color:#58dfff}
 .purple{color:#d0a9ff}
+</style><style>
+/* CRIAÇÃO DE MONTARIAS */
+#breeding{background:
+ radial-gradient(circle at 10% 5%,#49e6ff12 0,transparent 32%),
+ radial-gradient(circle at 90% 8%,#ff4fd812 0,transparent 30%),
+ linear-gradient(135deg,#05080d,#0b1018 50%,#070d12);
+ border:1px solid #252033;border-radius:18px;padding:14px}
+#breeding>.card{background:linear-gradient(145deg,#090f17,#11101b 55%,#09151b);border:1px solid #332944;box-shadow:0 14px 42px #000a}
+.breedFilters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.breedTier{border:1px solid #3a3150;background:#0c121a;color:#aeb7c7;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:800}
+.breedTier.active{color:#fff;border-color:#ff4fd8;background:linear-gradient(135deg,#35172f,#18283a);box-shadow:0 0 18px #ff4fd818}
+.breedGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.breedTile{border:1px solid #2b3040;background:#0a1017;border-radius:12px;padding:8px;cursor:pointer;text-align:left;color:var(--txt);transition:.18s;min-width:0}
+.breedTile:hover{border-color:#49e6ff;transform:translateY(-1px);box-shadow:0 8px 24px #0008}
+.breedTile.active{border-color:#ff4fd8;background:linear-gradient(145deg,#171021,#0b1820);box-shadow:0 0 0 1px #ff4fd830,0 10px 28px #0009}
+.breedTile img{width:78px;height:78px;display:block;margin:auto;object-fit:contain}
+.breedTile .btName{font-size:11px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.breedTile .btMeta{font-size:10px;color:var(--muted);margin-top:2px}
+.breedDetail{display:grid;grid-template-columns:1.1fr 1.9fr;gap:12px;margin-top:14px}
+.breedHero{display:flex;gap:14px;align-items:center;background:#080e15;border:1px solid #302a43;border-radius:14px;padding:14px}
+.breedHero img{width:112px;height:112px;object-fit:contain;background:#050a10;border-radius:12px}
+.breedHero h2{margin:0 0 5px}
+.breedStats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.breedStat{background:#080e15;border:1px solid #2b3040;border-radius:10px;padding:11px}
+.breedStat .label{font-size:10px;color:var(--muted);text-transform:uppercase}
+.breedStat .val{font-size:17px;font-weight:900;margin-top:4px}
+.breedCraft{margin-top:12px;background:#080e15;border:1px solid #302a43;border-radius:12px;padding:13px}
+.breedCraftRow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #202634}
+.breedCraftRow:last-child{border-bottom:0}
+.breedCraftRow img{width:48px;height:48px;object-fit:contain}
+.breedNotice{padding:10px 12px;border:1px solid #463b26;background:#18150d;color:#d7c68c;border-radius:10px;margin-top:10px;font-size:11px;line-height:1.45}
+@media(max-width:1000px){.breedGrid{grid-template-columns:repeat(4,1fr)}.breedDetail{grid-template-columns:1fr}}
+@media(max-width:650px){.breedGrid{grid-template-columns:repeat(3,1fr)}.breedTile img{width:64px;height:64px}.breedHero img{width:88px;height:88px}.breedStats{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.breedGrid{grid-template-columns:repeat(2,1fr)}.breedHero{padding:10px;gap:9px}.breedHero img{width:76px;height:76px}}
 </style></head>
 <body>
 <div class="app">
@@ -65,7 +99,7 @@
 <button data-page="market">▣ &nbsp; Mercado & Craft</button>
 
 <button data-page="arb">⇄ &nbsp; Comparar cidades</button>
-<div class="group">Produção</div>
+<div class="group">Produção</div><button data-page="breeding">🐎 &nbsp; Criação de montarias</button>
 
 <button data-page="refine">◇ &nbsp; Refinamento</button>
 <div class="group">Sistema</div>
@@ -105,13 +139,25 @@
 
 <section id="craft" class="page"><div class="card"><h2>⚒ Calculadora de crafting</h2><div class="bigsearch"><div class="searchwrap" style="flex:1"><input id="craftSearch" placeholder="Pesquise uma receita..."><div id="craftSuggest" class="suggest" hidden></div></div><button class="btn primary" onclick="craftFromSearch()">Selecionar</button></div><div class="section" id="craftSelected"></div><div class="section form"><div class="field"><label>Cidade</label><select id="craftCity"></select></div><div class="field"><label>Preço do produto</label><input value="Menor venda disponível (qualquer qualidade)" disabled></div><div class="field"><label>RR materiais (%)</label><input id="craftRR" type="number" value="15"></div><div class="field"><label>Taxa venda (%)</label><input id="craftTax" type="number" value="4"></div><div class="field"><label>Setup (%)</label><input id="craftSetup" type="number" value="2.5"></div><div class="field"><label>Fee estação</label><input id="craftFee" type="number" value="0"></div><div class="field"><label>Quantidade</label><input id="craftQty" type="number" value="1"></div></div><div class="section"><button id="craftBtn" class="btn primary" disabled onclick="calculateCraft()">Calcular operação</button></div><div class="section grid"><div class="card kpi"><div class="muted">Materiais</div><div id="ccost" class="value">—</div></div><div class="card kpi"><div class="muted">Venda líquida</div><div id="crev" class="value">—</div></div><div class="card kpi"><div class="muted">Lucro</div><div id="cprofit" class="value green">—</div></div><div class="card kpi"><div class="muted">ROI</div><div id="croi" class="value blue">—</div></div></div><div class="section scroll"><table><thead><tr><th>Material</th><th>Quantidade</th><th>Menor venda</th><th>Qualidade</th><th>Custo</th><th>Fonte</th><th>Atualização</th></tr></thead><tbody id="craftMats"></tbody></table></div><div id="craftSummary" class="section card viceSummary"><div class="viceTop"><div><div class="viceTitle">💎 Resumo da operação <b>VICE</b></div><div class="viceSub">Compra dos materiais → crafting → venda • valores para a cidade selecionada</div></div><span id="craftCoverage" class="sourceTag">aguardando</span></div><div class="viceGrid"><div class="viceMetric"><div class="l">Materiais</div><div id="sumMaterials" class="v gold">—</div></div><div class="viceMetric"><div class="l">Taxas + setup</div><div id="sumFees" class="v">—</div></div><div class="viceMetric"><div class="l">Total gasto</div><div id="sumSpent" class="v gold">—</div></div><div class="viceMetric"><div class="l">Venda líquida</div><div id="sumRevenue" class="v blue">—</div></div><div class="viceMetric"><div class="l">Lucro / ROI</div><div id="sumProfit" class="v">—</div></div></div><div id="craftVerdict" class="viceVerdict">Selecione uma receita e calcule a operação.</div></div></div></section>
 
+<section id="breeding" class="page">
+<div class="card">
+  <div class="row between">
+    <div><h2>🐎 Criação de montarias</h2><div class="tiny">Selecione o filhote pela imagem • T3–T8 • sem preços</div></div>
+    <span class="pill green">Foco + prole</span>
+  </div>
+  <div id="breedTiers" class="breedFilters"></div>
+  <div id="breedGrid" class="breedGrid"></div>
+  <div id="breedDetail" class="breedDetail"></div>
+</div>
+</section>
+
 <section id="refine" class="page"><div class="card"><h2>◇ Refinamento</h2><div class="note">Módulo preparado para comparar comprar matéria-prima → refinar → vender. A mesma lógica de preço/idade do mercado será usada aqui.</div><div class="section form"><div class="field"><label>Item refinado</label><input id="refineItem" placeholder="Ex.: T8_METALBAR"></div><div class="field"><label>Cidade</label><select id="refineCity"></select></div><div class="field"><label>RR (%)</label><input id="refineRR" value="15"></div><div class="field"><label>Quantidade</label><input id="refineQty" value="1"></div></div><div class="section note">O banco atual prioriza receitas de crafting. Para refinamento completo, o próximo banco deve incluir as receitas de refino e seus custos de transmutação/estação.</div></div></section>
 
 <section id="favorites" class="page"><div class="card"><div class="row between"><h2>★ Favoritos</h2><button class="btn" onclick="clearFavs()">Limpar</button></div><div id="favBody"></div></div></section>
 <section id="history" class="page"><div class="card"><div class="row between"><h2>◷ Histórico</h2><button class="btn" onclick="localStorage.removeItem('acm_hist');renderHistory()">Limpar</button></div><div id="histBody"></div></div></section>
 <section id="settings" class="page"><div class="card"><h2>⚙ Configurações</h2><div class="form"><div class="field"><label>Servidor</label><input value="Américas / West" disabled></div><div class="field"><label>Cidade padrão</label><select id="defaultCity"></select></div><div class="field"><label>RR padrão</label><input id="defaultRR" value="15"></div><div class="field"><label>Taxa de venda</label><input id="defaultTax" value="4"></div></div><div class="section row"><button class="btn primary" onclick="saveSettings()">Salvar</button><button class="btn" onclick="loadCatalog(true)">↻ Recarregar catálogo</button><button class="btn" onclick="loadRecipes(true)">↻ Recarregar receitas</button></div><div class="section note"><b>Privacidade:</b> configurações, favoritos e histórico ficam no navegador. Não há bot do Discord.</div></div></section>
 </main></div><footer class="app-footer">Versão: <b>1.6.0</b> • Desenvolvedor: <b>zFloat</b></footer>
-<div class="mobile"><button onclick="go('market')"><b>▣</b>Mercado & Craft</button><button onclick="go('favorites')"><b>★</b>Favoritos</button><button onclick="go('settings')"><b>⚙</b>Config.</button></div>
+<div class="mobile"><button onclick="go('market')"><b>▣</b>Mercado</button><button onclick="go('breeding')"><b>🐎</b>Criação</button><button onclick="go('favorites')"><b>★</b>Favoritos</button><button onclick="go('settings')"><b>⚙</b>Config.</button></div>
 
 <script>
 const APP_VERSION="1.6.0";
@@ -131,7 +177,7 @@ function enchant(id){let m=id.match(/@(\d)$/);return m?m[1]:"0"}
 function pretty(id){let x=id.replace(/@(\d)$/,"").replace(/^T[4-8]_/,"").replaceAll("_"," ").replaceAll("LEVEL1"," .1").replaceAll("LEVEL2"," .2").replaceAll("LEVEL3"," .3").replaceAll("LEVEL4"," .4");return "T"+tier(id).slice(1)+" "+x}
 function category(id){if(/^(T[4-8]_)(MAIN_|2H_|OFF_)/.test(id))return"weapon";if(/HEAD_|ARMOR_|SHOES_/.test(id))return"armor";if(/_BAR|_PLANK|_CLOTH|_LEATHER|_ORE|_WOOD|_HIDE|_FIBER|_ROCK/.test(id))return"resource";if(/POTION|FOOD|MEAL|STEW|SOUP/.test(id))return"consumable";return"other"}
 function fillCities(){const ids=["marketCity","craftCity","refineCity","defaultCity"];const html=CITIES.map(c=>`<option>${c}</option>`).join("");ids.forEach(id=>{const el=$(id);if(el)el.innerHTML=html});let d=localStorage.getItem("acm_city")||"Martlock";ids.forEach(id=>{const el=$(id);if(el)el.value=d})}
-function go(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));const el=$(p);if(!el)return;el.classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));const titles={search:"Pesquisar item",market:"Mercado & Craft",arb:"Comparar cidades",craft:"Calculadora",refine:"Refinamento",favorites:"Favoritos",history:"Histórico",settings:"Configurações"};const heading=document.querySelector(".top h1");if(heading)heading.textContent=titles[p]||"Albion Craft Master";document.title="Albion Craft Master • "+(titles[p]||"");if(p==="favorites")renderFavs();if(p==="history")renderHistory()}
+function go(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));const el=$(p);if(!el)return;el.classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));const titles={search:"Pesquisar item",market:"Mercado & Craft",arb:"Comparar cidades",craft:"Calculadora",breeding:"Criação de montarias",refine:"Refinamento",favorites:"Favoritos",history:"Histórico",settings:"Configurações"};const heading=document.querySelector(".top h1");if(heading)heading.textContent=titles[p]||"Albion Craft Master";document.title="Albion Craft Master • "+(titles[p]||"");if(p==="favorites")renderFavs();if(p==="history")renderHistory()}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
 async function loadCatalog(force=false){try{let raw=!force&&localStorage.getItem("acm_catalog");if(raw)catalog=JSON.parse(raw);else{let r=await fetch(ITEMS+"?v="+Date.now());if(!r.ok)throw Error(r.status);let j=await r.json();catalog=Array.isArray(j)?j:(j.items||j.Items||Object.values(j));localStorage.setItem("acm_catalog",JSON.stringify(catalog))}bindSearch($("itemSearch"),$("itemSuggest"));bindSearch($("craftSearch"),$("craftSuggest"),"craft");}catch(e){console.error(e)}}
 function itemId(o){return o.UniqueName||o.uniqueName||o.unique_name||o.id||o.Id||""}
@@ -657,5 +703,133 @@ function startLearningLoop(){
  intelTimer=setInterval(function(){backgroundSweep().catch(function(){})},5*60*1000);
 }startLearningLoop();
 setTimeout(function(){if(selectedItem)refreshItemIntelligence(selectedItem,document.getElementById("marketCity")?.value||"Martlock")},400);
+})();
+</script><script id="mount-breeding">
+(function(){
+"use strict";
+const MOUNT_BREEDS=[
+{id:"T3_FARM_HORSE_BABY",tier:3,grown:"T3_FARM_HORSE_GROWN",mounts:["T3_MOUNT_HORSE"],food:"plant",foodName:"Cenoura",foodQty:10,time:44,offspring:104,place:"Pasto"},
+{id:"T3_FARM_OX_BABY",tier:3,grown:"T3_FARM_OX_GROWN",mounts:["T3_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodQty:10,time:44,offspring:104,place:"Pasto"},
+{id:"T4_FARM_HORSE_BABY",tier:4,grown:"T4_FARM_HORSE_GROWN",mounts:["T4_MOUNT_HORSE"],food:"plant",foodName:"Cenoura",foodQty:31,time:92,offspring:105,place:"Pasto"},
+{id:"T4_FARM_OX_BABY",tier:4,grown:"T4_FARM_OX_GROWN",mounts:["T4_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodQty:31,time:92,offspring:105,place:"Pasto"},
+{id:"T4_FARM_GIANTSTAG_BABY",tier:4,grown:"T4_FARM_GIANTSTAG_GROWN",mounts:["T4_MOUNT_GIANTSTAG"],food:"plant",foodName:"Cenoura",foodQty:31,time:92,offspring:36,place:"Pasto"},
+{id:"T5_FARM_HORSE_BABY",tier:5,grown:"T5_FARM_HORSE_GROWN",mounts:["T5_MOUNT_HORSE"],food:"plant",foodName:"Cenoura",foodQty:91,time:140,offspring:105,place:"Pasto"},
+{id:"T5_FARM_OX_BABY",tier:5,grown:"T5_FARM_OX_GROWN",mounts:["T5_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodQty:91,time:140,offspring:105,place:"Pasto"},
+{id:"T5_FARM_COUGAR_BABY",tier:5,grown:"T5_FARM_COUGAR_GROWN",mounts:["T5_MOUNT_COUGAR_KEEPER"],food:"meat",foodName:"Carne",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_MOABIRD_FW_BRIDGEWATCH_BABY",tier:5,grown:"T5_FARM_MOABIRD_FW_BRIDGEWATCH_GROWN",mounts:["T5_MOUNT_MOABIRD_FW_BRIDGEWATCH"],food:"plant",foodName:"Cenoura",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_DIREBEAR_FW_FORTSTERLING_BABY",tier:5,grown:"T5_FARM_DIREBEAR_FW_FORTSTERLING_GROWN",mounts:["T5_MOUNT_DIREBEAR_FW_FORTSTERLING"],food:"meat",foodName:"Carne",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_DIREBOAR_FW_LYMHURST_BABY",tier:5,grown:"T5_FARM_DIREBOAR_FW_LYMHURST_GROWN",mounts:["T5_MOUNT_DIREBOAR_FW_LYMHURST"],food:"meat",foodName:"Carne",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_RAM_FW_MARTLOCK_BABY",tier:5,grown:"T5_FARM_RAM_FW_MARTLOCK_GROWN",mounts:["T5_MOUNT_RAM_FW_MARTLOCK"],food:"plant",foodName:"Cenoura",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_SWAMPDRAGON_FW_THETFORD_BABY",tier:5,grown:"T5_FARM_SWAMPDRAGON_FW_THETFORD_GROWN",mounts:["T5_MOUNT_SWAMPDRAGON_FW_THETFORD"],food:"meat",foodName:"Carne",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_GREYWOLF_FW_CAERLEON_BABY",tier:5,grown:"T5_FARM_GREYWOLF_FW_CAERLEON_GROWN",mounts:["T5_MOUNT_GREYWOLF_FW_CAERLEON"],food:"meat",foodName:"Carne",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_OWL_FW_BRECILIEN_BABY",tier:5,grown:"T5_FARM_OWL_FW_BRECILIEN_GROWN",mounts:["T5_MOUNT_OWL_FW_BRECILIEN"],food:"meat",foodName:"Carne",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T6_FARM_HORSE_BABY",tier:6,grown:"T6_FARM_HORSE_GROWN",mounts:["T6_MOUNT_HORSE"],food:"plant",foodName:"Cenoura",foodQty:271,time:188,offspring:105,place:"Pasto"},
+{id:"T6_FARM_OX_BABY",tier:6,grown:"T6_FARM_OX_GROWN",mounts:["T6_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodQty:271,time:188,offspring:105,place:"Pasto"},
+{id:"T6_FARM_DIREWOLF_BABY",tier:6,grown:"T6_FARM_DIREWOLF_GROWN",mounts:["T6_MOUNT_DIREWOLF"],food:"meat",foodName:"Carne",foodQty:271,time:188,offspring:23.6,place:"Canil"},
+{id:"T6_FARM_GIANTSTAG_MOOSE_BABY",tier:6,grown:"T6_FARM_GIANTSTAG_MOOSE_GROWN",mounts:["T6_MOUNT_GIANTSTAG_MOOSE"],food:"plant",foodName:"Cenoura",foodQty:271,time:188,offspring:23.6,place:"Pasto"},
+{id:"T7_FARM_HORSE_BABY",tier:7,grown:"T7_FARM_HORSE_GROWN",mounts:["T7_MOUNT_HORSE"],food:"plant",foodName:"Cenoura",foodQty:812,time:236,offspring:104,place:"Pasto"},
+{id:"T7_FARM_OX_BABY",tier:7,grown:"T7_FARM_OX_GROWN",mounts:["T7_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodQty:812,time:236,offspring:104,place:"Pasto"},
+{id:"T7_FARM_DIREBOAR_BABY",tier:7,grown:"T7_FARM_DIREBOAR_GROWN",mounts:["T7_MOUNT_DIREBOAR"],food:"meat",foodName:"Carne",foodQty:812,time:236,offspring:20,place:"Canil"},
+{id:"T7_FARM_SWAMPDRAGON_BABY",tier:7,grown:"T7_FARM_SWAMPDRAGON_GROWN",mounts:["T7_MOUNT_SWAMPDRAGON"],food:"meat",foodName:"Carne",foodQty:812,time:236,offspring:20,place:"Canil"},
+{id:"T8_FARM_HORSE_BABY",tier:8,grown:"T8_FARM_HORSE_GROWN",mounts:["T8_MOUNT_HORSE"],food:"plant",foodName:"Cenoura",foodQty:2432,time:284,offspring:103,place:"Pasto"},
+{id:"T8_FARM_OX_BABY",tier:8,grown:"T8_FARM_OX_GROWN",mounts:["T8_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodQty:2432,time:284,offspring:103,place:"Pasto"},
+{id:"T8_FARM_DIREBEAR_BABY",tier:8,grown:"T8_FARM_DIREBEAR_GROWN",mounts:["T8_MOUNT_DIREBEAR"],food:"meat",foodName:"Carne",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_MAMMOTH_BABY",tier:8,grown:"T8_FARM_MAMMOTH_GROWN",mounts:["T8_MOUNT_MAMMOTH_TRANSPORT"],food:"plant",foodName:"Cenoura",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_DIREWOLF_BABY",tier:8,grown:"T8_FARM_DIREWOLF_GROWN",mounts:["T8_MOUNT_DIREWOLF"],food:"meat",foodName:"Carne",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_MOABIRD_FW_BRIDGEWATCH_BABY",tier:8,grown:"T8_FARM_MOABIRD_FW_BRIDGEWATCH_GROWN",mounts:["T8_MOUNT_MOABIRD_FW_BRIDGEWATCH_ELITE"],food:"plant",foodName:"Cenoura",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_DIREBEAR_FW_FORTSTERLING_BABY",tier:8,grown:"T8_FARM_DIREBEAR_FW_FORTSTERLING_GROWN",mounts:["T8_MOUNT_DIREBEAR_FW_FORTSTERLING_ELITE"],food:"meat",foodName:"Carne",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_DIREBOAR_FW_LYMHURST_BABY",tier:8,grown:"T8_FARM_DIREBOAR_FW_LYMHURST_GROWN",mounts:["T8_MOUNT_DIREBOAR_FW_LYMHURST_ELITE"],food:"meat",foodName:"Carne",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_RAM_FW_MARTLOCK_BABY",tier:8,grown:"T8_FARM_RAM_FW_MARTLOCK_GROWN",mounts:["T8_MOUNT_RAM_FW_MARTLOCK_ELITE"],food:"plant",foodName:"Cenoura",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_SWAMPDRAGON_FW_THETFORD_BABY",tier:8,grown:"T8_FARM_SWAMPDRAGON_FW_THETFORD_GROWN",mounts:["T8_MOUNT_SWAMPDRAGON_FW_THETFORD_ELITE"],food:"meat",foodName:"Carne",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_GREYWOLF_FW_CAERLEON_BABY",tier:8,grown:"T8_FARM_GREYWOLF_FW_CAERLEON_GROWN",mounts:["T8_MOUNT_GREYWOLF_FW_CAERLEON_ELITE"],food:"meat",foodName:"Carne",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_OWL_FW_BRECILIEN_BABY",tier:8,grown:"T8_FARM_OWL_FW_BRECILIEN_GROWN",mounts:["T8_MOUNT_OWL_FW_BRECILIEN_ELITE"],food:"meat",foodName:"Carne",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_SPIDER_HELL_BABY",tier:8,grown:"T8_FARM_SPIDER_HELL_GROWN",mounts:["T8_MOUNT_SPIDER_HELL"],food:"meat",foodName:"Carne",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_DRAKE_BABY",tier:8,grown:"T8_FARM_DRAKE_GROWN",mounts:["T8_MOUNT_DRAKE"],food:"mount",foodName:"Montarias T8",foodQty:35,time:667,offspring:5.6,place:"Canil"}
+];
+
+const BREED_RECIPES={
+ "T3_MOUNT_HORSE":[["T3_FARM_HORSE_GROWN",1],["T3_LEATHER",10]],
+ "T4_MOUNT_HORSE":[["T4_FARM_HORSE_GROWN",1],["T4_LEATHER",20]],
+ "T5_MOUNT_HORSE":[["T5_FARM_HORSE_GROWN",1],["T5_LEATHER",20]],
+ "T6_MOUNT_HORSE":[["T6_FARM_HORSE_GROWN",1],["T6_LEATHER",20]],
+ "T7_MOUNT_HORSE":[["T7_FARM_HORSE_GROWN",1],["T7_LEATHER",20]],
+ "T8_MOUNT_HORSE":[["T8_FARM_HORSE_GROWN",1],["T8_LEATHER",20]],
+ "T3_MOUNT_OX":[["T3_FARM_OX_GROWN",1],["T3_LEATHER",10]],
+ "T4_MOUNT_OX":[["T4_FARM_OX_GROWN",1],["T4_LEATHER",20]],
+ "T5_MOUNT_OX":[["T5_FARM_OX_GROWN",1],["T5_LEATHER",20]],
+ "T6_MOUNT_OX":[["T6_FARM_OX_GROWN",1],["T6_LEATHER",20]],
+ "T7_MOUNT_OX":[["T7_FARM_OX_GROWN",1],["T7_LEATHER",20]],
+ "T8_MOUNT_OX":[["T8_FARM_OX_GROWN",1],["T8_LEATHER",20]],
+ "T4_MOUNT_GIANTSTAG":[["T4_FARM_GIANTSTAG_GROWN",1],["T4_LEATHER",20]],
+ "T6_MOUNT_GIANTSTAG_MOOSE":[["T6_FARM_GIANTSTAG_MOOSE_GROWN",1],["T6_LEATHER",20]],
+ "T8_MOUNT_DIREBEAR_FW_FORTSTERLING_ELITE":[["T8_FARM_DIREBEAR_FW_FORTSTERLING_GROWN",1],["T8_LEATHER",20],["T4_MOUNTAINHEART",20]],
+ "T8_MOUNT_DIREBOAR_FW_LYMHURST_ELITE":[["T8_FARM_DIREBOAR_FW_LYMHURST_GROWN",1],["T8_LEATHER",20],["T4_TREEHEART",20]],
+ "T8_MOUNT_RAM_FW_MARTLOCK_ELITE":[["T8_FARM_RAM_FW_MARTLOCK_GROWN",1],["T8_LEATHER",20],["T4_ROCKHEART",20]],
+ "T8_MOUNT_SWAMPDRAGON_FW_THETFORD_ELITE":[["T8_FARM_SWAMPDRAGON_FW_THETFORD_GROWN",1],["T8_LEATHER",20],["T4_VINEHEART",20]],
+ "T8_MOUNT_GREYWOLF_FW_CAERLEON_ELITE":[["T8_FARM_GREYWOLF_FW_CAERLEON_GROWN",1],["T8_LEATHER",20],["T4_SHADOWHEART",20]],
+ "T8_MOUNT_OWL_FW_BRECILIEN_ELITE":[["T8_FARM_OWL_FW_BRECILIEN_GROWN",1],["T8_LEATHER",20],["QUESTITEM_TOKEN_MISTS",20]],
+ "T8_MOUNT_MOABIRD_FW_BRIDGEWATCH_ELITE":[["T8_FARM_MOABIRD_FW_BRIDGEWATCH_GROWN",1],["T8_LEATHER",20],["T4_BEASTHEART",20]],
+ "T8_MOUNT_SPIDER_HELL":[["T8_FARM_SPIDER_HELL_GROWN",1],["T8_LEATHER",20],["T4_SHADOWHEART",20]]
+};
+
+function brName(id){return typeof displayName==="function"?displayName(id):id}
+function brIcon(id){return typeof iconUrl==="function"?iconUrl(id,128):"https://render.albiononline.com/v1/item/"+encodeURIComponent(id)+".png?size=128"}
+function brHours(h){let d=Math.floor(h/24),r=h%24;return d?d+"d "+r+"h":h+"h"}
+function brRecipe(id,tier){
+ let base=BREED_RECIPES[id]; if(base)return base;
+ let grown=id.replace(/^T(\d+)_MOUNT_/,"T$1_FARM_")+"";
+ return null;
+}
+function addRareRecipes(){
+ const tierLeather={4:"T4_LEATHER",5:"T5_LEATHER",6:"T6_LEATHER",7:"T7_LEATHER",8:"T8_LEATHER"};
+ MOUNT_BREEDS.forEach(x=>x.mounts.forEach(m=>{
+   if(!BREED_RECIPES[m]){
+     let mt=/^T(\d+)_/.exec(m),t=mt?+mt[1]:x.tier;
+     if(tierLeather[t])BREED_RECIPES[m]=[[x.grown,1],[tierLeather[t],20]];
+   }
+ }));
+}
+addRareRecipes();
+
+let breedTier="all",breedSelected=MOUNT_BREEDS[0].id;
+function renderBreedTiers(){
+ const el=$("breedTiers");if(!el)return;
+ el.innerHTML=["all",3,4,5,6,7,8].map(t=>'<button class="breedTier '+(String(t)===String(breedTier)?'active':'')+'" data-t="'+t+'">'+(t==="all"?"Todos":"T"+t)+'</button>').join("");
+ el.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{breedTier=b.dataset.t;renderBreed()});
+}
+function renderBreed(){
+ renderBreedTiers();
+ const list=MOUNT_BREEDS.filter(x=>breedTier==="all"||+x.tier===+breedTier);
+ const grid=$("breedGrid");if(!grid)return;
+ grid.innerHTML=list.map(x=>'<button class="breedTile '+(x.id===breedSelected?'active':'')+'" data-id="'+x.id+'"><img src="'+brIcon(x.id)+'"><div class="btName">'+safe(brName(x.id))+'</div><div class="btMeta">T'+x.tier+' • '+x.place+'</div></button>').join("");
+ grid.querySelectorAll("[data-id]").forEach(b=>b.onclick=()=>{breedSelected=b.dataset.id;renderBreed()});
+ renderBreedDetail();
+}
+function renderBreedDetail(){
+ const x=MOUNT_BREEDS.find(a=>a.id===breedSelected)||MOUNT_BREEDS[0],el=$("breedDetail");if(!el)return;
+ const grownName=brName(x.grown), food=x.food==="plant"?"Plantas":"Carne";
+ const premiumTime=Math.round(x.time/2);
+ const mountIds=x.mounts.filter(Boolean);
+ const recipes=mountIds.map(m=>({id:m,rows:BREED_RECIPES[m]||[]}));
+ const first=recipes[0];
+ let craftHtml=recipes.map(r=>{
+   let n=brName(r.id);
+   return '<div class="breedCraft"><div class="row"><img src="'+brIcon(r.id)+'"><div><b>'+safe(n)+'</b><div class="tiny">Selaria • T'+x.tier+'</div></div></div>'+
+     r.rows.map(q=>'<div class="breedCraftRow"><img src="'+brIcon(q[0])+'"><div><b>'+q[1]+'× '+safe(brName(q[0]))+'</b><div class="tiny">'+(q[0]===x.grown?"Animal crescido":"Material de selaria")+'</div></div></div>').join("")+
+   '</div>';
+ }).join("");
+ el.innerHTML=
+ '<div><div class="breedHero"><img src="'+brIcon(x.id)+'"><div><h2>'+safe(brName(x.id))+'</h2><div class="muted">T'+x.tier+' • '+x.place+'</div><div class="tiny" style="margin-top:5px">Depois de crescido: <b>'+safe(grownName)+'</b></div></div></div>'+
+ '<div class="breedNotice">Montarias não possuem <b>comida favorita</b>. A alimentação depende da dieta: <b>'+food+'</b>. A quantidade abaixo é a referência em unidades de alimento padrão (ex.: cenoura para dieta vegetal); o jogo trabalha por nutrição.</div></div>'+
+ '<div><div class="breedStats">'+
+ '<div class="breedStat"><div class="label">Alimentação total</div><div class="val">'+x.foodQty.toLocaleString("pt-BR")+' unidades</div><div class="tiny">'+safe(x.foodName)+' • dieta '+food+'</div></div>'+
+ '<div class="breedStat"><div class="label">Tempo de criação</div><div class="val">'+brHours(x.time)+'</div><div class="tiny">Premium: ~'+brHours(premiumTime)+'</div></div>'+
+ '<div class="breedStat"><div class="label">Foco</div><div class="val">1.000</div><div class="tiny">por filhote / ciclo de nurture</div></div>'+
+ '<div class="breedStat"><div class="label">Rendimento de prole</div><div class="val green">'+String(x.offspring).replace(".",",")+"%"+'</div><div class="tiny">média com foco</div></div>'+
+ '</div><div class="breedCraft"><h2 style="margin-bottom:4px">Depois de crescido</h2><div class="tiny">Use o animal adulto abaixo para produzir a montaria na Selaria.</div></div>'+craftHtml+
+ '</div>';
+}
+window.renderMountBreeding=renderBreed;
+renderBreed();
 })();
 </script></body></html>
