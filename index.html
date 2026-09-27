@@ -86,6 +86,7 @@
 .breedCraftRow:last-child{border-bottom:0}
 .breedCraftRow img{width:48px;height:48px;object-fit:contain}
 .breedNotice{padding:10px 12px;border:1px solid #463b26;background:#18150d;color:#d7c68c;border-radius:10px;margin-top:10px;font-size:11px;line-height:1.45}
+.breedFoodLine{display:flex;align-items:center;gap:10px;margin-top:7px}.breedFoodLine img{width:46px;height:46px;object-fit:contain;background:#050a10;border-radius:8px;border:1px solid #2b3040}.breedFoodLine .val{font-size:19px;font-weight:900;margin:0}.breedSpecial{border-color:#4a3657;background:linear-gradient(145deg,#111020,#0b151c)}
 @media(max-width:1000px){.breedGrid{grid-template-columns:repeat(4,1fr)}.breedDetail{grid-template-columns:1fr}}
 @media(max-width:650px){.breedGrid{grid-template-columns:repeat(3,1fr)}.breedTile img{width:64px;height:64px}.breedHero img{width:88px;height:88px}.breedStats{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.breedGrid{grid-template-columns:repeat(2,1fr)}.breedHero{padding:10px;gap:9px}.breedHero img{width:76px;height:76px}}
@@ -142,7 +143,7 @@
 <section id="breeding" class="page">
 <div class="card">
   <div class="row between">
-    <div><h2>🐎 Criação de montarias</h2><div class="tiny">Selecione o filhote pela imagem • T3–T8 • sem preços</div></div>
+    <div><h2>🐎 Criação de montarias</h2><div class="tiny">Selecione o filhote pela imagem • T3–T8 • blindados e montarias especiais • sem preços</div></div>
     <span class="pill green">Foco + prole</span>
   </div>
   <div id="breedTiers" class="breedFilters"></div>
@@ -811,7 +812,7 @@ function renderBreedDetail(){
  }).join("");
  el.innerHTML=
  '<div><div class="breedHero"><img src="'+brIcon(x.id)+'"><div><h2>'+safe(brName(x.id))+'</h2><div class="muted">T'+x.tier+' • '+x.place+'</div><div class="tiny" style="margin-top:5px">Depois de crescido: <b>'+safe(grownName)+'</b></div></div></div>'+
- '<div class="breedNotice">Montarias não possuem <b>comida favorita</b>. A alimentação depende da dieta: <b>'+food+'</b>. A quantidade abaixo é a referência em unidades de alimento padrão (ex.: cenoura para dieta vegetal); o jogo trabalha por nutrição.</div></div>'+
+ '<div class="breedNotice">A alimentação é mostrada em unidades do alimento usado para completar a nutrição. A quantidade é a referência desta ficha; o jogo calcula o crescimento por nutrição.</div></div>'+
  '<div><div class="breedStats">'+
  '<div class="breedStat breedFoodStat"><div class="label">Alimentação total</div><div class="breedFoodLine"><img src="'+brIcon(x.foodId||x.id)+'"><div><div class="val">'+x.foodQty.toLocaleString("pt-BR")+'×</div><div class="tiny">'+safe(x.foodName)+' • dieta '+food+'</div></div></div></div>'+
  '<div class="breedStat"><div class="label">Tempo de criação</div><div class="val">'+brHours(x.time)+'</div><div class="tiny">Premium: ~'+brHours(premiumTime)+'</div></div>'+
