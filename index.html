@@ -686,7 +686,7 @@ window.compareCities=async function(){
    });
    var th=document.querySelector("#arb thead");if(th)th.innerHTML="<tr><th>Cidade</th><th>Preço</th><th>Data</th><th>Fonte</th><th></th></tr>";
    document.getElementById("arbBody").innerHTML=rows.map(function(x){
-     return "<tr><td>"+safe(x.city)+"</td><td class='"+(x.v?"":"red")+"'>"+(x.v?money(x.v):"—")+"</td><td>"+(x.d?new Date(x.d).toLocaleString("pt-BR"):"—")+"</td><td><span class='sourceTag "+sourceCls(x.source)+"'>"+sourceText(x.source)+"</span></td><td><button class='btn' onclick=\\"openItem('"+id.replace(/'/g,"\\\\'")+"')\\">Abrir</button></td></tr>";
+     return "<tr><td>"+safe(x.city)+"</td><td class='"+(x.v?"":"red")+"'>"+(x.v?money(x.v):"—")+"</td><td>"+(x.d?new Date(x.d).toLocaleString("pt-BR"):"—")+"</td><td><span class='sourceTag "+sourceCls(x.source)+"'>"+sourceText(x.source)+"</span></td><td><button class='btn' onclick=\"openItem("+JSON.stringify(id)+")\">Abrir</button></td></tr>";
    }).join("");
  }catch(e){console.warn("Compare intelligence v2:",e);if(oldCompareCities)oldCompareCities()}
 };
