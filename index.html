@@ -708,14 +708,14 @@ setTimeout(function(){if(selectedItem)refreshItemIntelligence(selectedItem,docum
 })();
 </script><script id="farm-module">(function(){"use strict";
 const FARM_CROPS=[
-["T1_CARROT","T1_CARROT_SEED",1,"Cenoura","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T2_BEAN","T2_BEAN_SEED",2,"Feijão","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T3_WHEAT","T3_WHEAT_SEED",3,"Trigo","Mercador de Agricultura / Mercado","Culinária, farinha e alimentação de animais"],
-["T4_TURNIP","T4_TURNIP_SEED",4,"Nabo","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T5_CABBAGE","T5_CABBAGE_SEED",5,"Repolho","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T6_POTATO","T6_POTATO_SEED",6,"Batata","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T7_CORN","T7_CORN_SEED",7,"Milho","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T8_PUMPKIN","T8_PUMPKIN_SEED",8,"Abóbora","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"]
+["T1_CARROT","T1_FARM_CARROT_SEED",1,"Cenoura","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
+["T2_BEAN","T2_FARM_BEAN_SEED",2,"Feijão","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
+["T3_WHEAT","T3_FARM_WHEAT_SEED",3,"Trigo","Mercador de Agricultura / Mercado","Culinária, farinha e alimentação de animais"],
+["T4_TURNIP","T4_FARM_TURNIP_SEED",4,"Nabo","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
+["T5_CABBAGE","T5_FARM_CABBAGE_SEED",5,"Repolho","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
+["T6_POTATO","T6_FARM_POTATO_SEED",6,"Batata","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
+["T7_CORN","T7_FARM_CORN_SEED",7,"Milho","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
+["T8_PUMPKIN","T8_FARM_PUMPKIN_SEED",8,"Abóbora","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"]
 ].map(a=>({id:a[0],seed:a[1],tier:a[2],name:a[3],source:a[4],use:a[5],time:22,yieldBase:"3–6 por semente",seedReturn:["0%","33,33%","60%","73,33%","80%","86,67%","91,11%","93,33%"][a[2]-1]+" base • rega aumenta o retorno"}));
 const FARM_ANIMALS=[
 ["T3_FARM_CHICKEN_BABY","T3_FARM_CHICKEN_GROWN",3,"Galinha","T3_EGG","Ovos de Galinha","T3_MEAT",60],
