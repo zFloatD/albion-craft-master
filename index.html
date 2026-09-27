@@ -424,7 +424,7 @@ window.calculateCraft=async function(){
 };
 window.compareCities=async function(){
  var id=document.getElementById("arbItem").value.trim(),mode=document.getElementById("arbMode").value;
- try{
+ try{var th=document.querySelector("#arb thead");if(th)th.innerHTML="<tr><th>Cidade</th><th>Preço</th><th>Data</th><th>Fonte</th><th></th></tr>";
   var ps=await getPrices([id],CITIES,""),ext=await getExternalPrices([id]),all=mergePriceSources(ps,ext),hist=await safeHistory([id],CITIES,""),rows=CITIES.map(function(city){var p=mode==="buy"?resolveBuy(all,hist,city,id):resolveSell(all,hist,city,id);return{city:city,v:p&&p.v||0,d:p&&p.d||"",source:p&&p.source||"sem dado"}});
   document.getElementById("arbBody").innerHTML=rows.map(function(x){return '<tr><td>'+safe(x.city)+'</td><td class="'+(x.v?"":"red")+'">'+(x.v?money(x.v):"—")+'</td><td>'+ (x.d?new Date(x.d).toLocaleString("pt-BR"):"—")+'</td><td><span class="sourceTag '+sourceClass(x.source)+'">'+sourceLabel(x.source)+'</span></td><td><button class="btn" onclick="openItem(\''+id.replace(/'/g,"\\'")+'\')">Abrir</button></td></tr>'}).join("");
   acmArbRender(rows,mode);
