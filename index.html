@@ -157,7 +157,7 @@
 <section id="favorites" class="page"><div class="card"><div class="row between"><h2>★ Favoritos</h2><button class="btn" onclick="clearFavs()">Limpar</button></div><div id="favBody"></div></div></section>
 <section id="history" class="page"><div class="card"><div class="row between"><h2>◷ Histórico</h2><button class="btn" onclick="localStorage.removeItem('acm_hist');renderHistory()">Limpar</button></div><div id="histBody"></div></div></section>
 <section id="settings" class="page"><div class="card"><h2>⚙ Configurações</h2><div class="form"><div class="field"><label>Servidor</label><input value="Américas / West" disabled></div><div class="field"><label>Cidade padrão</label><select id="defaultCity"></select></div><div class="field"><label>RR padrão</label><input id="defaultRR" value="15"></div><div class="field"><label>Taxa de venda</label><input id="defaultTax" value="4"></div></div><div class="section row"><button class="btn primary" onclick="saveSettings()">Salvar</button><button class="btn" onclick="loadCatalog(true)">↻ Recarregar catálogo</button><button class="btn" onclick="loadRecipes(true)">↻ Recarregar receitas</button></div><div class="section note"><b>Privacidade:</b> configurações, favoritos e histórico ficam no navegador. Não há bot do Discord.</div></div></section>
-</main></div><footer class="app-footer">Versão: <b>1.6.0</b> • Desenvolvedor: <b>zFloat</b></footer>
+</main></div><footer class="app-footer">Versão: <b>1.6.2</b> • Desenvolvedor: <b>zFloat</b></footer>
 <div class="mobile"><button onclick="go('market')"><b>▣</b>Mercado</button><button onclick="go('breeding')"><b>🐎</b>Criação</button><button onclick="go('favorites')"><b>★</b>Favoritos</button><button onclick="go('settings')"><b>⚙</b>Config.</button></div>
 
 <script>
@@ -183,7 +183,7 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.pa
 async function loadCatalog(force=false){try{let raw=!force&&localStorage.getItem("acm_catalog");if(raw)catalog=JSON.parse(raw);else{let r=await fetch(ITEMS+"?v="+Date.now());if(!r.ok)throw Error(r.status);let j=await r.json();catalog=Array.isArray(j)?j:(j.items||j.Items||Object.values(j));localStorage.setItem("acm_catalog",JSON.stringify(catalog))}bindSearch($("itemSearch"),$("itemSuggest"));bindSearch($("craftSearch"),$("craftSuggest"),"craft");}catch(e){console.error(e)}}
 function itemId(o){return o.UniqueName||o.uniqueName||o.unique_name||o.id||o.Id||""}
 function itemName(o){let n=o.LocalizedNames||o.localizedNames||o.names||o.Name||o.name;if(typeof n==="string")return n;if(n){return n["PT-BR"]||n["pt-BR"]||n["pt_br"]||n.pt||n["PT"]||n["EN-US"]||n.en||Object.values(n)[0]}return itemId(o)}
-function safe(s){return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;")}function iconUrl(id,size=217){return `https://render.albiononline.com/v1/item/${encodeURIComponent(id)}.png?size=${size}`}function displayName(id){const o=catalog.find(x=>itemId(x)===id);return o?itemName(o):pretty(id)}
+function safe(s){return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;")}function iconUrl(id,size=217){return `https://render.albiononline.com/v1/item/${encodeURIComponent(id)}.png?size=${size}&v=1.6.2`}function displayName(id){const o=catalog.find(x=>itemId(x)===id);return o?itemName(o):pretty(id)}
 function bindSearch(input,box,mode="market"){
  if(!input||!box||input.dataset.bound==="1")return;
  input.dataset.bound="1"; box.className="acbox"; let timer=null;
@@ -715,7 +715,6 @@ const MOUNT_BREEDS=[
 {id:"T4_FARM_OX_BABY",tier:4,grown:"T4_FARM_OX_GROWN",mounts:["T4_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:31,time:92,offspring:105,place:"Pasto"},
 {id:"T4_FARM_GIANTSTAG_BABY",tier:4,grown:"T4_FARM_GIANTSTAG_GROWN",mounts:["T4_MOUNT_GIANTSTAG"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:31,time:92,offspring:36,place:"Pasto"},
 {id:"T5_FARM_HORSE_BABY",tier:5,grown:"T5_FARM_HORSE_GROWN",mounts:["T5_MOUNT_HORSE","T5_MOUNT_ARMORED_HORSE","T5_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:91,time:140,offspring:105,place:"Pasto"},
-{id:"T5_FARM_OX_BABY",tier:5,grown:"T5_FARM_OX_GROWN",mounts:["T5_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:91,time:140,offspring:105,place:"Pasto"},
 {id:"T5_FARM_COUGAR_BABY",tier:5,grown:"T5_FARM_COUGAR_GROWN",mounts:["T5_MOUNT_COUGAR_KEEPER@1"],food:"meat",foodName:"Carne",foodId:"T1_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
 {id:"T5_FARM_MOABIRD_FW_BRIDGEWATCH_BABY",tier:5,grown:"T5_FARM_MOABIRD_FW_BRIDGEWATCH_GROWN",mounts:["T5_MOUNT_MOABIRD_FW_BRIDGEWATCH"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:91,time:140,offspring:36,place:"Canil"},
 {id:"T5_FARM_DIREBEAR_FW_FORTSTERLING_BABY",tier:5,grown:"T5_FARM_DIREBEAR_FW_FORTSTERLING_GROWN",mounts:["T5_MOUNT_DIREBEAR_FW_FORTSTERLING"],food:"meat",foodName:"Carne",foodId:"T1_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
