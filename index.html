@@ -708,23 +708,25 @@ setTimeout(function(){if(selectedItem)refreshItemIntelligence(selectedItem,docum
 })();
 </script><script id="farm-module">(function(){"use strict";
 const FARM_CROPS=[
-["T1_CARROT","T1_FARM_CARROT_SEED",1,"Cenoura","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T2_BEAN","T2_FARM_BEAN_SEED",2,"Feijão","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T3_WHEAT","T3_FARM_WHEAT_SEED",3,"Trigo","Mercador de Agricultura / Mercado","Culinária, farinha e alimentação de animais"],
-["T4_TURNIP","T4_FARM_TURNIP_SEED",4,"Nabo","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T5_CABBAGE","T5_FARM_CABBAGE_SEED",5,"Repolho","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T6_POTATO","T6_FARM_POTATO_SEED",6,"Batata","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T7_CORN","T7_FARM_CORN_SEED",7,"Milho","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"],
-["T8_PUMPKIN","T8_FARM_PUMPKIN_SEED",8,"Abóbora","Mercador de Agricultura / Mercado","Culinária e alimentação de animais"]
-].map(a=>({id:a[0],seed:a[1],tier:a[2],name:a[3],source:a[4],use:a[5],time:22,yieldBase:"3–6 por semente",seedReturn:["0%","33,33%","60%","73,33%","80%","86,67%","91,11%","93,33%"][a[2]-1]+" base • rega aumenta o retorno"}));
+["T1_CARROT","T1_FARM_CARROT_SEED",1,"Cenoura","Lymhurst","Culinária e alimentação de animais","0%","200%"],
+["T2_BEAN","T2_FARM_BEAN_SEED",2,"Feijão","Bridgewatch","Culinária e alimentação de animais","33%","167%"],
+["T3_WHEAT","T3_FARM_WHEAT_SEED",3,"Trigo","Martlock","Culinária, farinha e alimentação de animais","60%","140%"],
+["T4_TURNIP","T4_FARM_TURNIP_SEED",4,"Nabo","Fort Sterling","Culinária e alimentação de animais","73%","127%"],
+["T5_CABBAGE","T5_FARM_CABBAGE_SEED",5,"Repolho","Thetford","Culinária e alimentação de animais","80%","120%"],
+["T6_POTATO","T6_FARM_POTATO_SEED",6,"Batata","Martlock","Culinária e alimentação de animais","87%","113%"],
+["T7_CORN","T7_FARM_CORN_SEED",7,"Milho","Bridgewatch","Culinária e alimentação de animais","91%","109%"],
+["T8_PUMPKIN","T8_FARM_PUMPKIN_SEED",8,"Abóbora","Lymhurst","Culinária e alimentação de animais","93%","107%"]
+].map(a=>({id:a[0],seed:a[1],tier:a[2],name:a[3],bonusCity:a[4],use:a[5],time:22,noFocus:a[6],focus:a[7],yieldBase:"3–6 por semente"}));
 const FARM_ANIMALS=[
-["T3_FARM_CHICKEN_BABY","T3_FARM_CHICKEN_GROWN",3,"Galinha","T3_EGG","Ovos de Galinha","T3_MEAT",60],
-["T4_FARM_GOAT_BABY","T4_FARM_GOAT_GROWN",4,"Cabra","T4_MILK","Leite de Cabra","T4_MEAT",73.33],
-["T5_FARM_GOOSE_BABY","T5_FARM_GOOSE_GROWN",5,"Ganso","T5_EGG","Ovos de Ganso","T5_MEAT",80],
-["T6_FARM_SHEEP_BABY","T6_FARM_SHEEP_GROWN",6,"Ovelha","T6_MILK","Leite de Ovelha","T6_MEAT",86.67],
-["T7_FARM_PIG_BABY","T7_FARM_PIG_GROWN",7,"Porco",null,"","T7_MEAT",91.11],
-["T8_FARM_COW_BABY","T8_FARM_COW_GROWN",8,"Vaca","T8_MILK","Leite de Vaca","T8_MEAT",93.33]
-].map(a=>({id:a[0],grown:a[1],tier:a[2],name:a[3],secondary:a[4],secondaryName:a[5],meat:a[6],offspring:a[7],time:44,feedQty:18,feed:"Culturas / ervas",place:"Pasto",source:"Mercador de Agricultura"}));
+["T3_FARM_CHICKEN_BABY","T3_FARM_CHICKEN_GROWN",3,"Galinha","T3_WHEAT","Trigo","T3_EGG","Ovos de Galinha","T3_MEAT",60,"Fort Sterling"],
+["T4_FARM_GOAT_BABY","T4_FARM_GOAT_GROWN",4,"Cabra","T4_TURNIP","Nabo","T4_MILK","Leite de Cabra","T4_MEAT",73.33,"Bridgewatch"],
+["T5_FARM_GOOSE_BABY","T5_FARM_GOOSE_GROWN",5,"Ganso","T5_CABBAGE","Repolho","T5_EGG","Ovos de Ganso","T5_MEAT",80,"Lymhurst"],
+["T6_FARM_SHEEP_BABY","T6_FARM_SHEEP_GROWN",6,"Ovelha","T6_POTATO","Batata","T6_MILK","Leite de Ovelha","T6_MEAT",86.67,"Fort Sterling"],
+["T7_FARM_PIG_BABY","T7_FARM_PIG_GROWN",7,"Porco","T7_CORN","Milho",null,"","T7_MEAT",91.11,"Thetford"],
+["T8_FARM_COW_BABY","T8_FARM_COW_GROWN",8,"Vaca","T8_PUMPKIN","Abóbora","T8_MILK","Leite de Vaca","T8_MEAT",93.33,"Martlock"]
+].map(a=>({id:a[0],grown:a[1],tier:a[2],name:a[3],favorite:a[4],favoriteName:a[5],secondary:a[6],secondaryName:a[7],meat:a[8],offspring:a[9],bonusCity:a[10],time:44,feedQty:18,feed:"culturas ou ervas",place:"Pasto",source:"Mercador de Agricultura"}));
+const FARM_CROP_BONUSES=[["T1_CARROT",1,"Cenoura","Lymhurst"],["T2_BEAN",2,"Feijão","Bridgewatch"],["T3_WHEAT",3,"Trigo","Martlock"],["T4_TURNIP",4,"Nabo","Fort Sterling"],["T5_CABBAGE",5,"Repolho","Thetford"],["T6_POTATO",6,"Batata","Martlock"],["T7_CORN",7,"Milho","Bridgewatch"],["T8_PUMPKIN",8,"Abóbora","Lymhurst"]];
+const FARM_ANIMAL_BONUSES=[["T3_FARM_CHICKEN_GROWN",3,"Galinha","Fort Sterling"],["T4_FARM_GOAT_GROWN",4,"Cabra","Bridgewatch"],["T5_FARM_GOOSE_GROWN",5,"Ganso","Lymhurst"],["T6_FARM_SHEEP_GROWN",6,"Ovelha","Fort Sterling"],["T7_FARM_PIG_GROWN",7,"Porco","Thetford"],["T8_FARM_COW_GROWN",8,"Vaca","Martlock"]];
 let farmType="crop",farmTier="all",farmSelected=FARM_CROPS[0].id;
 const fIcon=id=>typeof iconUrl==="function"?iconUrl(id,128):"https://render.albiononline.com/v1/item/"+encodeURIComponent(id)+".png?size=128";
 const fName=(id,f)=>typeof displayName==="function"?displayName(id):f||id;
