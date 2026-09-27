@@ -593,11 +593,10 @@ window.loadMarket=async function(){
  try{
    if(selectedItem){
      var city=document.getElementById("marketCity").value;
-     var p=await refreshItemIntelligence(selectedItem,city);if(p){
-       
+     await refreshItemIntelligence(selectedItem,city);
+   }
  }catch(e){console.warn(e)}
 };
-
 /* Craft: não substitui a matemática existente; apenas audita as fontes usadas e impede que
    a interface trate estimativa como se fosse preço ao vivo. */
 window.calculateCraft=async function(){
