@@ -798,7 +798,7 @@ function renderBreed(){
 }
 function renderBreedDetail(){
  const x=MOUNT_BREEDS.find(a=>a.id===breedSelected)||MOUNT_BREEDS[0],el=$("breedDetail");if(!el)return;
- const grownName=brName(x.grown), food=x.food==="plant"?"Plantas":"Carne";
+ const grownName=brName(x.grown), food=x.food==="plant"?"Plantas":(x.food==="meat"?"Carne":(x.food==="mount"?"Montarias":"Especial"));
  const premiumTime=Math.round(x.time/2);
  const mountIds=x.mounts.filter(Boolean);
  const recipes=mountIds.map(m=>({id:m,rows:BREED_RECIPES[m]||[]}));
@@ -813,11 +813,12 @@ function renderBreedDetail(){
  '<div><div class="breedHero"><img src="'+brIcon(x.id)+'"><div><h2>'+safe(brName(x.id))+'</h2><div class="muted">T'+x.tier+' • '+x.place+'</div><div class="tiny" style="margin-top:5px">Depois de crescido: <b>'+safe(grownName)+'</b></div></div></div>'+
  '<div class="breedNotice">Montarias não possuem <b>comida favorita</b>. A alimentação depende da dieta: <b>'+food+'</b>. A quantidade abaixo é a referência em unidades de alimento padrão (ex.: cenoura para dieta vegetal); o jogo trabalha por nutrição.</div></div>'+
  '<div><div class="breedStats">'+
- '<div class="breedStat"><div class="label">Alimentação total</div><div class="val">'+x.foodQty.toLocaleString("pt-BR")+' unidades</div><div class="tiny">'+safe(x.foodName)+' • dieta '+food+'</div></div>'+
+ '<div class="breedStat breedFoodStat"><div class="label">Alimentação total</div><div class="breedFoodLine"><img src="'+brIcon(x.foodId||x.id)+'"><div><div class="val">'+x.foodQty.toLocaleString("pt-BR")+'×</div><div class="tiny">'+safe(x.foodName)+' • dieta '+food+'</div></div></div></div>'+
  '<div class="breedStat"><div class="label">Tempo de criação</div><div class="val">'+brHours(x.time)+'</div><div class="tiny">Premium: ~'+brHours(premiumTime)+'</div></div>'+
  '<div class="breedStat"><div class="label">Foco</div><div class="val">1.000</div><div class="tiny">por filhote / ciclo de nurture</div></div>'+
  '<div class="breedStat"><div class="label">Rendimento de prole</div><div class="val green">'+String(x.offspring).replace(".",",")+"%"+'</div><div class="tiny">média com foco</div></div>'+
  '</div><div class="breedCraft"><h2 style="margin-bottom:4px">Depois de crescido</h2><div class="tiny">Use o animal adulto abaixo para produzir a montaria na Selaria.</div></div>'+craftHtml+
+ (function(){const sp=BREED_SPECIALS[x.id]||[];if(!sp.length)return "";return '<div class="breedCraft breedSpecial"><h2 style="margin-bottom:4px">✨ Montarias especiais / evoluções</h2><div class="tiny">Rotas adicionais a partir da montaria adulta.</div>'+sp.map(r=>'<div class="breedCraftRow"><img src="'+brIcon(r.id)+'"><div><b>'+safe(brName(r.id))+'</b><div class="tiny">'+safe(r.label)+'</div>'+r.rows.map(q=>'<div class="breedCraftRow"><img src="'+brIcon(q[0])+'"><div><b>'+q[1]+'× '+safe(brName(q[0]))+'</b><div class="tiny">Ingrediente da evolução</div></div></div>').join("")+'</div></div>').join("")+'</div>'})()+
  '</div>';
 }
 window.renderMountBreeding=renderBreed;
