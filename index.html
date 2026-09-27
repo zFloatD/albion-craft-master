@@ -87,7 +87,7 @@
 .breedCraftRow img{width:48px;height:48px;object-fit:contain}
 .breedNotice{padding:10px 12px;border:1px solid #463b26;background:#18150d;color:#d7c68c;border-radius:10px;margin-top:10px;font-size:11px;line-height:1.45}
 .breedFoodLine{display:flex;align-items:center;gap:10px;margin-top:7px}.breedFoodLine img{width:46px;height:46px;object-fit:contain;background:#050a10;border-radius:8px;border:1px solid #2b3040}.breedFoodLine .val{font-size:19px;font-weight:900;margin:0}.breedSpecial{border-color:#4a3657;background:linear-gradient(145deg,#111020,#0b151c)}
-@media(max-width:1000px){.breedGrid{grid-template-columns:repeat(4,1fr)}.breedDetail{grid-template-columns:1fr}}
+.breedSource{margin-bottom:12px;background:#080e15;border:1px solid #302a43;border-radius:12px;padding:13px}.breedSourceRow{display:flex;align-items:center;gap:10px}.breedSourceRow img{background:#050a10;border-radius:8px;border:1px solid #2b3040;padding:3px}.breedSource h3{font-size:13px}.breedSource b{font-size:12px}.breedSource .tiny{margin-top:2px}@media(max-width:1000px){.breedGrid{grid-template-columns:repeat(4,1fr)}.breedDetail{grid-template-columns:1fr}}
 @media(max-width:650px){.breedGrid{grid-template-columns:repeat(3,1fr)}.breedTile img{width:64px;height:64px}.breedHero img{width:88px;height:88px}.breedStats{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.breedGrid{grid-template-columns:repeat(2,1fr)}.breedHero{padding:10px;gap:9px}.breedHero img{width:76px;height:76px}}
 </style></head>
@@ -853,7 +853,7 @@ const BREED_RECIPES={
 };
 
 function brName(id){return typeof displayName==="function"?displayName(id):id}
-function brIcon(id){if(!id)return "";return "https://gameinfo.albiononline.com/api/gameinfo/items/"+id+"@0.png"}
+function brIcon(id){if(!id)return "";return "https://render.albiononline.com/v1/item/"+encodeURIComponent(id)+".png?size=217"}
 function brHours(h){let d=Math.floor(h/24),r=h%24;return d?d+"d "+r+"h":h+"h"}
 function brRecipe(id,tier){
  let base=BREED_RECIPES[id]; if(base)return base;
@@ -898,7 +898,7 @@ function renderBreedDetail(){
  }
  const grownName=brName(x.grown), food=x.food==="plant"?"Plantas":(x.food==="meat"?"Carne":(x.food==="mount"?"Montarias":"Especial"));
  const premiumTime=Math.round(x.time/2);
- const mountIds=x.mounts.filter(Boolean);
+ const mountIds=x.mounts.filter(Boolean).filter(m=>!(m.includes("_MOUNT_OX")&&!x.id.includes("_OX_")));
  const recipes=mountIds.map(m=>({id:m,rows:BREED_RECIPES[m]||[]}));
  const first=recipes[0];
  let craftHtml=recipes.map(r=>{
@@ -910,7 +910,7 @@ function renderBreedDetail(){
  el.innerHTML=
  '<div><div class="breedHero"><img src="'+brIcon(x.id)+'"><div><h2>'+safe(brName(x.id))+'</h2><div class="muted">T'+x.tier+' • '+x.place+'</div><div class="tiny" style="margin-top:5px">Depois de crescido: <b>'+safe(grownName)+'</b></div></div></div>'+
  '<div class="breedNotice">A alimentação é mostrada em unidades do alimento usado para completar a nutrição. A quantidade é a referência desta ficha; o jogo calcula o crescimento por nutrição.</div></div>'+
- '<div class="breedSource"><h3 style="margin:0 0 8px">Onde obter o filhote</h3><div class="breedSourceRow"><img src=""+brIcon((BREED_SOURCES[x.id]||{}).sourceIcon||x.id)" style="width:44px;height:44px;object-fit:contain"><div><b>"+safe((BREED_SOURCES[x.id]||{}).source||"Origem não cadastrada")+"</b><div class="tiny">Bioma: "+safe((BREED_SOURCES[x.id]||{}).biome||"—")+"</div></div></div></div><div><div class="breedStats">'+
+ ''<div class="breedSource"><h3 style="margin:0 0 8px">Onde obter o filhote</h3><div class="breedSourceRow"><img src="'+brIcon((BREED_SOURCES[x.id]||{}).sourceIcon||x.id)+'" style="width:44px;height:44px;object-fit:contain"><div><b>'+safe((BREED_SOURCES[x.id]||{}).source||"Origem não cadastrada")+'</b><div class="tiny">Bioma: '+safe((BREED_SOURCES[x.id]||{}).biome||"—")+'</div></div></div></div>'+<div><div class="breedStats">'+
  '<div class="breedStat breedFoodStat"><div class="label">Alimentação total</div><div class="breedFoodLine"><img src="'+brIcon(x.foodId||x.id)+'"><div><div class="val">'+x.foodQty.toLocaleString("pt-BR")+'×</div><div class="tiny">'+safe(x.foodName)+' • dieta '+food+'</div></div></div></div>'+
  '<div class="breedStat"><div class="label">Tempo de criação</div><div class="val">'+brHours(x.time)+'</div><div class="tiny">Premium: ~'+brHours(premiumTime)+'</div></div>'+
  '<div class="breedStat"><div class="label">Foco</div><div class="val">1.000</div><div class="tiny">por filhote / ciclo de nurture</div></div>'+
