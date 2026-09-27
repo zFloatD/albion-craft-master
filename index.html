@@ -296,13 +296,7 @@ window.addEventListener("error",e=>{const s=document.getElementById("status");if
 boot();
 setInterval(()=>{if(selectedItem&&$("market").classList.contains("active"))loadMarket().catch(()=>{});},15000);
 if($("filterTier"))$("filterTier").onchange=renderItemBrowser;if($("filterEnchant"))$("filterEnchant").onchange=renderItemBrowser;
-</script><style id="acm-intelligence-style">
-.acmIntel{margin-top:12px;background:linear-gradient(135deg,#0a1119,#151020 55%,#0a171b);border:1px solid #39304b;border-radius:12px;padding:12px}
-.acmIntelGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.acmMetric{background:#080d14;border:1px solid #2b3040;border-radius:9px;padding:9px}.acmMetric .v{font-weight:900;font-size:15px;margin-top:3px}.acmMetric .l{font-size:9px;color:var(--muted);text-transform:uppercase}.acmBadge{display:inline-block;font-size:10px;padding:3px 7px;border-radius:99px;background:#18232d;color:var(--muted)}.acmBadge.high{background:#103a29;color:#55f0ad}.acmBadge.med{background:#392d17;color:#f1cb73}.acmBadge.low{background:#3a2417;color:#ffb86b}.acmTrendUp{color:#55f0ad}.acmTrendDown{color:#ff6868}.acmTrendFlat{color:#8fd8ff}
-.acmRange{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.acmRange span{background:#0b1219;border:1px solid #2a3340;border-radius:8px;padding:7px 9px;font-size:11px}.acmRange b{display:block;color:#ffd66e;margin-top:2px}
-.acmScore{font-size:20px;font-weight:950}.acmScore.good{color:#55f0ad}.acmScore.mid{color:#f1cb73}.acmScore.bad{color:#ff6868}
-@media(max-width:700px){.acmIntelGrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:430px){.acmIntelGrid{grid-template-columns:1fr 1fr}.acmMetric{padding:8px}}
-</style><script id="acm-intelligence">
+</script><script id="acm-intelligence">
 (function(){
 "use strict";
 
@@ -573,40 +567,6 @@ function intelConfidence(p){
 }
 function confidenceLabel(x){return x>=80?"Alta":x>=55?"Média":x>=35?"Baixa":"Muito baixa"}
 
-function renderIntel(p,city,item,kind){
- var box=document.getElementById(kind==="market"?"acmMarketIntel":"acmCraftIntel");
- if(!box)return;
- var c=intelConfidence(p),src=sourceText(p&&p.source),age=p&&p.d?ageMin(p.d):Infinity;
- var warning="";
- if(p&&!observedSource(p.source))warning='<div class="acmSafety">⚠ Este valor não é uma cotação ao vivo. É '+src.toLowerCase()+'. Para investir prata alta, confirme no mercado do jogo.</div>';
- if(p&&p.source==="histórico-recente")warning='<div class="acmSafety">ℹ Histórico recente: útil para planejar, mas pode não ser o preço da oferta disponível agora.</div>';
- box.innerHTML='<div class="row between"><b>🧠 Inteligência de preço v2</b><span class="acmBadge '+(c>=80?"high":c>=55?"med":"low")+'">Confiança '+c+'/100 • '+confidenceLabel(c)+'</span></div>'+
- '<div class="acmIntelGrid">'+
- '<div class="acmMetric"><div class="l">Preço usado</div><div class="v gold">'+(p&&p.v?money(p.v):"—")+'</div></div>'+
- '<div class="acmMetric"><div class="l">Fonte</div><div class="v">'+src+'</div></div>'+
- '<div class="acmMetric"><div class="l">Idade</div><div class="v">'+(p&&p.d?age(age):"modelo")+'</div></div>'+
- '<div class="acmMetric"><div class="l">Aprendizado</div><div class="v">'+(p&&p.learningSamples?p.learningSamples+" validações":(p&&observedSource(p.source)?"observação real":"ainda aprendendo"))+'</div></div></div>'+
- warning+
- '<div class="tiny" style="margin-top:8px">Item: '+safe(item)+' • Cidade: '+safe(city)+' • O sistema mantém a identidade exata do item e não copia silenciosamente o preço de outra cidade.</div>';
-}
-
-function inject(){
- var stat=document.querySelector("#market .statline");
- if(stat&&!document.getElementById("acmMarketIntel")){
-   var d=document.createElement("div");d.id="acmMarketIntel";d.className="acmIntel";stat.parentNode.insertBefore(d,stat.nextSibling);
- }
- var cs=document.getElementById("craftSummary");
- if(cs&&!document.getElementById("acmCraftIntel")){
-   var d2=document.createElement("div");d2.id="acmCraftIntel";d2.className="acmIntel";cs.appendChild(d2);
- }
- var style=document.getElementById("acm-intelligence-v2-style");
- if(!style){
-   style=document.createElement("style");style.id="acm-intelligence-v2-style";
-   style.textContent=".acmSafety{margin-top:9px;padding:9px;border:1px solid #6b5730;background:#241e12;color:#f1cb73;border-radius:8px;font-size:11px;line-height:1.45}.acmMetric .v{word-break:break-word}";
-   document.head.appendChild(style);
- }
-}
-
 function saveFromPrice(item,city,p){
  if(!p||!p.v)return;
  if(observedSource(p.source))saveObserved(item,city,p.v,p.source,p.d,p.quality);
@@ -622,9 +582,7 @@ async function refreshItemIntelligence(item,city){
    var all=mergePriceSources(ps,ext);
    var hist=await safeHistory([item],CITIES,"");
    var p=safeSell(all,hist,city,item);
-   saveFromPrice(item,city,p);
-   renderIntel(p,city,item,"market");
-   return p;
+   saveFromPrice(item,city,p);return p;
  }catch(e){console.warn("Price intelligence v2:",e)}
  finally{intelBusy=false}
 }
@@ -635,13 +593,8 @@ window.loadMarket=async function(){
  try{
    if(selectedItem){
      var city=document.getElementById("marketCity").value;
-     var p=await refreshItemIntelligence(selectedItem,city);
-     inject();
-     if(p){
-       var tag=document.getElementById("sellAge");
-       if(tag)tag.textContent=(p.d?"• "+age(ageMin(p.d)):"• "+sourceText(p.source));
-     }
-   }
+     var p=await refreshItemIntelligence(selectedItem,city);if(p){
+       
  }catch(e){console.warn(e)}
 };
 
@@ -661,16 +614,7 @@ window.calculateCraft=async function(){
    rows.forEach(function(x){saveFromPrice(x.id,city,x.p)});
    var allPrices=[prod].concat(rows.map(function(x){return x.p})).filter(Boolean);
    var weak=allPrices.filter(function(p){return !observedSource(p.source)});
-   var box=document.getElementById("acmCraftIntel");
-   if(box){
-     var strongest=prod||weak[0]||null;
-     renderIntel(strongest,city,selectedCraft,"craft");
-     var extra=document.createElement("div");
-     extra.className="tiny";
-     extra.style.marginTop="8px";
-     extra.innerHTML=weak.length?("⚠ "+weak.length+" preço(s) da operação usam histórico/modelagem. O lucro exibido pelo cálculo existente deve ser tratado como cenário, não garantia."):("✓ Todos os preços auditados da operação vieram de observações atuais/recentes.");
-     box.appendChild(extra);
-   }
+   
  }catch(e){console.warn("Craft intelligence v2:",e)}
 };
 
@@ -712,9 +656,7 @@ async function backgroundSweep(){
 function startLearningLoop(){
  clearInterval(intelTimer);
  intelTimer=setInterval(function(){backgroundSweep().catch(function(){})},5*60*1000);
-}
-inject();
-startLearningLoop();
-setTimeout(function(){inject();if(selectedItem)refreshItemIntelligence(selectedItem,document.getElementById("marketCity")?.value||"Martlock")},400);
+}startLearningLoop();
+setTimeout(function(){if(selectedItem)refreshItemIntelligence(selectedItem,document.getElementById("marketCity")?.value||"Martlock")},400);
 })();
 </script></body></html>
