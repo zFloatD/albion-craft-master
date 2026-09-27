@@ -296,4 +296,141 @@ window.addEventListener("error",e=>{const s=document.getElementById("status");if
 boot();
 setInterval(()=>{if(selectedItem&&$("market").classList.contains("active"))loadMarket().catch(()=>{});},15000);
 if($("filterTier"))$("filterTier").onchange=renderItemBrowser;if($("filterEnchant"))$("filterEnchant").onchange=renderItemBrowser;
+</script><style id="acm-intelligence-style">
+.acmIntel{margin-top:12px;background:linear-gradient(135deg,#0a1119,#151020 55%,#0a171b);border:1px solid #39304b;border-radius:12px;padding:12px}
+.acmIntelGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.acmMetric{background:#080d14;border:1px solid #2b3040;border-radius:9px;padding:9px}.acmMetric .v{font-weight:900;font-size:15px;margin-top:3px}.acmMetric .l{font-size:9px;color:var(--muted);text-transform:uppercase}.acmBadge{display:inline-block;font-size:10px;padding:3px 7px;border-radius:99px;background:#18232d;color:var(--muted)}.acmBadge.high{background:#103a29;color:#55f0ad}.acmBadge.med{background:#392d17;color:#f1cb73}.acmBadge.low{background:#3a2417;color:#ffb86b}.acmTrendUp{color:#55f0ad}.acmTrendDown{color:#ff6868}.acmTrendFlat{color:#8fd8ff}
+.acmRange{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.acmRange span{background:#0b1219;border:1px solid #2a3340;border-radius:8px;padding:7px 9px;font-size:11px}.acmRange b{display:block;color:#ffd66e;margin-top:2px}
+.acmScore{font-size:20px;font-weight:950}.acmScore.good{color:#55f0ad}.acmScore.mid{color:#f1cb73}.acmScore.bad{color:#ff6868}
+@media(max-width:700px){.acmIntelGrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:430px){.acmIntelGrid{grid-template-columns:1fr 1fr}.acmMetric{padding:8px}}
+</style><script id="acm-intelligence">
+(function(){
+"use strict";
+var OWN_KEY="acm_price_observations_v1", OWN_MAX=600, INTEL_CACHE_TTL=120000, intelCache={};
+function acmNum(v){var n=Number(v);return isFinite(n)&&n>0?n:0}
+function acmArr(a){return (a||[]).map(acmNum).filter(function(v){return v>0}).sort(function(a,b){return a-b})}
+function acmMedian(a){a=acmArr(a);if(!a.length)return 0;var m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2}
+function acmPct(a,p){a=acmArr(a);if(!a.length)return 0;var i=(a.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return lo===hi?a[lo]:a[lo]+(a[hi]-a[lo])*(i-lo)}
+function acmAge(d){if(!d)return Infinity;var t=new Date(d).getTime();return isFinite(t)?Math.max(0,(Date.now()-t)/60000):Infinity}
+function acmConfidence(source,age,agreement){
+ var s=source==="atual"?0:source==="albionmarket"||source==="codex"?1:source==="histórico"?2:source==="cache"?3:4;
+ var score=(s===0?65:s===1?55:s===2?40:s===3?25:12);
+ if(isFinite(age)){if(age<=15)score+=25;else if(age<=60)score+=15;else if(age<=360)score+=7;else score-=5}
+ if(agreement>=3)score+=10;else if(agreement===2)score+=5;
+ return Math.max(0,Math.min(100,Math.round(score)));
+}
+function acmConfLabel(score){return score>=80?"Alta":score>=55?"Média":"Baixa"}
+function acmOwn(){try{return JSON.parse(localStorage.getItem(OWN_KEY)||"[]")}catch(e){return[]}}
+function acmSaveObs(item,city,v,source){
+ if(!item||!city||!v)return;var a=acmOwn(),now=Date.now();
+ a.unshift({item:item,city:city,v:Math.round(v),source:source||"desconhecido",t:now});
+ var seen={},out=[];for(var i=0;i<a.length&&out.length<OWN_MAX;i++){var x=a[i],k=x.item+"|"+x.city+"|"+x.v+"|"+Math.floor(x.t/60000);if(!seen[k]){seen[k]=1;out.push(x)}}
+ try{localStorage.setItem(OWN_KEY,JSON.stringify(out))}catch(e){}
+}
+function acmOwnValues(item,city){return acmOwn().filter(function(x){return x.item===item&&x.city===city}).map(function(x){return x.v})}
+function acmCurrentRows(ps,item,city,field){
+ return (ps||[]).map(normPrice).filter(function(x){return x&&x.item_id===item&&String(x.city).toLowerCase()===String(city).toLowerCase()&&acmNum(x[field])>0})
+}
+function acmStats(ps,hist,item,city){
+ var cur=acmCurrentRows(ps,item,city,"sell").map(function(x){return x.sell});
+ var hp=typeof historyPoints==="function"?historyPoints(hist||[],item,city).map(function(x){return x.v}):[];
+ var own=acmOwnValues(item,city), all=cur.concat(hp.slice(0,48),own.slice(0,100));
+ var selected=acmMedian(cur)||acmMedian(hp)||acmMedian(own), q1=acmPct(all,.25), med=acmMedian(all), q3=acmPct(all,.75);
+ var outlier=selected&&med&&selected<med*.72;
+ var spread=med&&q3?q3/q1:0;
+ var source="estimado",d="";
+ var resolved=resolveSell(ps,hist,city,item);if(resolved){source=resolved.source||"estimado";d=resolved.d||"";selected=resolved.v||selected}
+ var agree=cur.length>=4?3:cur.length>=2?2:cur.length?1:0;
+ var conf=acmConfidence(source,acmAge(d),agree);
+ var trend="flat";
+ if(hp.length>=4){var recent=acmMedian(hp.slice(0,Math.min(6,hp.length))),older=acmMedian(hp.slice(Math.min(6,hp.length),Math.min(18,hp.length)));if(older){var delta=(recent-older)/older;trend=delta>.04?"up":delta<-.04?"down":"flat"}}
+ return {selected:selected,low:q1||selected,typical:med||selected,high:q3||selected,source:source,confidence:conf,trend:trend,outlier:!!outlier,spread:spread,observations:cur.length+hp.length+own.length};
+}
+function acmMarketIntel(ps,hist,city,item){
+ var st=acmStats(ps,hist,item,city),box=document.getElementById("acmMarketIntel");if(!box)return;
+ var tr=st.trend==="up"?"▲ alta":st.trend==="down"?"▼ baixa":"→ estável";
+ var tc=st.trend==="up"?"acmTrendUp":st.trend==="down"?"acmTrendDown":"acmTrendFlat";
+ box.innerHTML='<div class="row between"><b>🧠 Inteligência de preço</b><span class="acmBadge '+(st.confidence>=80?"high":st.confidence>=55?"med":"low")+'">Confiança '+st.confidence+'/100 • '+acmConfLabel(st.confidence)+'</span></div>'+
+ '<div class="acmIntelGrid">'+
+ '<div class="acmMetric"><div class="l">Oferta selecionada</div><div class="v gold">'+(st.selected?money(st.selected):"—")+'</div></div>'+
+ '<div class="acmMetric"><div class="l">Preço típico</div><div class="v blue">'+(st.typical?money(st.typical):"—")+'</div></div>'+
+ '<div class="acmMetric"><div class="l">Tendência</div><div class="v '+tc+'">'+tr+'</div></div>'+
+ '<div class="acmMetric"><div class="l">Observações</div><div class="v">'+st.observations+'</div></div></div>'+
+ '<div class="acmRange"><span>Conservador<b>'+ (st.low?money(st.low):"—") +'</b></span><span>Típico<b>'+ (st.typical?money(st.typical):"—") +'</b></span><span>Favorável<b>'+ (st.high?money(st.high):"—") +'</b></span>'+
+ (st.outlier?'<span style="border-color:#6b5730;color:#f1cb73">⚠ oferta abaixo do padrão</span>':"")+
+ '<span class="tiny" style="padding:7px">Fonte: '+sourceLabel(st.source)+' • faixa estatística baseada nos dados disponíveis.</span></div>';
+}
+function acmInject(){
+ var stat=document.querySelector("#market .statline");
+ if(stat&&!document.getElementById("acmMarketIntel")){var d=document.createElement("div");d.id="acmMarketIntel";d.className="acmIntel";stat.parentNode.insertBefore(d,stat.nextSibling)}
+ var cs=document.getElementById("craftSummary");
+ if(cs&&!document.getElementById("acmCraftIntel")){var d2=document.createElement("div");d2.id="acmCraftIntel";d2.className="acmIntel";cs.appendChild(d2)}
+ var arb=document.getElementById("arbBody");
+ if(arb&&!document.getElementById("acmArbIntel")){var host=arb.closest(".card");if(host){var d3=document.createElement("div");d3.id="acmArbIntel";d3.className="acmIntel";host.appendChild(d3)}}
+}
+function acmOpportunity(o){
+ if(!o||o.profit===null||o.profit===undefined)return null;
+ var roi=isFinite(o.roi)?o.roi:0, score=50;
+ score+=Math.max(-20,Math.min(25,roi/4));
+ var confs=[o.prod&&o.prod.source].concat((o.rows||[]).map(function(x){return x.source})).filter(Boolean);
+ var conf=100;confs.forEach(function(s){conf=Math.min(conf,s==="atual"?100:s==="albionmarket"||s==="codex"?85:s==="histórico"?65:s==="cache"?45:35)});
+ score+=(conf-70)*.25;
+ if(o.missing)score-=30;if(o.profit<0)score-=25;
+ return Math.max(0,Math.min(100,Math.round(score)));
+}
+function acmRenderCraftIntel(o){
+ var box=document.getElementById("acmCraftIntel");if(!box)return;
+ var score=acmOpportunity(o);if(score===null){box.innerHTML='<b>🧠 Inteligência da operação</b><div class="tiny" style="margin-top:6px">Aguardando preços e cálculo para estimar margem, estabilidade e confiança.</div>';return}
+ var cls=score>=70?"good":score>=45?"mid":"bad";
+ var reason=o.missing?"Dados incompletos":(o.profit<0?"Margem negativa":(o.roi<10?"ROI baixo":score>=70?"Margem e dados consistentes":"Operação com ressalvas"));
+ box.innerHTML='<div class="row between"><b>🧠 Inteligência da operação</b><span class="acmScore '+cls+'">'+score+'/100</span></div>'+
+ '<div class="acmIntelGrid"><div class="acmMetric"><div class="l">Margem</div><div class="v">'+(o.profit===null?"—":money(o.profit))+'</div></div>'+
+ '<div class="acmMetric"><div class="l">ROI</div><div class="v">'+(o.roi===null?"—":o.roi.toFixed(1)+"%")+'</div></div>'+
+ '<div class="acmMetric"><div class="l">Qualidade dos dados</div><div class="v">'+(score>=70?"boa":score>=45?"média":"baixa")+'</div></div>'+
+ '<div class="acmMetric"><div class="l">Leitura</div><div class="v">'+reason+'</div></div></div>'+
+ '<div class="tiny" style="margin-top:8px">O índice é auxiliar: combina ROI, margem, completude e confiabilidade das fontes. O preço real selecionado continua sendo mostrado acima.</div>';
+}
+function acmArbRender(rows,mode){
+ var box=document.getElementById("acmArbIntel");if(!box||!rows.length)return;
+ var vals=rows.filter(function(x){return x.v>0}),min=vals.length?Math.min.apply(null,vals.map(function(x){return x.v})):0,max=vals.length?Math.max.apply(null,vals.map(function(x){return x.v})):0,spread=min?((max-min)/min*100):0;
+ var lo=vals.find(function(x){return x.v===min}),hi=vals.find(function(x){return x.v===max});
+ box.innerHTML='<div class="row between"><b>⇄ Oportunidade entre cidades</b><span class="acmBadge '+(spread>=5?"high":spread>=2?"med":"low")+'">dispersão '+spread.toFixed(1)+'%</span></div>'+
+ '<div class="acmIntelGrid"><div class="acmMetric"><div class="l">'+(mode==="buy"?"Menor compra":"Menor venda")+'</div><div class="v gold">'+(min?money(min):"—")+'</div><div class="tiny">'+(lo?lo.city:"—")+'</div></div>'+
+ '<div class="acmMetric"><div class="l">'+(mode==="buy"?"Maior compra":"Maior venda")+'</div><div class="v gold">'+(max?money(max):"—")+'</div><div class="tiny">'+(hi?hi.city:"—")+'</div></div>'+
+ '<div class="acmMetric"><div class="l">Diferença</div><div class="v green">'+(max&&min?money(max-min):"—")+'</div></div>'+
+ '<div class="acmMetric"><div class="l">Leitura</div><div class="v">'+(spread>=5?"dispersão alta":spread>=2?"dispersão moderada":"mercado concentrado")+'</div></div></div>'+
+ '<div class="tiny" style="margin-top:8px">A diferença é bruta e não desconta taxas, transporte ou risco de execução.</div>';
+}
+var oldLoadMarket=window.loadMarket, oldCalculateCraft=window.calculateCraft, oldCompareCities=window.compareCities;
+window.loadMarket=async function(){
+ await oldLoadMarket();
+ try{
+  if(selectedItem){
+   var city=document.getElementById("marketCity").value,ps=await getPrices([selectedItem],CITIES,""),ext=await getExternalPrices([selectedItem]),all=mergePriceSources(ps,ext),hist=await safeHistory([selectedItem],CITIES,"");
+   var sv=resolveSell(all,hist,city,selectedItem);if(sv&&sv.v)acmSaveObs(selectedItem,city,sv.v,sv.source);
+   acmMarketIntel(all,hist,city,selectedItem);
+  }
+ }catch(e){console.warn("Inteligência de mercado:",e)}
+};
+window.calculateCraft=async function(){
+ await oldCalculateCraft();
+ try{
+  if(selectedCraft&&recipes[selectedCraft]){
+   var city=document.getElementById("craftCity").value,qty=Math.max(1,+document.getElementById("craftQty").value||1),rec=recipes[selectedCraft],ids=[selectedCraft].concat((rec.materials||[]).map(function(x){return x.id})),ps=await getPrices(ids,CITIES,""),ext=await getExternalPrices(ids),all=mergePriceSources(ps,ext),hist=await safeHistory(ids,CITIES,""),prod=resolveSell(all,hist,city,selectedCraft),rows=(rec.materials||[]).map(function(m){var p=resolveSell(all,hist,city,m.id);return{m:m,p:p||{v:0,source:"sem dado"}}}),missing=!prod||!prod.v||rows.some(function(x){return !x.p.v}),cost=rows.reduce(function(s,x){var n=(+x.m.count||0)*qty;return s+(x.p.v?n*x.p.v:0)},0),gross=prod&&prod.v?prod.v*qty:0,tax=Math.max(0,Math.min(100,+document.getElementById("craftTax").value||0))/100,setup=Math.max(0,Math.min(100,+document.getElementById("craftSetup").value||0))/100,fee=Math.max(0,+document.getElementById("craftFee").value||0),rev=gross-gross*(tax+setup),spent=cost+fee*qty,profit=missing?null:rev-spent,roi=profit!==null&&spent?profit/spent*100:null;
+   rows.forEach(function(x){if(x.p.v)acmSaveObs(x.m.id,city,x.p.v,x.p.source)});
+   if(prod&&prod.v)acmSaveObs(selectedCraft,city,prod.v,prod.source);
+   acmRenderCraftIntel({prod:prod||{source:"sem dado"},rows:rows,missing:missing,profit:profit,roi:roi});
+  }
+ }catch(e){console.warn("Inteligência de crafting:",e)}
+};
+window.compareCities=async function(){
+ var id=document.getElementById("arbItem").value.trim(),mode=document.getElementById("arbMode").value;
+ try{var th=document.querySelector("#arb thead");if(th)th.innerHTML="<tr><th>Cidade</th><th>Preço</th><th>Data</th><th>Fonte</th><th></th></tr>";
+  var ps=await getPrices([id],CITIES,""),ext=await getExternalPrices([id]),all=mergePriceSources(ps,ext),hist=await safeHistory([id],CITIES,""),rows=CITIES.map(function(city){var p=mode==="buy"?resolveBuy(all,hist,city,id):resolveSell(all,hist,city,id);return{city:city,v:p&&p.v||0,d:p&&p.d||"",source:p&&p.source||"sem dado"}});
+  document.getElementById("arbBody").innerHTML=rows.map(function(x){return '<tr><td>'+safe(x.city)+'</td><td class="'+(x.v?"":"red")+'">'+(x.v?money(x.v):"—")+'</td><td>'+ (x.d?new Date(x.d).toLocaleString("pt-BR"):"—")+'</td><td><span class="sourceTag '+sourceClass(x.source)+'">'+sourceLabel(x.source)+'</span></td><td><button class="btn" onclick="openItem(\''+id.replace(/'/g,"\\'")+'\')">Abrir</button></td></tr>'}).join("");
+  acmArbRender(rows,mode);
+ }catch(e){console.warn("Arbitragem:",e);oldCompareCities()}
+};
+acmInject();
+setTimeout(function(){acmInject();if(selectedItem&&document.getElementById("market").classList.contains("active"))window.loadMarket().catch(function(){});},250);
+})();
 </script></body></html>
