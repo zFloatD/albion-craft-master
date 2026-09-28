@@ -1,6 +1,25 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<style id="acmAuthCss">
+body.acmLocked .app{display:none!important}
+#acmAuth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 20% 0%,#17232e 0,#080d12 45%);color:var(--txt)}
+#acmAuth .authBox{width:min(440px,100%);background:linear-gradient(145deg,#101820,#0b1118);border:1px solid #2b3946;border-radius:18px;padding:22px;box-shadow:0 22px 70px #000b}
+#acmAuth .authLogo{font-size:22px;font-weight:900;margin-bottom:4px}.authLogo b{color:var(--green)}
+#acmAuth .authSub{color:var(--muted);font-size:12px;margin-bottom:18px}
+#acmAuth .authTabs{display:flex;gap:6px;margin-bottom:14px}
+#acmAuth .authTab{flex:1;padding:10px;border:1px solid var(--line);background:#0a1016;color:var(--muted);border-radius:8px;cursor:pointer;font-weight:800}
+#acmAuth .authTab.active{color:var(--txt);border-color:var(--green2);background:#103a29}
+#acmAuth .authField{margin-bottom:10px}.authField label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}
+#acmAuth .authField input{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:#070c12;color:var(--txt);outline:0}
+#acmAuth .authField input:focus{border-color:var(--green2)}
+#acmAuth .authBtn{width:100%;padding:11px;border-radius:8px;border:1px solid var(--green2);background:var(--green2);color:#04140d;font-weight:900;cursor:pointer}
+#acmAuth .authMsg{margin-top:10px;padding:9px 10px;border-radius:8px;font-size:11px;line-height:1.4;display:none}
+#acmAuth .authMsg.ok{display:block;background:#103a29;color:var(--green);border:1px solid #236d4b}
+#acmAuth .authMsg.err{display:block;background:#3d181b;color:var(--red);border:1px solid #74343a}
+#acmAuth .authNote{margin-top:13px;padding:10px;border-radius:9px;background:#111a22;border:1px solid var(--line);color:var(--muted);font-size:10px;line-height:1.45}
+#acmAuth .authUser{display:flex;justify-content:space-between;gap:8px;margin-top:12px;font-size:11px;color:var(--muted)}
+</style>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080d12"><link rel="manifest" href="manifest.json"><title>Albion Craft Master</title>
 <style>
@@ -91,7 +110,31 @@
 @media(max-width:650px){.breedGrid{grid-template-columns:repeat(3,1fr)}.breedTile img{width:64px;height:64px}.breedHero img{width:88px;height:88px}.breedStats{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.breedGrid{grid-template-columns:repeat(2,1fr)}.breedHero{padding:10px;gap:9px}.breedHero img{width:76px;height:76px}}
 .breedSource{margin-bottom:12px;background:#080e15;border:1px solid #302a43;border-radius:12px;padding:13px}.breedSourceRow{display:flex;align-items:center;gap:10px}.breedSourceIcon{width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:#050a10;border-radius:8px;border:1px solid #2b3040;font-size:25px}.breedSource h3{font-size:13px;margin:0 0 4px}.breedSource b{font-size:12px}.breedSource .tiny{margin-top:2px}</style></head>
-<body>
+<body class="acmLocked">
+<div id="acmAuth">
+  <div class="authBox">
+    <div class="authLogo">⚒ Albion <b>Craft Master</b></div>
+    <div class="authSub">Área de acesso • uso entre colegas</div>
+    <div class="authTabs">
+      <button type="button" class="authTab active" data-auth-tab="login">Entrar</button>
+      <button type="button" class="authTab" data-auth-tab="register">Criar conta</button>
+    </div>
+    <form id="acmLoginForm">
+      <div class="authField"><label>Usuário</label><input id="acmLoginUser" autocomplete="username" maxlength="24" required></div>
+      <div class="authField"><label>Senha</label><input id="acmLoginPass" type="password" autocomplete="current-password" minlength="4" required></div>
+      <button class="authBtn" type="submit">🔐 Entrar</button>
+    </form>
+    <form id="acmRegisterForm" style="display:none">
+      <div class="authField"><label>Usuário</label><input id="acmRegUser" autocomplete="username" maxlength="24" required></div>
+      <div class="authField"><label>Senha</label><input id="acmRegPass" type="password" autocomplete="new-password" minlength="4" required></div>
+      <div class="authField"><label>Código de autorização do administrador</label><input id="acmRegCode" autocomplete="off" maxlength="40" required></div>
+      <button class="authBtn" type="submit">👤 Solicitar / autorizar conta</button>
+    </form>
+    <div id="acmAuthMsg" class="authMsg"></div>
+    <div class="authNote">V1 local: cada conta guarda favoritos, histórico e preferências separadamente neste aparelho. Para autorizar um colega, forneça a ele o código administrativo definido no código desta versão. Isto é uma barreira contra curiosos, não um sistema de segurança forte.</div>
+    <div class="authUser"><span>GitHub Pages • HTTPS</span><span id="acmAuthVersion">Acesso V1</span></div>
+  </div>
+</div>
 <div class="app">
 <aside class="side">
 <div class="logo">⚒ Albion <b>Craft Master</b></div>
@@ -178,7 +221,7 @@ function tier(id){let m=id.match(/^T([4-8])_/);return m?"T"+m[1]:"—"}
 function enchant(id){let m=id.match(/@(\d)$/);return m?m[1]:"0"}
 function pretty(id){let x=id.replace(/@(\d)$/,"").replace(/^T[4-8]_/,"").replaceAll("_"," ").replaceAll("LEVEL1"," .1").replaceAll("LEVEL2"," .2").replaceAll("LEVEL3"," .3").replaceAll("LEVEL4"," .4");return "T"+tier(id).slice(1)+" "+x}
 function category(id){if(/^(T[4-8]_)(MAIN_|2H_|OFF_)/.test(id))return"weapon";if(/HEAD_|ARMOR_|SHOES_/.test(id))return"armor";if(/_BAR|_PLANK|_CLOTH|_LEATHER|_ORE|_WOOD|_HIDE|_FIBER|_ROCK/.test(id))return"resource";if(/POTION|FOOD|MEAL|STEW|SOUP/.test(id))return"consumable";return"other"}
-function fillCities(){const ids=["marketCity","craftCity","refineCity","defaultCity"];const html=CITIES.map(c=>`<option>${c}</option>`).join("");ids.forEach(id=>{const el=$(id);if(el)el.innerHTML=html});let d=localStorage.getItem("acm_city")||"Martlock";ids.forEach(id=>{const el=$(id);if(el)el.value=d})}
+function fillCities(){const ids=["marketCity","craftCity","refineCity","defaultCity"];const html=CITIES.map(c=>`<option>${c}</option>`).join("");ids.forEach(id=>{const el=$(id);if(el)el.innerHTML=html});let d=localStorage.getItem(userStorageKey("acm_city"))||"Martlock";ids.forEach(id=>{const el=$(id);if(el)el.value=d})}
 function go(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));const el=$(p);if(!el)return;el.classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));const titles={search:"Pesquisar item",market:"Mercado & Craft",arb:"Comparar cidades",craft:"Calculadora",breeding:"Criação de montarias",farm:"Fazenda",refine:"Refinamento",favorites:"Favoritos",history:"Histórico",settings:"Configurações"};const heading=document.querySelector(".top h1");if(heading)heading.textContent=titles[p]||"Albion Craft Master";document.title="Albion Craft Master • "+(titles[p]||"");if(p==="favorites")renderFavs();if(p==="history")renderHistory()}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
 async function loadCatalog(force=false){try{let raw=!force&&localStorage.getItem("acm_catalog");if(raw)catalog=JSON.parse(raw);else{let r=await fetch(ITEMS+"?v="+Date.now());if(!r.ok)throw Error(r.status);let j=await r.json();catalog=Array.isArray(j)?j:(j.items||j.Items||Object.values(j));localStorage.setItem("acm_catalog",JSON.stringify(catalog))}bindSearch($("itemSearch"),$("itemSuggest"));bindSearch($("craftSearch"),$("craftSuggest"),"craft");}catch(e){console.error(e)}}
@@ -331,15 +374,15 @@ function selectCraft(id){if(!id)return;selectedCraft=id;$("craftSearch").value=d
 async function calculateCraft(){if(!selectedCraft){alert("Selecione uma receita primeiro.");return}let rec=recipes[selectedCraft];if(!rec){alert("Esta receita não está disponível no banco atual.");return}let city=$("craftCity").value,qty=Math.max(1,+$("craftQty").value||1),rr=Math.max(0,Math.min(100,+$("craftRR").value||0))/100,tax=Math.max(0,Math.min(100,+$("craftTax").value||0))/100,setup=Math.max(0,Math.min(100,+$("craftSetup").value||0))/100,fee=Math.max(0,+$("craftFee").value||0);$("craftBtn").disabled=true;$("craftBtn").textContent="Calculando…";try{let mats=rec.materials||[],ids=[selectedCraft,...mats.map(x=>x.id)],ps=[];try{ps=await getPrices(ids,CITIES,"")}catch(e){console.warn("AODP prices indisponíveis, usando histórico/cache:",e)}try{ps=mergePriceSources(ps,await getExternalPrices(ids))}catch(e){console.warn("Fonte externa indisponível:",e)}let hist=await safeHistory(ids,CITIES,""),prod=resolveSell(ps,hist,city,selectedCraft)||{v:0,d:"",quality:0,source:"sem dado"},missing=!prod.v,cost=0,rows=[];for(let m of mats){let p=resolveSell(ps,hist,city,m.id)||{v:0,d:"",quality:0,source:"sem dado"},need=(+m.count||0)*qty,after=m.ret?need*(1-rr):need,has=!!p.v,line=has?after*p.v:0;if(!has)missing=true;cost+=line;rows.push({m,p,need,after,line,has,quality:p.quality||0,source:p.source||"sem dado"})}let gross=prod.v*qty,salesTax=gross*(tax+setup),rev=gross-salesTax,totalSpent=cost+fee*qty,hasEstimated=!!prod.estimated||rows.some(x=>!!x.p.estimated),profit=missing?null:rev-totalSpent,roi=profit!==null&&totalSpent?profit/totalSpent*100:null;$("ccost").textContent=missing?"Dados incompletos":money(cost);$("crev").textContent=prod.v?money(rev):"Sem preço";$("crev").title=prod.v?`Venda líquida ${money(rev)} • bruto ${money(gross)} • ${prod.source} • ${qualityName(prod.quality)}`:"Sem preço";$("cprofit").textContent=profit===null?"—":money(profit);$("cprofit").className="value "+(profit===null?"":profit>=0?"green":"red");$("croi").textContent=roi===null?"—":roi.toFixed(1)+"%";renderCraftSummary({materials:cost,fees:fee*qty,salesTax,spent:totalSpent,revenue:rev,profit,roi,qty,prod,rows,city,missing});$("craftMats").innerHTML=rows.map(x=>`<tr><td><img class="recipe-icon" src="${iconUrl(x.m.id,40)}" style="width:40px;height:40px;vertical-align:middle"> <b>${safe(displayName(x.m.id))}</b></td><td>${x.need}${x.after!==x.need?`<br><span class="tiny">efetivo: ${x.after.toFixed(2)}</span>`:""}</td><td>${x.has?money(x.p.v):'<span class="red">Sem preço</span>'}</td><td>${x.has?qualityName(x.quality):"—"}</td><td>${x.has?money(x.line):"—"}</td><td>${x.has?sourceBadge(x.source):"—"}</td><td class="${x.has?cls(mins(x.p.d)):"red"}">${x.has?(x.p.d?age(mins(x.p.d)):"estimativa"):"sem dado"}</td></tr>`).join("")||'<tr><td colspan="7" class="empty">Receita sem materiais.</td></tr>';if(profit!==null)saveHist(selectedCraft,profit,roi,city)}catch(e){console.error(e);$("craftMats").innerHTML=`<tr><td colspan="7" class="empty">Erro ao calcular: ${safe(e.message||e)}</td></tr>`;renderCraftSummary({materials:0,fees:0,salesTax:0,spent:0,revenue:0,profit:null,roi:null,qty,prod:{source:"erro"},rows:[],city,missing:true})}finally{$("craftBtn").disabled=!recipes[selectedCraft];$("craftBtn").textContent="Calcular operação"}}
 function renderCraftSummary(o){let q=$("craftCoverage"),v=$("craftVerdict");$("sumMaterials").textContent=o.missing?"Incompleto":money(o.materials);$("sumFees").textContent=money(o.salesTax+o.fees);$("sumSpent").textContent=o.missing?"—":money(o.spent);$("sumRevenue").textContent=o.revenue?money(o.revenue):"—";$("sumProfit").textContent=o.profit===null?"—":money(o.profit)+" • "+(o.roi===null?"—":o.roi.toFixed(1)+"%");let hasCache=o.rows.some(x=>x.source==="cache")||o.prod.source==="cache",hasHist=o.rows.some(x=>x.source==="histórico"||x.source==="referência histórica")||o.prod.source==="histórico"||o.prod.source==="referência histórica",hasRef=o.rows.some(x=>!!x.p.estimated&&x.source!=="histórico"&&x.source!=="referência histórica")||!!o.prod.estimated;q.textContent=o.missing?"dados incompletos":hasCache?"último dado ≤ 7 dias":hasHist?"inclui histórico":hasRef?"preço de referência":"dados atuais";q.className="sourceTag "+(o.missing?"":hasCache?"cache":hasHist?"history":hasRef?"reference":"current");if(o.missing){v.className="viceVerdict warn";v.textContent="⚠ Dados insuficientes: falta preço para um dos componentes."}else if(o.profit>0){v.className="viceVerdict good";v.textContent=(hasCache||hasHist||hasRef?"⚠ Estimativa: parte dos preços não é ao vivo. ":"")+"✓ Operação positiva • lucro estimado "+money(o.profit)+" por lote de "+o.qty+" unidade(s)."}else{v.className="viceVerdict bad";v.textContent="✕ Operação negativa após materiais, taxas e fee • prejuízo estimado "+money(Math.abs(o.profit))+" por lote."}}
 
-function favs(){let a=JSON.parse(localStorage.getItem("acm_favs")||"[]");return Array.isArray(a)?a:[]}
-function toggleSpecificFav(id){if(!id)return;let a=favs();a=a.includes(id)?a.filter(x=>x!==id):[...a,id];localStorage.setItem("acm_favs",JSON.stringify(a));renderFavs();updateFavButtons()}
-function removeFav(id){if(!id)return;let a=favs().filter(x=>x!==id);localStorage.setItem("acm_favs",JSON.stringify(a));renderFavs();updateFavButtons()}
+function favs(){let a=JSON.parse(localStorage.getItem(userStorageKey("acm_favs"))||"[]");return Array.isArray(a)?a:[]}
+function toggleSpecificFav(id){if(!id)return;let a=favs();a=a.includes(id)?a.filter(x=>x!==id):[...a,id];localStorage.setItem(userStorageKey("acm_favs"),JSON.stringify(a));renderFavs();updateFavButtons()}
+function removeFav(id){if(!id)return;let a=favs().filter(x=>x!==id);localStorage.setItem(userStorageKey("acm_favs"),JSON.stringify(a));renderFavs();updateFavButtons()}
 function toggleFav(){let id=selectedItem||selectedCraft;if(!id)return;toggleSpecificFav(id)}function favoriteAndOpen(id){if(!id)return;let a=favs();let on=a.includes(id);toggleSpecificFav(id);if(!on)go("favorites")}
 function favoriteKind(id){if(typeof id!=="string")return"item";if(window.getMountFavoriteInfo&&window.getMountFavoriteInfo(id))return"mount";if(window.getFarmFavoriteInfo&&window.getFarmFavoriteInfo(id))return"farm";return"item"}function favoriteName(id){let k=favoriteKind(id);if(k==="farm"){let a=window.getFarmFavoriteInfo&&window.getFarmFavoriteInfo(id);return a?a.name:pretty(id)}if(k==="mount"){let a=window.getMountFavoriteInfo&&window.getMountFavoriteInfo(id);return a?a.name:pretty(id)}return displayName(id)+" "+tier(id)+"."+enchant(id)}function favoriteIcon(id){return iconUrl(id,128)}function favoriteMeta(id){let k=favoriteKind(id);if(k==="farm"){let a=window.getFarmFavoriteInfo&&window.getFarmFavoriteInfo(id);return a?"Fazenda • T"+a.tier:"Fazenda"}if(k==="mount"){let a=window.getMountFavoriteInfo&&window.getMountFavoriteInfo(id);return a?"Montarias • T"+a.tier:"Montarias"}return "Mercado / Craft • "+tier(id)+" • ."+enchant(id)}function openFavorite(id){let k=favoriteKind(id);if(k==="farm"&&window.openFarmFavorite)return window.openFarmFavorite(id);if(k==="mount"&&window.openMountFavorite)return window.openMountFavorite(id);openItem(id)}function updateFavButtons(){const a=favs();[["marketFavBtn",selectedItem],["craftFavBtn",selectedCraft]].forEach(([id,item])=>{const b=$(id);if(!b)return;const on=!!item&&a.includes(item);b.textContent=on?"⭐ Favoritado":"⭐ Favorito";b.classList.toggle("isFav",on);b.title=on?"Remover dos favoritos":"Adicionar aos favoritos"});document.querySelectorAll("[data-farm-fav],[data-mount-fav]").forEach(b=>{const id=b.dataset.farmFav||b.dataset.mountFav,on=a.includes(id);b.textContent=on?"⭐ Favoritado":"⭐ Favorito";b.classList.toggle("isFav",on);b.title=on?"Remover dos favoritos":"Adicionar aos favoritos"})}
 function renderFavs(){let a=favs();$('favBody').innerHTML=a.length?a.map(id=>{let n=safe(favoriteName(id)),m=safe(favoriteMeta(id));return '<div class="row between" style="padding:10px;border-bottom:1px solid var(--line);gap:10px"><div class="row" style="gap:10px;min-width:0"><img class="icon" loading="lazy" decoding="async" src="'+favoriteIcon(id)+'" style="width:44px;height:44px"><div><b>'+n+'</b><div class="tiny">'+m+'</div></div></div><div class="row" style="gap:6px"><button class="btn" onclick="openFavorite(\''+id+'\')">Abrir</button><button class="btn" title="Remover dos favoritos" onclick="removeFav(\''+id+'\')">✕</button></div></div>'}).join(''):'<div class="empty">Nenhum favorito. Abra um item e toque em ⭐ Favorito.</div>';}
-function clearFavs(){localStorage.removeItem("acm_favs");renderFavs()}function saveHist(id,p,r,city){let a=JSON.parse(localStorage.getItem("acm_hist")||"[]");a.unshift({id,p,r,city,d:new Date().toLocaleString("pt-BR")});localStorage.setItem("acm_hist",JSON.stringify(a.slice(0,100)))}
-function renderHistory(){let a=JSON.parse(localStorage.getItem("acm_hist")||"[]");$("histBody").innerHTML=a.length?a.map(x=>`<div class="row between" style="padding:10px;border-bottom:1px solid var(--line)"><span>${pretty(x.id)}<br><span class="tiny">${x.city} • ${x.d}</span></span><span class="${x.p>=0?"green":"red"}">${money(x.p)}<br><span class="tiny">${(+x.r).toFixed(1)}% ROI</span></span></div>`).join(""):'<div class="empty">Nenhum cálculo registrado.</div>'}
-function saveSettings(){localStorage.setItem("acm_city",$("defaultCity").value);localStorage.setItem("acm_rr",$("defaultRR").value);localStorage.setItem("acm_tax",$("defaultTax").value);alert("Configurações salvas.")}
+function clearFavs(){localStorage.removeItem(userStorageKey("acm_favs"));renderFavs()}function saveHist(id,p,r,city){let a=JSON.parse(localStorage.getItem(userStorageKey("acm_hist"))||"[]");a.unshift({id,p,r,city,d:new Date().toLocaleString("pt-BR")});localStorage.setItem(userStorageKey("acm_hist"),JSON.stringify(a.slice(0,100)))}
+function renderHistory(){let a=JSON.parse(localStorage.getItem(userStorageKey("acm_hist"))||"[]");$("histBody").innerHTML=a.length?a.map(x=>`<div class="row between" style="padding:10px;border-bottom:1px solid var(--line)"><span>${pretty(x.id)}<br><span class="tiny">${x.city} • ${x.d}</span></span><span class="${x.p>=0?"green":"red"}">${money(x.p)}<br><span class="tiny">${(+x.r).toFixed(1)}% ROI</span></span></div>`).join(""):'<div class="empty">Nenhum cálculo registrado.</div>'}
+function saveSettings(){localStorage.setItem(userStorageKey("acm_city"),$("defaultCity").value);localStorage.setItem(userStorageKey("acm_rr"),$("defaultRR").value);localStorage.setItem(userStorageKey("acm_tax"),$("defaultTax").value);alert("Configurações salvas.")}
 function refreshData(){priceMem.clear();if(selectedItem)loadMarket()}
 function buildUnified(){const market=$("market"),search=$("search"),craft=$("craft");if(!market||!search||!craft||$("unifiedSearchHost"))return;const sh=document.createElement("div");sh.id="unifiedSearchHost";const ch=document.createElement("div");ch.id="unifiedCraftHost";const card=market.querySelector(".card");card.prepend(sh);card.appendChild(ch);Array.from(search.children).forEach(x=>sh.appendChild(x));Array.from(craft.children).forEach(x=>ch.appendChild(x));search.innerHTML="";craft.innerHTML=""}
 window.addEventListener("error",e=>{const s=document.getElementById("status");if(s)s.textContent="● erro JS";}); window.addEventListener("unhandledrejection",e=>{const s=document.getElementById("status");if(s)s.textContent="● erro";}); async function boot(){fillCities();renderFavs();renderHistory();buildUnified();$("status").innerHTML='<span class="loader"></span> Carregando catálogo e receitas…';try{await Promise.all([loadCatalog(),loadRecipes()]);renderItemBrowser();$("status").textContent="Catálogo "+(catalog.length?"carregado":"indisponível")+" • "+catalog.length.toLocaleString("pt-BR")+" itens • "+Object.keys(recipes).length.toLocaleString("pt-BR")+" receitas."}catch(e){$("status").textContent="Catálogo parcialmente carregado.";console.error(e)}}
@@ -873,5 +916,85 @@ function renderBreedDetail(){
 }
 window.getMountFavoriteInfo=function(id){const a=MOUNT_BREEDS.find(x=>x.id===id);return a?{name:brName(a.id),tier:a.tier}:null};window.openMountFavorite=function(id){const a=MOUNT_BREEDS.find(x=>x.id===id);if(!a)return;breedSelected=id;go("breeding");renderBreed();updateFavButtons()};window.renderMountBreeding=renderBreed;
 renderBreed();updateFavButtons();
+})();
+</script>
+<script id="acmAuthJs">
+(function(){
+  // TROQUE este código antes de compartilhar o site. Como esta é uma V1 100% estática,
+  // qualquer pessoa com conhecimento técnico pode inspecionar o JavaScript.
+  const AUTH_APPROVAL_CODE="ACM-2026-COLEGAS";
+  const AUTH_USERS_KEY="acm_auth_users_v1";
+  const AUTH_SESSION_KEY="acm_auth_session_v1";
+  const AUTH_MAX_USERS=20;
+
+  function authUsers(){try{const a=JSON.parse(localStorage.getItem(AUTH_USERS_KEY)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
+  function saveAuthUsers(a){localStorage.setItem(AUTH_USERS_KEY,JSON.stringify(a))}
+  function normalizeUser(v){return String(v||"").trim().toLowerCase().replace(/[^a-z0-9_-]/g,"").slice(0,24)}
+  function userStorageKey(key){const u=localStorage.getItem(AUTH_SESSION_KEY);return u?"acm_u_"+u+"_"+key:key}
+  window.userStorageKey=userStorageKey;
+
+  async function hashPassword(pass){
+    const data=new TextEncoder().encode(pass);
+    const buf=await crypto.subtle.digest("SHA-256",data);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+  function setMsg(text,kind){const el=document.getElementById("acmAuthMsg");if(!el)return;el.textContent=text;el.className="authMsg "+kind}
+  function migrateOldData(user){
+    const keys=["acm_favs","acm_hist","acm_city","acm_rr","acm_tax"];
+    keys.forEach(k=>{
+      const old=k, fresh="acm_u_"+user+"_"+k;
+      if(localStorage.getItem(old)!==null && localStorage.getItem(fresh)===null){
+        localStorage.setItem(fresh,localStorage.getItem(old));
+        localStorage.removeItem(old);
+      }
+    });
+  }
+  function refreshApp(){
+    document.body.classList.remove("acmLocked");
+    const a=document.getElementById("acmAuth");if(a)a.remove();
+    try{if(typeof renderFavs==="function")renderFavs();if(typeof updateFavButtons==="function")updateFavButtons();}catch(e){}
+  }
+  function showAuth(){
+    document.body.classList.add("acmLocked");
+    const a=document.getElementById("acmAuth");if(a)a.style.display="flex";
+  }
+  function switchTab(tab){
+    document.querySelectorAll("#acmAuth .authTab").forEach(b=>b.classList.toggle("active",b.dataset.authTab===tab));
+    document.getElementById("acmLoginForm").style.display=tab==="login"?"block":"none";
+    document.getElementById("acmRegisterForm").style.display=tab==="register"?"block":"none";
+    setMsg("","");
+  }
+  function sessionUser(){return localStorage.getItem(AUTH_SESSION_KEY)}
+  function bind(){
+    document.querySelectorAll("[data-auth-tab]").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.authTab)));
+    document.getElementById("acmLoginForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const user=normalizeUser(document.getElementById("acmLoginUser").value),pass=document.getElementById("acmLoginPass").value;
+      const rec=authUsers().find(x=>x.user===user);
+      if(!rec){setMsg("Usuário não encontrado ou ainda não autorizado.","err");return}
+      if((await hashPassword(pass))!==rec.hash){setMsg("Senha incorreta.","err");return}
+      localStorage.setItem(AUTH_SESSION_KEY,user);migrateOldData(user);refreshApp();
+    });
+    document.getElementById("acmRegisterForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const user=normalizeUser(document.getElementById("acmRegUser").value),pass=document.getElementById("acmRegPass").value,code=document.getElementById("acmRegCode").value.trim();
+      if(user.length<3){setMsg("Use pelo menos 3 caracteres no usuário.","err");return}
+      if(pass.length<4){setMsg("Use pelo menos 4 caracteres na senha.","err");return}
+      if(code!==AUTH_APPROVAL_CODE){setMsg("Código de autorização inválido. Peça autorização ao administrador.","err");return}
+      const users=authUsers();
+      if(users.length>=AUTH_MAX_USERS){setMsg("Limite local de contas atingido nesta V1.","err");return}
+      if(users.some(x=>x.user===user)){setMsg("Esse usuário já existe neste aparelho.","err");return}
+      users.push({user,hash:await hashPassword(pass),createdAt:new Date().toISOString()});saveAuthUsers(users);
+      localStorage.setItem(AUTH_SESSION_KEY,user);migrateOldData(user);refreshApp();
+    });
+  }
+  window.acmLogout=function(){
+    localStorage.removeItem(AUTH_SESSION_KEY);
+    location.reload();
+  };
+  document.addEventListener("DOMContentLoaded",()=>{
+    if(sessionUser())refreshApp();else showAuth();
+    bind();
+  });
 })();
 </script></body></html>
