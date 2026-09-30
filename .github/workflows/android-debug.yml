@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - feature/android-v1
-      - main
 
 jobs:
   build:
