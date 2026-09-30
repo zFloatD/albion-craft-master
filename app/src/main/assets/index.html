@@ -1,25 +1,1003 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080d12">
-<title>Albion Craft Master</title>
-<style>
-html,body{margin:0;width:100%;height:100%;background:#080d12;color:#e8eef4;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-body{display:flex;align-items:center;justify-content:center}
-main{text-align:center;padding:24px}
-.logo{font-size:28px;font-weight:900;letter-spacing:.2px}
-.w{color:#fff}.g{color:#35d07f}
-p{color:#8794a2;font-size:13px}
-.badge{display:inline-block;margin-top:10px;padding:7px 10px;border:1px solid #27323d;border-radius:9px;color:#39d98a;background:#10161d}
+<script id="acmAuthBoot">window.userStorageKey=window.userStorageKey||function(key){var u=localStorage.getItem("acm_auth_session_v1");return u?"acm_u_"+u+"_"+key:key};</script><style id="acmAuthCss">
+body.acmLocked .app{display:none!important}
+#acmAuth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 20% 0%,#17232e 0,#080d12 45%);color:var(--txt)}
+#acmAuth .authBox{width:min(440px,100%);background:linear-gradient(145deg,#101820,#0b1118);border:1px solid #2b3946;border-radius:18px;padding:22px;box-shadow:0 22px 70px #000b}
+#acmAuth .authLogo{font-size:22px;font-weight:900;margin-bottom:4px}.authLogo b{color:var(--green)}.acmBrand{display:inline-flex;white-space:nowrap}.acmBrand .w{color:#fff}.acmBrand .g{color:#35d07f}
+#acmAuth .authSub{color:var(--muted);font-size:12px;margin-bottom:18px}
+#acmAuth .authTabs{display:flex;gap:6px;margin-bottom:14px}
+#acmAuth .authTab{flex:1;padding:10px;border:1px solid var(--line);background:#0a1016;color:var(--muted);border-radius:8px;cursor:pointer;font-weight:800}
+#acmAuth .authTab.active{color:var(--txt);border-color:var(--green2);background:#103a29}
+#acmAuth .authField{margin-bottom:10px}.authField label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}
+#acmAuth .authField input{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:#070c12;color:var(--txt);outline:0}
+#acmAuth .authField input:focus{border-color:var(--green2)}
+#acmAuth .authBtn{width:100%;padding:11px;border-radius:8px;border:1px solid var(--green2);background:var(--green2);color:#04140d;font-weight:900;cursor:pointer}
+#acmAuth .authMsg{margin-top:10px;padding:9px 10px;border-radius:8px;font-size:11px;line-height:1.4;display:none}
+#acmAuth .authMsg.ok{display:block;background:#103a29;color:var(--green);border:1px solid #236d4b}
+#acmAuth .authMsg.err{display:block;background:#3d181b;color:var(--red);border:1px solid #74343a}
+#acmAuth .authNote{margin-top:13px;padding:10px;border-radius:9px;background:#111a22;border:1px solid var(--line);color:var(--muted);font-size:10px;line-height:1.45}
+#acmAuth .authUser{display:flex;justify-content:space-between;gap:8px;margin-top:12px;font-size:11px;color:var(--muted)}
 </style>
-</head>
-<body>
-<main>
-<div class="logo">⚒ <span class="w">A</span><span class="g">l</span><span class="w">b</span><span class="g">i</span><span class="w">o</span><span class="g">n</span> <span class="w">C</span><span class="g">r</span><span class="w">a</span><span class="g">f</span><span class="w">t</span> <span class="w">M</span><span class="g">a</span><span class="w">s</span><span class="g">t</span><span class="w">e</span><span class="g">r</span></span></div>
-<p>Base Android V1</p>
-<div class="badge">APK em desenvolvimento</div>
-</main>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080d12"><link rel="manifest" href="manifest.json"><title>Albion Craft Master</title>
+<style>
+:root{--bg:#080d12;--p:#10161d;--p2:#151d26;--line:#27323d;--txt:#e8eef4;--muted:#8794a2;--green:#39d98a;--green2:#1cae6b;--red:#ff6868;--gold:#d6a64c;--blue:#67aaff;--orange:#e4a24f;--pink:#ff4fd8;--cyan:#49e6ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 25% -10%,#17232e 0,#080d12 40%);color:var(--txt);font:14px system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.app{display:flex;min-height:100vh}.side{width:235px;background:#0b1016;border-right:1px solid var(--line);padding:16px 11px;position:sticky;top:0;height:100vh}.logo{font-size:18px;font-weight:800;padding:8px 10px 20px}.logo b{color:var(--green)}nav button{display:block;width:100%;border:0;background:none;color:var(--muted);text-align:left;border-radius:9px;padding:11px 12px;margin:2px 0;cursor:pointer}nav button:hover,nav button.active{background:var(--p2);color:var(--txt)}nav .group{font-size:10px;text-transform:uppercase;color:#5f6b78;padding:16px 12px 5px}.main{width:100%;max-width:1500px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}h1{font-size:23px;margin:0}h2{font-size:16px;margin:0 0 13px}.muted{color:var(--muted)}.tiny{font-size:11px;color:var(--muted)}.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.between{justify-content:space-between}.btn{background:var(--p);border:1px solid var(--line);color:var(--txt);padding:9px 12px;border-radius:8px;cursor:pointer}.btn:hover{border-color:#3b4a58}.btn.primary{background:var(--green2);border-color:var(--green2);color:#04140d;font-weight:800}.pill{font-size:11px;padding:4px 8px;border-radius:99px;background:#18222c;color:var(--muted)}.pill.green{background:#103a29;color:var(--green)}.pill.warn{background:#3b3018;color:#e8c46a}.pill.red{background:#3d181b;color:var(--red)}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.two{display:grid;grid-template-columns:1.3fr .7fr;gap:12px}.card{background:linear-gradient(180deg,#121a23,#0f151b);border:1px solid var(--line);border-radius:12px;padding:15px}.kpi .value{font-size:23px;font-weight:800;margin-top:4px}.green{color:var(--green)}.red{color:var(--red)}.gold{color:var(--gold)}.blue{color:var(--blue)}.orange{color:var(--orange)}.section{margin-top:13px}.form{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.field label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}.field input,.field select{width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);background:#0a1016;color:var(--txt);outline:0}.field input:focus,.field select:focus{border-color:var(--green2)}.bigsearch{display:flex;gap:8px}.bigsearch input{flex:1;padding:13px 14px;background:#0a1016;border:1px solid var(--line);border-radius:9px;color:var(--txt);font-size:15px}.suggest{position:absolute;left:0;right:0;top:49px;z-index:20;background:#111923;border:1px solid var(--line);border-radius:9px;max-height:330px;overflow:auto;box-shadow:0 18px 40px #000b}.searchwrap{position:relative}.suggest div{padding:10px 12px;border-bottom:1px solid #202a34;cursor:pointer}.suggest div:hover{background:#18232e}.itemhead{display:flex;gap:13px;align-items:center}.icon{width:62px;height:62px;object-fit:contain;background:#090e14;border-radius:9px}.statline{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#0c1218;border:1px solid var(--line);border-radius:8px;padding:10px}.stat b{display:block;font-size:16px;margin-top:3px}table{width:100%;border-collapse:collapse}th,td{padding:9px 7px;border-bottom:1px solid var(--line);text-align:left}th{font-size:10px;color:var(--muted);text-transform:uppercase}td{font-size:12px}.scroll{overflow:auto}.empty{text-align:center;padding:28px;color:var(--muted)}.note{padding:11px;border-radius:9px;background:#111a22;border:1px solid var(--line);color:var(--muted);line-height:1.5}.chart{height:150px;display:flex;align-items:flex-end;gap:3px;padding:10px 2px}.bar{flex:1;background:var(--green2);min-width:2px;opacity:.8;border-radius:3px 3px 0 0}.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}.tab{background:#0d141b;border:1px solid var(--line);color:var(--muted);padding:8px 10px;border-radius:7px;cursor:pointer}.tab.active{background:#183325;color:var(--green);border-color:#236d4b}.mobile{display:none}.loader{width:12px;height:12px;border:2px solid #71808d;border-top-color:transparent;border-radius:50%;display:inline-block;animation:r .8s linear infinite}@keyframes r{to{transform:rotate(360deg)}}@media(max-width:900px){.side{display:none}.main{padding:13px 11px 76px}.mobile{display:flex;position:fixed;z-index:30;bottom:0;left:0;right:0;background:#0b1016;border-top:1px solid var(--line);justify-content:space-around;padding:6px}.mobile button{background:none;border:0;color:var(--muted);font-size:10px}.mobile b{display:block;font-size:18px}.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.form{grid-template-columns:repeat(2,1fr)}.top h1{font-size:20px}}@media(max-width:480px){.grid{gap:8px}.card{padding:12px}.form{grid-template-columns:1fr 1fr}.statline{grid-template-columns:1fr}.kpi .value{font-size:19px}}
+</style><style>.viceSummary{position:relative;overflow:hidden;background:linear-gradient(135deg,#111827,#15101f 48%,#0c1820);border:1px solid #3a3150;box-shadow:0 10px 30px #0007}.viceSummary:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#ff4fd814,#49e6ff10,transparent 65%);pointer-events:none}.viceTop{display:flex;align-items:center;justify-content:space-between;gap:12px}.viceTitle{font-size:16px;font-weight:900}.viceTitle b{color:var(--pink)}.viceSub{color:var(--muted);font-size:11px;margin-top:3px}.viceGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:13px}.viceMetric{background:#090f16b8;border:1px solid #30384a;border-radius:10px;padding:11px;min-width:0}.viceMetric .v{font-size:17px;font-weight:900;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.viceMetric .l{font-size:10px;color:var(--muted);text-transform:uppercase}.viceVerdict{margin-top:11px;padding:11px 12px;border-radius:10px;border:1px solid #3b3c50;background:#0a1017d9;font-weight:800}.viceVerdict.good{border-color:#1f7250;background:#0d241b;color:var(--green)}.viceVerdict.bad{border-color:#74343a;background:#261216;color:var(--red)}.viceVerdict.warn{border-color:#6b5730;background:#241e12;color:#e8c46a}.sourceTag{font-size:10px;padding:3px 6px;border-radius:99px;background:#18232d;color:var(--muted)}.sourceTag.current{background:#103a29;color:var(--green)}.sourceTag.history{background:#392d17;color:#e8c46a}.sourceTag.cache{background:#22203a;color:#c9a7ff}.sourceTag.albionmarket{background:#17352f;color:#70f0c0}.sourceTag.codex{background:#123b42;color:#62e6ff}.sourceTag.reference{background:#182c3a;color:#8fd8ff}.sourceTag.estimated{background:#3a2417;color:#ffb86b}@media(max-width:900px){.viceGrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:480px){.viceGrid{grid-template-columns:1fr 1fr}.viceMetric .v{font-size:15px}}.app-footer{width:100%;text-align:center;padding:12px 18px;color:var(--muted);font-size:11px;border-top:1px solid var(--line);background:#090e13}.app-footer b{color:var(--green)}.unifiedSearchHost,.unifiedCraftHost{margin-top:12px}.unifiedCraftHost>.card{margin-top:12px}.acbox{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:1000;max-height:58vh;overflow:auto;background:#0b1218;border:1px solid #2a3946;border-radius:12px;box-shadow:0 18px 40px #000b;padding:5px}.acrow{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer;border-bottom:1px solid #17222c}.acrow:hover{background:#17242e}.acrow img{width:48px;height:48px;object-fit:contain;flex:0 0 48px}.acmain{min-width:0}.acname{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.acmeta{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.acmore{padding:8px;text-align:center;color:var(--green);font-size:11px}.priceBig{font-size:18px;font-weight:900;color:var(--gold)}.missingPrice{color:var(--muted)}.itemBrowser{margin-top:12px}.browserRoot{background:#0c1218;border:1px solid var(--line);border-radius:10px;overflow:hidden}.browserRoot>summary{cursor:pointer;padding:12px;font-weight:900;list-style:none}.browserRoot>summary::-webkit-details-marker{display:none}.browserRoot>summary:before{content:"›";display:inline-block;margin-right:8px;color:var(--green)}.browserRoot[open]>summary:before{transform:rotate(90deg)}.browserGroups{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.browserGroup{background:#0c1218;border:1px solid var(--line);border-radius:10px;overflow:hidden}.browserGroup summary{cursor:pointer;padding:11px 12px;font-weight:800;list-style:none}.browserGroup summary::-webkit-details-marker{display:none}.browserGroup summary:before{content:"›";display:inline-block;margin-right:8px;color:var(--green)}.browserGroup[open]>summary:before{transform:rotate(90deg)}.browserItems{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;padding:0 8px 8px}.browserItem{display:flex;align-items:center;gap:7px;background:#111923;border:1px solid #202c37;border-radius:8px;padding:6px;cursor:pointer;color:var(--txt);text-align:left;min-width:0}.browserItem img{width:40px;height:40px;object-fit:contain;flex:0 0 40px}.browserItem span{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.browserHint{margin-top:8px;color:var(--muted);font-size:11px}@media(max-width:650px){.browserGroups{grid-template-columns:1fr}.browserItems{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.acrow{padding:10px 8px}.acrow img{width:44px;height:44px;flex-basis:44px}}</style>
+<style>
+.favBtn{background:#d6a64c;border:1px solid #f0c85f;color:#171008;padding:9px 13px;border-radius:8px;cursor:pointer;font-weight:900;white-space:nowrap;box-shadow:0 3px 12px #0005}.favBtn:hover{background:#e8b957;border-color:#ffe08a;transform:translateY(-1px)}.favBtn.isFav{background:#f0c85f;border-color:#ffe9a3;box-shadow:0 0 16px #d6a64c55}.farmInlineFav{margin-left:auto;padding:6px 9px;font-size:11px}@media(max-width:480px){.favBtn{padding:8px 10px;font-size:12px}}/* DARK + VICE CITY — Mercado & Craft */
+/* VICE FULL THEME — Mercado & Craft */
+#market,#craft{background:
+ radial-gradient(circle at 12% 8%,#ff4fd814 0,transparent 32%),
+ radial-gradient(circle at 88% 12%,#49e6ff12 0,transparent 30%),
+ linear-gradient(135deg,#05070c 0%,#090b13 48%,#060d12 100%);
+ border:1px solid #252033;border-radius:18px;padding:14px;box-shadow:inset 0 0 80px #ff4fd806,0 18px 60px #0008}
+#market>.card,#craft>.card{background:linear-gradient(145deg,#090e16 0%,#11101c 52%,#09151b 100%);border:1px solid #332944;box-shadow:0 14px 42px #000a}
+#market .itemhead,#craft .itemhead{background:linear-gradient(90deg,#ff4fd80d,#49e6ff08);border:1px solid #2d2940;border-radius:14px}
+#market .stat,#craft .kpi{background:#080d14d9;border:1px solid #2c2940;box-shadow:inset 0 1px #ffffff08}
+#market .section.scroll,#craft .section.scroll{border:1px solid #29253a;border-radius:12px;overflow:auto;background:#060a10aa}
+#market th,#craft th{background:#12101e;color:#b7c1cf;border-bottom:1px solid #403450}
+#market tbody tr:hover,#craft tbody tr:hover{background:#ff4fd808}
+#market .btn.primary,#craft .btn.primary{box-shadow:0 0 18px #ff4fd818,0 0 14px #49e6ff0d}
+#market .viceSummary,#craft .viceSummary{background:linear-gradient(135deg,#131020 0%,#181023 48%,#0b1b21 100%);border-color:#4a3657}
+#market .viceTitle,#craft .viceTitle{letter-spacing:.35px}
+#market .viceTitle b,#craft .viceTitle b{color:#ff4fd8;text-shadow:0 0 12px #ff4fd866}
+#market .sourceTag.current,#craft .sourceTag.current{color:#55f0ad;background:#0d3325}
+#market .sourceTag.history,#craft .sourceTag.history{color:#f1cb73;background:#352912}
+#market .sourceTag.cache,#craft .sourceTag.cache{color:#d0a9ff;background:#29203e}\n#market .sourceTag.reference,#craft .sourceTag.reference{color:#8fd8ff;background:#182c3a}\n#market .sourceTag.estimated,#craft .sourceTag.estimated{color:#ffb86b;background:#3a2417}
+#market .chart{background:linear-gradient(180deg,#0d0c16,#080d13);border-color:#302842}
+#market .form,#craft .form{background:#0a0e16aa;border-color:#29253a}
+#market select,#market input,#craft select,#craft input{border-color:#302a43}
+#market h2,#craft h2{color:#eef3fb;text-shadow:0 0 18px #ff4fd818}
+#market .muted,#craft .muted,#market label,#craft label{color:#aeb7c7}
+#market .tiny,#craft .tiny{color:#7f8b9d}
+#market .form,#craft .form{background:linear-gradient(135deg,#080c13e8,#100d18e8);border:1px solid #342b45}
+#market input,#market select,#craft input,#craft select{background:#070b12;color:#edf2f8;border:1px solid #3a3150;box-shadow:inset 0 0 18px #0008}
+#market input:focus,#market select:focus,#craft input:focus,#craft select:focus{border-color:#ff4fd8;box-shadow:0 0 0 2px #ff4fd820,0 0 18px #ff4fd814;outline:none}
+#market .section,#craft .section{border-color:#2b263a}
+#market table,#craft table{border-color:#302940}
+#market td,#craft td{border-bottom:1px solid #211d2c;color:#dbe2ec}
+#market .statline,#craft .grid{gap:10px}
+#market .stat,#craft .kpi{transition:.2s ease}
+#market .stat:hover,#craft .kpi:hover{border-color:#ff4fd850;box-shadow:0 0 20px #ff4fd812,inset 0 1px #ffffff08}
+#market .btn,#craft .btn{border-color:#3b3150;background:linear-gradient(135deg,#10101a,#0b141a);color:#dce5f0}
+#market .btn:hover,#craft .btn:hover{border-color:#ff4fd8;box-shadow:0 0 20px #ff4fd820}
+#market .btn.primary,#craft .btn.primary{background:linear-gradient(135deg,#c92b9c,#5532b9 52%,#188ea6);border-color:#ff74df;color:#fff}
+#market .scroll,#craft .scroll{scrollbar-color:#4b365a #090b11}
+#market .scroll::-webkit-scrollbar,#craft .scroll::-webkit-scrollbar{width:8px;height:8px}
+#market .scroll::-webkit-scrollbar-track,#craft .scroll::-webkit-scrollbar-track{background:#080a10}
+#market .scroll::-webkit-scrollbar-thumb,#craft .scroll::-webkit-scrollbar-thumb{background:linear-gradient(#ff4fd8,#49e6ff);border-radius:99px}
+#market .sourceTag,#craft .sourceTag{border:1px solid #3a3150}
+#market .gold,#craft .gold{color:#ffd66e}
+#market .green,#craft .green{color:#55f0ad}
+#market .blue,#craft .blue{color:#58dfff}
+.purple{color:#d0a9ff}
+</style><style>
+/* CRIAÇÃO DE MONTARIAS */
+#breeding{background:
+ radial-gradient(circle at 10% 5%,#49e6ff12 0,transparent 32%),
+ radial-gradient(circle at 90% 8%,#ff4fd812 0,transparent 30%),
+ linear-gradient(135deg,#05080d,#0b1018 50%,#070d12);
+ border:1px solid #252033;border-radius:18px;padding:14px}
+#breeding>.card{background:linear-gradient(145deg,#090f17,#11101b 55%,#09151b);border:1px solid #332944;box-shadow:0 14px 42px #000a}
+.breedFilters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.breedTier{border:1px solid #3a3150;background:#0c121a;color:#aeb7c7;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:800}
+.breedTier.active{color:#fff;border-color:#ff4fd8;background:linear-gradient(135deg,#35172f,#18283a);box-shadow:0 0 18px #ff4fd818}
+.breedGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.breedTile{border:1px solid #2b3040;background:#0a1017;border-radius:12px;padding:8px;cursor:pointer;text-align:left;color:var(--txt);transition:.18s;min-width:0}
+.breedTile:hover{border-color:#49e6ff;transform:translateY(-1px);box-shadow:0 8px 24px #0008}
+.breedTile.active{border-color:#ff4fd8;background:linear-gradient(145deg,#171021,#0b1820);box-shadow:0 0 0 1px #ff4fd830,0 10px 28px #0009}
+.breedTile img{width:78px;height:78px;display:block;margin:auto;object-fit:contain}
+.breedTile .btName{font-size:11px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.breedTile .btMeta{font-size:10px;color:var(--muted);margin-top:2px}
+.breedDetail{display:grid;grid-template-columns:1.1fr 1.9fr;gap:12px;margin-top:14px}
+.breedHero{display:flex;gap:14px;align-items:center;background:#080e15;border:1px solid #302a43;border-radius:14px;padding:14px}
+.breedHero img{width:112px;height:112px;object-fit:contain;background:#050a10;border-radius:12px}
+.breedHero h2{margin:0 0 5px}
+.breedStats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.breedStat{background:#080e15;border:1px solid #2b3040;border-radius:10px;padding:11px}
+.breedStat .label{font-size:10px;color:var(--muted);text-transform:uppercase}
+.breedStat .val{font-size:17px;font-weight:900;margin-top:4px}
+.breedCraft{margin-top:12px;background:#080e15;border:1px solid #302a43;border-radius:12px;padding:13px}
+.breedCraftRow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #202634}
+.breedCraftRow:last-child{border-bottom:0}
+.breedCraftRow img{width:48px;height:48px;object-fit:contain}
+.breedNotice{padding:10px 12px;border:1px solid #463b26;background:#18150d;color:#d7c68c;border-radius:10px;margin-top:10px;font-size:11px;line-height:1.45}
+.breedFoodLine{display:flex;align-items:center;gap:10px;margin-top:7px}.breedFoodLine img{width:46px;height:46px;object-fit:contain;background:#050a10;border-radius:8px;border:1px solid #2b3040}.breedFoodLine .val{font-size:19px;font-weight:900;margin:0}.breedSpecial{border-color:#4a3657;background:linear-gradient(145deg,#111020,#0b151c)}
+@media(max-width:1000px){.breedGrid{grid-template-columns:repeat(4,1fr)}.breedDetail{grid-template-columns:1fr}}
+@media(max-width:650px){.breedGrid{grid-template-columns:repeat(3,1fr)}.breedTile img{width:64px;height:64px}.breedHero img{width:88px;height:88px}.breedStats{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.breedGrid{grid-template-columns:repeat(2,1fr)}.breedHero{padding:10px;gap:9px}.breedHero img{width:76px;height:76px}}
+.breedSource{margin-bottom:12px;background:#080e15;border:1px solid #302a43;border-radius:12px;padding:13px}.breedSourceRow{display:flex;align-items:center;gap:10px}.breedSourceIcon{width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:#050a10;border-radius:8px;border:1px solid #2b3040;font-size:25px}.breedSource h3{font-size:13px;margin:0 0 4px}.breedSource b{font-size:12px}.breedSource .tiny{margin-top:2px}</style></head>
+<body class="acmLocked">
+<div id="acmSessionBar" style="position:fixed;z-index:40;right:12px;top:10px;display:none;gap:7px;align-items:center;background:#0b1218dd;border:1px solid #2b3946;border-radius:9px;padding:5px 7px;backdrop-filter:blur(8px)"><span id="acmSessionUser" class="tiny"></span><button class="btn" style="padding:6px 8px;font-size:11px" onclick="acmLogout()">Sair</button></div><div id="acmAuth">
+  <div class="authBox">
+    <div class="authLogo">⚒ Albion <b>Craft Master</b></div>
+    <div class="authSub">Área de acesso • uso entre colegas</div>
+    <div class="authTabs">
+      <button type="button" class="authTab active" data-auth-tab="login">Entrar</button>
+      <button type="button" class="authTab" data-auth-tab="register">Criar conta</button>
+    </div>
+    <form id="acmLoginForm">
+      <div class="authField"><label>Usuário</label><input id="acmLoginUser" autocomplete="username" maxlength="24" required></div>
+      <div class="authField"><label>Senha</label><input id="acmLoginPass" type="password" autocomplete="current-password" minlength="4" required></div>
+      <button class="authBtn" type="submit">🔐 Entrar</button>
+    </form>
+    <form id="acmRegisterForm" style="display:none">
+      <div class="authField"><label>Usuário</label><input id="acmRegUser" autocomplete="username" maxlength="24" required></div>
+      <div class="authField"><label>Senha</label><input id="acmRegPass" type="password" autocomplete="new-password" minlength="4" required></div>
+      <div class="authField"><label>Código de autorização do administrador</label><input id="acmRegCode" autocomplete="off" maxlength="40" required></div>
+      <button class="authBtn" type="submit">👤 Solicitar / autorizar conta</button>
+    </form>
+    <div id="acmAuthMsg" class="authMsg"></div>
+    <div class="authNote">V1 local: cada conta guarda favoritos, histórico e preferências separadamente neste aparelho. Para autorizar um colega, forneça a ele o código administrativo definido no código desta versão. Isto é uma barreira contra curiosos, não um sistema de segurança forte.</div>
+    <div class="authUser"><span>GitHub Pages • HTTPS</span><span id="acmAuthVersion">Acesso V1</span></div>
+  </div>
+</div>
+<div class="app">
+<aside class="side">
+<div class="logo">⚒ <span class="acmBrand"><span class="w">A</span><span class="g">l</span><span class="w">b</span><span class="g">i</span><span class="w">o</span><span class="g">n</span> <span class="w">C</span><span class="g">r</span><span class="w">a</span><span class="g">f</span><span class="w">t</span> <span class="w">M</span><span class="g">a</span><span class="w">s</span><span class="g">t</span><span class="w">e</span><span class="g">r</span></span></div>
+<nav>
+
+<button data-page="market">▣ &nbsp; Mercado & Craft</button>
+
+<button data-page="arb">⇄ &nbsp; Comparar cidades</button>
+<div class="group">Produção</div><button data-page="breeding">🐎 &nbsp; Criação de montarias</button><button data-page="farm">🌱 &nbsp; Fazenda</button>
+
+<button data-page="refine">◇ &nbsp; Refinamento</button>
+<div class="group">Sistema</div>
+<button data-page="favorites">★ &nbsp; Favoritos</button>
+<button data-page="history">◷ &nbsp; Histórico</button>
+<button data-page="settings">⚙ &nbsp; Configurações</button>
+</nav></aside>
+
+<main class="main">
+<header class="top"><div><h1 id="title">Mercado & Craft</h1><div class="muted">Américas • crafting • mercado</div></div><div class="row"><span id="status" class="pill">● pronto</span><button class="btn primary" onclick="refreshData()">↻ Atualizar</button></div></header>
+
+
+<section id="market" class="page active">
+<div class="card">
+<div class="row between"><div><h2 id="marketTitle">Mercado & Craft</h2><div class="tiny"><span id="marketId">Nenhum item</span> • <span id="marketMeta">—</span></div></div><button id="marketFavBtn" class="favBtn" data-fav-page="market" onclick="toggleFav()">⭐ Favorito</button></div>
+<div class="section itemhead"><img id="marketIcon" class="icon" src="https://render.albiononline.com/v1/item/T4_MAIN_AXE.png?size=217"><div><b id="marketName">Selecione um item</b><div class="tiny">Preços por cidade • AODP • atualização automática a cada 15 s</div></div></div>
+<div class="section form">
+<div class="field"><label>Cidade</label><select id="marketCity"></select></div>
+<div class="field"><label>Preço usado</label><input value="Menor venda disponível (qualquer qualidade)" disabled></div>
+<div class="field"><label>Histórico</label><select id="historyScale"><option value="1">1 dia</option><option value="7" selected>7 dias</option><option value="30">30 dias</option></select></div>
+</div>
+<div class="section statline">
+<div class="stat"><span class="muted">Preço de venda</span><b id="sellMin" class="gold">—</b><span id="sellAge" class="tiny">—</span></div>
+<div class="stat"><span class="muted">Ordem de compra</span><b id="buyMax" class="gold">—</b><span id="buyAge" class="tiny">—</span></div>
+<div class="stat"><span class="muted">Média do histórico</span><b id="priceAvg" class="blue">—</b><span id="historyInfo" class="tiny">—</span></div>
+</div>
+<div class="section scroll"><table><thead><tr><th>Cidade</th><th>Venda</th><th>Compra</th><th>Atualização</th></tr></thead><tbody id="marketCities"></tbody></table></div><div class="section"><h2>📡 Vendas disponíveis • estilo /price</h2><div class="tiny" style="margin:-6px 0 8px">Cada cotação de venda encontrada no AODP, incluindo as diferentes qualidades. Ordenado do menor para o maior preço.</div><div class="section scroll"><table><thead><tr><th>Localização</th><th>Qualidade</th><th>Preço</th><th>Atualização</th></tr></thead><tbody id="marketOrders"></tbody></table></div></div>
+<div class="section"><h2>Histórico de preço</h2><div id="chart" class="chart"></div></div>
+</div></section>
+
+<section id="search" class="page">
+<div class="card"><h2>⌕ Pesquisar item</h2><div class="bigsearch"><div class="searchwrap" style="flex:1"><input id="itemSearch" placeholder="Nome do item ou ID técnico..."><div id="itemSuggest" class="suggest" hidden></div></div><button class="btn primary" onclick="performSearch()">Pesquisar</button></div>
+<div class="section card itemBrowser"><div class="row between"><h2>📚 Selecionar item sem pesquisar</h2><span class="tiny">T4–T8 • selecione tier e encantamento</span></div><div id="browserGroups" class="browserGroups"></div><div class="browserHint">Escolha uma família para abrir os itens. Ao tocar em um item, ele será selecionado no Mercado & Craft.</div></div><div class="section form"><div class="field"><label>Tier</label><select id="filterTier"><option value="">Todos</option><option>T4</option><option>T5</option><option>T6</option><option>T7</option><option>T8</option></select></div><div class="field"><label>Encantamento</label><select id="filterEnchant"><option value="">Todos</option><option value="0">.0</option><option value="1">.1</option><option value="2">.2</option><option value="3">.3</option><option value="4">.4</option></select></div></div></div>
+</section>
+
+<section id="arb" class="page"><div class="card"><h2>⇄ Comparar cidades</h2><div class="form"><div class="field"><label>Item ID</label><input id="arbItem" value="T8_MAIN_AXE"></div><div class="field"><label>Preço usado</label><input value="Menor venda disponível" disabled></div><div class="field"><label>Modo</label><select id="arbMode"><option value="sell">Venda → venda</option><option value="buy">Compra → compra</option></select></div><div class="field"><label>—</label><button class="btn primary" onclick="compareCities()">Comparar</button></div></div><div class="section scroll"><table><thead><tr><th>Cidade</th><th>Preço</th><th>Data</th><th>Idade</th><th></th></tr></thead><tbody id="arbBody"></tbody></table></div></div></section>
+
+<section id="craft" class="page"><div class="card"><h2>⚒ Calculadora de crafting</h2><div class="bigsearch"><div class="searchwrap" style="flex:1"><input id="craftSearch" placeholder="Pesquise uma receita..."><div id="craftSuggest" class="suggest" hidden></div></div><button class="btn primary" onclick="craftFromSearch()">Selecionar</button></div><div class="section" id="craftSelected"></div><div class="section form"><div class="field"><label>Cidade</label><select id="craftCity"></select></div><div class="field"><label>Preço do produto</label><input value="Menor venda disponível (qualquer qualidade)" disabled></div><div class="field"><label>RR materiais (%)</label><input id="craftRR" type="number" value="15"></div><div class="field"><label>Taxa venda (%)</label><input id="craftTax" type="number" value="4"></div><div class="field"><label>Setup (%)</label><input id="craftSetup" type="number" value="2.5"></div><div class="field"><label>Fee estação</label><input id="craftFee" type="number" value="0"></div><div class="field"><label>Quantidade</label><input id="craftQty" type="number" value="1"></div></div><div class="section"><button id="craftBtn" class="btn primary" disabled onclick="calculateCraft()">Calcular operação</button></div><div class="section grid"><div class="card kpi"><div class="muted">Materiais</div><div id="ccost" class="value">—</div></div><div class="card kpi"><div class="muted">Venda líquida</div><div id="crev" class="value">—</div></div><div class="card kpi"><div class="muted">Lucro</div><div id="cprofit" class="value green">—</div></div><div class="card kpi"><div class="muted">ROI</div><div id="croi" class="value blue">—</div></div></div><div class="section scroll"><table><thead><tr><th>Material</th><th>Quantidade</th><th>Menor venda</th><th>Qualidade</th><th>Custo</th><th>Fonte</th><th>Atualização</th></tr></thead><tbody id="craftMats"></tbody></table></div><div id="craftSummary" class="section card viceSummary"><div class="viceTop"><div><div class="viceTitle">💎 Resumo da operação <b>VICE</b></div><div class="viceSub">Compra dos materiais → crafting → venda • valores para a cidade selecionada</div></div><span id="craftCoverage" class="sourceTag">aguardando</span></div><div class="viceGrid"><div class="viceMetric"><div class="l">Materiais</div><div id="sumMaterials" class="v gold">—</div></div><div class="viceMetric"><div class="l">Taxas + setup</div><div id="sumFees" class="v">—</div></div><div class="viceMetric"><div class="l">Total gasto</div><div id="sumSpent" class="v gold">—</div></div><div class="viceMetric"><div class="l">Venda líquida</div><div id="sumRevenue" class="v blue">—</div></div><div class="viceMetric"><div class="l">Lucro / ROI</div><div id="sumProfit" class="v">—</div></div></div><div id="craftVerdict" class="viceVerdict">Selecione uma receita e calcule a operação.</div></div></div></section>
+
+<section id="breeding" class="page">
+<div class="card">
+  <div class="row between">
+    <div><h2>🐎 Criação de montarias</h2><div class="tiny">Selecione o filhote pela imagem • T3–T8 • blindados e montarias especiais • sem preços</div></div>
+    <span class="pill green">Foco + prole</span>
+  </div>
+  <div id="breedTiers" class="breedFilters"></div>
+  <div id="breedGrid" class="breedGrid"></div>
+  <div id="breedDetail" class="breedDetail"></div>
+</div>
+</section>
+
+<section id="farm" class="page"><div class="card"><div class="row between"><div><h2>🌱 Fazenda</h2><div class="tiny">Verduras T1–T8 • animais de produção T3–T8 • sem montarias</div></div><span class="pill green">Plantio + criação</span></div><div id="farmTypes" class="breedFilters"></div><div id="farmTiers" class="breedFilters"></div><div id="farmGrid" class="breedGrid"></div><div id="farmDetail" class="breedDetail"></div></div></section>
+<section id="refine" class="page"><div class="card"><h2>◇ Refinamento</h2><div class="note">Módulo preparado para comparar comprar matéria-prima → refinar → vender. A mesma lógica de preço/idade do mercado será usada aqui.</div><div class="section form"><div class="field"><label>Item refinado</label><input id="refineItem" placeholder="Ex.: T8_METALBAR"></div><div class="field"><label>Cidade</label><select id="refineCity"></select></div><div class="field"><label>RR (%)</label><input id="refineRR" value="15"></div><div class="field"><label>Quantidade</label><input id="refineQty" value="1"></div></div><div class="section note">O banco atual prioriza receitas de crafting. Para refinamento completo, o próximo banco deve incluir as receitas de refino e seus custos de transmutação/estação.</div></div></section>
+
+<section id="favorites" class="page"><div class="card"><div class="row between"><h2>★ Favoritos</h2><button class="btn" onclick="clearFavs()">Limpar</button></div><div id="favBody"></div></div></section>
+<section id="history" class="page"><div class="card"><div class="row between"><h2>◷ Histórico</h2><button class="btn" onclick="localStorage.removeItem('acm_hist');renderHistory()">Limpar</button></div><div id="histBody"></div></div></section>
+<section id="settings" class="page"><div class="card"><h2>⚙ Configurações</h2><div class="form"><div class="field"><label>Servidor</label><input value="Américas / West" disabled></div><div class="field"><label>Cidade padrão</label><select id="defaultCity"></select></div><div class="field"><label>RR padrão</label><input id="defaultRR" value="15"></div><div class="field"><label>Taxa de venda</label><input id="defaultTax" value="4"></div></div><div class="section row"><button class="btn primary" onclick="saveSettings()">Salvar</button><button class="btn" onclick="loadCatalog(true)">↻ Recarregar catálogo</button><button class="btn" onclick="loadRecipes(true)">↻ Recarregar receitas</button></div><div class="section note"><b>Privacidade:</b> configurações, favoritos e histórico ficam no navegador. Não há bot do Discord.</div></div></section>
+</main></div><footer class="app-footer">Versão: <b>1.6.5</b> • Desenvolvedor: <b>zFloat</b></footer>
+<div class="mobile"><button onclick="go('market')"><b>▣</b>Mercado</button><button onclick="go('breeding')"><b>🐎</b>Criação</button><button onclick="go('farm')"><b>🌱</b>Fazenda</button><button onclick="go('favorites')"><b>★</b>Favoritos</button><button onclick="go('settings')"><b>⚙</b>Config.</button></div>
+
+<script>
+const APP_VERSION="1.6.5";
+const API="https://west.albion-online-data.com/api/v2/stats/";
+const ITEMS="https://raw.githubusercontent.com/ao-data/ao-bin-dumps/master/formatted/items.json";
+const RECIPES="https://raw.githubusercontent.com/vkorne-web/albion-market/main/recipes.json";
+const CITIES=["Bridgewatch","Caerleon","Fort Sterling","Lymhurst","Martlock","Thetford","Brecilien"];
+let catalog=[],recipes={},selectedItem=null,selectedCraft=null,priceMem=new Map();
+
+const $=x=>document.getElementById(x);
+const money=n=>isFinite(n)&&Number(n)>0?"$ "+Number(n).toLocaleString("pt-BR",{maximumFractionDigits:0}):"—";
+function mins(d){if(!d||d.startsWith("0001"))return Infinity;return (Date.now()-new Date(d).getTime())/60000}
+function age(m){return !isFinite(m)?"sem dado":m<1?"agora":m<60?Math.round(m)+" min":Math.round(m/60)+" h"}
+function cls(m){return !isFinite(m)?"red":m<=30?"green":m<=180?"orange":"red"}
+function tier(id){let m=id.match(/^T([4-8])_/);return m?"T"+m[1]:"—"}
+function enchant(id){let m=id.match(/@(\d)$/);return m?m[1]:"0"}
+function pretty(id){let x=id.replace(/@(\d)$/,"").replace(/^T[4-8]_/,"").replaceAll("_"," ").replaceAll("LEVEL1"," .1").replaceAll("LEVEL2"," .2").replaceAll("LEVEL3"," .3").replaceAll("LEVEL4"," .4");return "T"+tier(id).slice(1)+" "+x}
+function category(id){if(/^(T[4-8]_)(MAIN_|2H_|OFF_)/.test(id))return"weapon";if(/HEAD_|ARMOR_|SHOES_/.test(id))return"armor";if(/_BAR|_PLANK|_CLOTH|_LEATHER|_ORE|_WOOD|_HIDE|_FIBER|_ROCK/.test(id))return"resource";if(/POTION|FOOD|MEAL|STEW|SOUP/.test(id))return"consumable";return"other"}
+function fillCities(){const ids=["marketCity","craftCity","refineCity","defaultCity"];const html=CITIES.map(c=>`<option>${c}</option>`).join("");ids.forEach(id=>{const el=$(id);if(el)el.innerHTML=html});let d=localStorage.getItem(userStorageKey("acm_city"))||"Martlock";ids.forEach(id=>{const el=$(id);if(el)el.value=d})}
+function go(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));const el=$(p);if(!el)return;el.classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));const titles={search:"Pesquisar item",market:"Mercado & Craft",arb:"Comparar cidades",craft:"Calculadora",breeding:"Criação de montarias",farm:"Fazenda",refine:"Refinamento",favorites:"Favoritos",history:"Histórico",settings:"Configurações"};const heading=document.querySelector(".top h1");if(heading)heading.textContent=titles[p]||"<span class="acmBrand"><span class="w">A</span><span class="g">l</span><span class="w">b</span><span class="g">i</span><span class="w">o</span><span class="g">n</span> <span class="g">C</span><span class="w">r</span><span class="g">a</span><span class="w">f</span><span class="g">t</span> <span class="g">M</span><span class="w">a</span><span class="g">s</span><span class="w">t</span><span class="g">e</span><span class="w">r</span></span>";document.title="Albion Craft Master • "+(titles[p]||"");if(p==="favorites")renderFavs();if(p==="history")renderHistory()}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
+async function loadCatalog(force=false){try{let raw=!force&&localStorage.getItem("acm_catalog");if(raw)catalog=JSON.parse(raw);else{let r=await fetch(ITEMS+"?v="+Date.now());if(!r.ok)throw Error(r.status);let j=await r.json();catalog=Array.isArray(j)?j:(j.items||j.Items||Object.values(j));localStorage.setItem("acm_catalog",JSON.stringify(catalog))}bindSearch($("itemSearch"),$("itemSuggest"));bindSearch($("craftSearch"),$("craftSuggest"),"craft");}catch(e){console.error(e)}}
+function itemId(o){return o.UniqueName||o.uniqueName||o.unique_name||o.id||o.Id||""}
+function itemName(o){let n=o.LocalizedNames||o.localizedNames||o.names||o.Name||o.name;if(typeof n==="string")return n;if(n){return n["PT-BR"]||n["pt-BR"]||n["pt_br"]||n.pt||n["PT"]||n["EN-US"]||n.en||Object.values(n)[0]}return itemId(o)}
+function safe(s){return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;")}const __iconCache=new Map(),__nameCache=new Map();function iconUrl(id,size=217){const k=id+"|"+size,v=__iconCache.get(k);if(v)return v;const u=`https://render.albiononline.com/v1/item/${encodeURIComponent(id)}.png?size=${size}`;__iconCache.set(k,u);return u}function displayName(id){const cached=__nameCache.get(id);if(cached)return cached;const o=catalog.find(x=>itemId(x)===id);if(o){const n=itemName(o);__nameCache.set(id,n);return n}return pretty(id)}
+function bindSearch(input,box,mode="market"){
+ if(!input||!box||input.dataset.bound==="1")return;
+ input.dataset.bound="1"; box.className="acbox"; let timer=null;
+ const render=(arr,q)=>{
+   if(!arr.length){box.innerHTML='<div class="empty">Nenhum item encontrado.</div>';box.hidden=false;return}
+   const top=arr.slice(0,4),more=arr.slice(4);
+   box.innerHTML=top.map(o=>{let id=itemId(o);return '<div class="acrow" data-id="'+safe(id)+'"><img src="'+iconUrl(id,217)+'"><div class="acmain"><div class="acname">'+safe(itemName(o))+'</div><div class="acmeta">'+safe(id)+' • '+tier(id)+(enchant(id)!=="0"?" • ."+enchant(id):"")+(recipes[id]?" • ⚒ receita":"")+'</div></div></div>'}).join("")+
+     (more.length?'<div class="acmore">↓ Mais resultados — role para ver</div>'+more.map(o=>{let id=itemId(o);return '<div class="acrow" data-id="'+safe(id)+'"><img src="'+iconUrl(id,217)+'"><div class="acmain"><div class="acname">'+safe(itemName(o))+'</div><div class="acmeta">'+safe(id)+' • '+tier(id)+(enchant(id)!=="0"?" • ."+enchant(id):"")+(recipes[id]?" • ⚒ receita":"")+'</div></div></div>'}).join(""):"");
+   box.hidden=false;
+   box.querySelectorAll("[data-id]").forEach(el=>el.onclick=()=>{let id=el.dataset.id;input.value=displayName(id);box.hidden=true;if(mode==="craft")selectCraft(id);else openItem(id)});
+ };
+ input.addEventListener("input",()=>{clearTimeout(timer);timer=setTimeout(()=>{let q=input.value.trim().toLowerCase();if(q.length<2){box.hidden=true;return}render(filtered(q).slice(0,40),q)},60)});
+ input.addEventListener("keydown",e=>{if(e.key==="Escape"){box.hidden=true;return}if(e.key==="Enter"){e.preventDefault();let a=filtered(input.value.trim().toLowerCase());if(a[0]){let id=itemId(a[0]);input.value=displayName(id);box.hidden=true;if(mode==="craft")selectCraft(id);else openItem(id)}}});
+ input.addEventListener("focus",()=>{if(input.value.trim().length>=2)input.dispatchEvent(new Event("input"))});
+ document.addEventListener("click",e=>{if(e.target!==input&&!box.contains(e.target))box.hidden=true});
+}
+function filtered(q){let t=$("filterTier")?.value||"",e=$("filterEnchant")?.value||"";return catalog.filter(o=>{let id=itemId(o),n=itemName(o)||"";return (id.toLowerCase().includes(q)||n.toLowerCase().includes(q))&&(!t||tier(id)===t)&&(!e||enchant(id)===e)})}
+
+function browserBaseId(id){return id.replace(/^T[4-8]_/, "").replace(/@\d+$/, "")}
+function browserItemButton(o){let id=itemId(o);return '<button class="browserItem" data-browser-id="'+safe(id)+'"><img src="'+iconUrl(id,128)+'"><span>'+safe(itemName(o))+'</span></button>'}
+function browserBaseId(id){return id.replace(/^T[4-8]_/, "").replace(/^ARTEFACT_/, "").replace(/@\d+$/, "")}
+function browserItemButton(o){let id=itemId(o);return '<button class="browserItem" data-browser-id="'+safe(id)+'"><img src="'+iconUrl(id,128)+'"><span>'+safe(itemName(o))+'</span></button>'}
+function browserGroup(title,items){if(!items.length)return "";let m=new Map();items.forEach(o=>{let base=browserBaseId(itemId(o));if(!m.has(base))m.set(base,o)});let arr=[...m.values()].sort((x,y)=>itemName(x).localeCompare(itemName(y),"pt-BR"));return '<details class="browserGroup"><summary>'+safe(title)+' <span class="tiny">('+arr.length+')</span></summary><div class="browserItems">'+arr.map(browserItemButton).join("")+'</div></details>'}
+function browserArmorGroup(title,items){let slots=[["Capote",/HEAD_/],["Robe",/ARMOR_/],["Sandálias",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
+function browserLeatherGroup(title,items){let slots=[["Capuz",/HEAD_/],["Casaco",/ARMOR_/],["Sapatos",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
+function browserPlateGroup(title,items){let slots=[["Elmo",/HEAD_/],["Armadura",/ARMOR_/],["Botas",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
+function browserWeaponsGroup(groups){return '<details class="browserRoot"><summary>⚔️ Armas</summary>'+groups.map(x=>browserGroup(x[0],x[1])).filter(Boolean).join("")+'</details>'}
+function browserWeaponFamily(id){
+  let x=browserBaseId(id).replace(/^2H_/,"").replace(/^MAIN_/,"");
+  if(/^CROSSBOW/.test(x))return "Bestas";
+  if(/^(BOW|WARBOW|LONGBOW)/.test(x))return "Arcos";
+  if(/^(AXE|DUALAXE|HALBERD|SCYTHE|SICKLE|TWINSCYTHE)/.test(x))return /SCYTHE|SICKLE/.test(x)?"Gadanhas e Foices":"Machados";
+  if(/^(SWORD|CLAYMORE|DUALSCIMITAR|SCIMITAR|CLEAVER)/.test(x))return "Espadas";
+  if(/^(MACE|ROCKMACE)/.test(x))return "Maças";
+  if(/^(DAGGER|DAGGERPAIR|CLAWPAIR|RAPIER)/.test(x))return "Adagas";
+  if(/^(SPEAR|GLAIVE|TRIDENT|HARPOON)/.test(x))return "Lanças";
+  if(/^(FIRESTAFF|INFERNOSTAFF)/.test(x))return "Cajados de Fogo";
+  if(/^(FROSTSTAFF|ICECRYSTAL)/.test(x))return "Cajados de Gelo";
+  if(/^(CURSEDSTAFF|SKULLORB)/.test(x))return "Cajados Amaldiçoados";
+  if(/^(NATURESTAFF|WILDSTAFF)/.test(x))return "Cajados da Natureza";
+  if(/^(HOLYSTAFF)/.test(x))return "Cajados Sagrados";
+  if(/^(ARCANESTAFF|ROCKSTAFF|ENIGMATICORB)/.test(x))return "Cajados Arcanos";
+  if(/^(HAMMER|DUALHAMMER)/.test(x))return "Martelos";
+  if(/^(QUARTERSTAFF|IRONCLAD|DOUBLEBLADED|COMBATSTAFF)/.test(x))return "Bordões";
+  if(/(GAUNTLETS|FIST|BRAWLER|IRONGAUNTLETS)/.test(x))return "Armas de Punho";
+  return null;
+}
+function renderItemBrowser(){
+ let h=$("browserGroups");if(!h||!catalog.length)return;
+ let tierFilter=$("filterTier")?.value||"",enchantFilter=$("filterEnchant")?.value||"";
+ let eq=catalog.filter(o=>{let id=itemId(o);return /^T[4-8]_/.test(id)&&(!tierFilter||tier(id)===tierFilter)&&(!enchantFilter||enchant(id)===enchantFilter)&&recipes[id]});
+ let armor=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(HEAD|ARMOR|SHOES)_/.test(itemId(o)));
+ let weap=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(MAIN|2H)_/.test(itemId(o)));
+ let off=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?OFF_/.test(itemId(o)));
+ let bags=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(BAG|CAPE)/.test(itemId(o)));
+ let g=[];
+ g.push(browserArmorGroup("Pano",armor.filter(o=>/CLOTH/.test(itemId(o)))));
+ g.push(browserLeatherGroup("Couro",armor.filter(o=>/LEATHER/.test(itemId(o)))));
+ g.push(browserPlateGroup("Placa",armor.filter(o=>/PLATE/.test(itemId(o)))));
+ let familyNames=["Machados","Espadas","Arcos","Maças","Adagas","Lanças","Cajados de Fogo","Cajados de Gelo","Cajados Amaldiçoados","Cajados da Natureza","Cajados Sagrados","Cajados Arcanos","Bestas","Martelos","Bordões","Armas de Punho","Gadanhas e Foices"];
+ let groups=familyNames.map(n=>[n,weap.filter(o=>browserWeaponFamily(itemId(o))===n)]);
+ g.push(browserWeaponsGroup(groups));
+ g.push(browserGroup("Off-hands",off),browserGroup("Bolsas e Capas",bags));
+ h.innerHTML=g.filter(Boolean).join("");
+ h.querySelectorAll("[data-browser-id]").forEach(x=>x.onclick=()=>openItem(x.dataset.browserId));
+}
+function openItem(id){selectedItem=id;$("marketTitle").textContent=displayName(id);$("marketName").textContent=displayName(id);$("marketId").textContent=id;$("marketMeta").textContent=tier(id)+" • encantamento ."+enchant(id);$("marketIcon").src=iconUrl(id,217);const fb=document.querySelector('[data-fav-page="market"]');if(fb)fb.dataset.favId=id;go("market");updateFavButtons();selectCraft(id);loadMarket()}
+
+function performSearch(){const q=$("itemSearch").value.trim().toLowerCase();if(!catalog.length){$("status").textContent="Catálogo ainda carregando…";return}const arr=filtered(q);if(arr.length)openItem(itemId(arr[0]));else alert("Nenhum item encontrado.");}
+async function loadRecipes(force=false){try{let raw=!force&&localStorage.getItem("acm_recipes");recipes=raw?JSON.parse(raw):await fetch(RECIPES+"?v="+Date.now()).then(r=>r.json());if(!raw)localStorage.setItem("acm_recipes",JSON.stringify(recipes));if(selectedItem)selectCraft(selectedItem)}catch(e){console.error(e)}}
+const PRICE_CACHE_KEY="acm_price_cache_v2",PRICE_CACHE_TTL=7*24*60*60*1000;function readPriceCache(){try{return JSON.parse(localStorage.getItem(PRICE_CACHE_KEY)||"{}")}catch(e){return{}}}function savePriceCache(ps){let db=readPriceCache(),now=Date.now();for(const raw of ps){const x=normPrice(raw);if(!x||!x.item_id||!x.city)continue;if(x.sell>0)db[x.city+"|"+x.item_id]={v:x.sell,d:x.sellDate||new Date(now).toISOString(),q:x.quality,seen:now};}try{localStorage.setItem(PRICE_CACHE_KEY,JSON.stringify(db))}catch(e){}}function cachedSell(city,itemId){const x=readPriceCache()[city+"|"+itemId];if(!x||!x.v)return null;let ageMs=x.d?Math.abs(Date.now()-new Date(x.d).getTime()):Infinity;if(!isFinite(ageMs))ageMs=Date.now()-x.seen;if(ageMs>PRICE_CACHE_TTL)return null;return{v:+x.v,d:x.d||"",quality:+x.q||0,source:"cache",estimated:true}}const EXTERNAL_PRICE_CACHE_KEY="acm_external_price_cache_v1",EXTERNAL_PRICE_TTL=120000;
+const PRICE_PRIORITY=["atual","codex","albionmarket","histórico","cache","referência","estimado"];
+const externalPriceMem=new Map();
+function externalCache(){try{return JSON.parse(localStorage.getItem(EXTERNAL_PRICE_CACHE_KEY)||"{}")}catch(e){return{}}}
+function saveExternalCache(x){try{localStorage.setItem(EXTERNAL_PRICE_CACHE_KEY,JSON.stringify(x))}catch(e){}}
+function parseSilverText(s){let t=String(s||"").replace(/[^0-9]/g,"");return t?+t:0}
+function normalizeExternalRow(item,city,sell,buy,source){return item&&city&&(sell||buy)?{item_id:item,city,quality:0,sell:+sell||0,buy:+buy||0,sellDate:"",buyDate:"",source,estimated:false,confidence:"alta"}:null}
+async function fetchAlbionMarketItem(itemId){
+  const now=Date.now(),key="am:"+itemId,mem=externalPriceMem.get(key);
+  if(mem&&now-mem.t<EXTERNAL_PRICE_TTL)return mem.data;
+  try{
+    const r=await fetch("https://www.albionmarket.gg/item/"+encodeURIComponent(itemId),{cache:"no-store"});
+    if(!r.ok)throw Error("AlbionMarket "+r.status);
+    const doc=new DOMParser().parseFromString(await r.text(),"text/html"),rows=[];
+    for(const tr of doc.querySelectorAll("table tr")){
+      const cells=[...tr.querySelectorAll("th,td")].map(x=>x.textContent.trim());
+      if(cells.length<3)continue;
+      const city=cells[0];
+      if(!CITIES.some(c=>c.toLowerCase()===city.toLowerCase()))continue;
+      const nums=cells.slice(1).map(parseSilverText),sell=nums[0]||0,buy=nums[1]||0;
+      const row=normalizeExternalRow(itemId,city,sell,buy,"albionmarket");if(row)rows.push(row);
+    }
+    externalPriceMem.set(key,{t:now,data:rows});
+    if(rows.length){const cache=externalCache();cache[itemId]={t:now,rows};saveExternalCache(cache)}
+    return rows;
+  }catch(e){
+    const hit=externalCache()[itemId];
+    if(hit&&now-hit.t<7*24*60*60*1000)return hit.rows||[];
+    return [];
+  }
+}
+async function getExternalPrices(ids){let out=[];for(const id of [...new Set(ids.filter(Boolean))]){const rows=await fetchAlbionMarketItem(id);if(rows.length)out.push(...rows)}return out}
+function mergePriceSources(base,external){return [...(base||[]),...(external||[])]}function numeric(v){v=+v;return isFinite(v)&&v>0?v:0}function median(a){a=a.filter(n=>numeric(n)>0).map(Number).sort((x,y)=>x-y);if(!a.length)return 0;let m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2}function historyPoints(data,id,city){let groups=data.filter(x=>(x.item_id||x.itemId||"")===id&&((x.location||x.city||"").toLowerCase()===String(city||"").toLowerCase()||!city)),pts=[];for(const g of groups)if(Array.isArray(g.data))for(const p of g.data){let v=numeric(p.avg_price);if(v)pts.push({v,d:p.timestamp||p.time||""})}return pts.sort((a,b)=>new Date(b.d||0)-new Date(a.d||0))}function historyReference(data,id,city){let pts=historyPoints(data,id,city);if(pts.length){let recent=pts.slice(0,24).map(x=>x.v);return{v:median(recent),d:pts[0].d||"",source:"histórico",estimated:true,confidence:recent.length>=12?"alta":"média"}}let all=historyPoints(data,id,"");if(all.length){let recent=all.slice(0,48).map(x=>x.v);return{v:median(recent),d:all[0].d||"",source:"referência histórica",estimated:true,confidence:"baixa"}}return null}function crossCitySell(ps,itemId){let a=rowsForItem(ps,itemId).map(x=>x.sell).filter(n=>n>0),v=median(a);return v?{v,d:"",source:"referência",estimated:true,confidence:a.length>=4?"média":"baixa"}:null}function crossCityBuy(ps,itemId){let a=ps.map(normPrice).filter(x=>x&&x.item_id===itemId&&x.buy>0).map(x=>x.buy),v=median(a);return v?{v,d:"",source:"referência",estimated:true,confidence:a.length>=4?"média":"baixa"}:null}function estimatedBuyFromSell(ps,itemId,sell){let pairs=ps.map(normPrice).filter(x=>x&&x.item_id===itemId&&x.sell>0&&x.buy>0).map(x=>x.buy/x.sell).filter(r=>r>0.3&&r<1.1),ratio=median(pairs);return ratio&&sell?{v:Math.round(sell*ratio),d:"",source:"estimado",estimated:true,confidence:pairs.length>=4?"média":"baixa"}:null}function resolveSell(ps,hist,city,itemId){
+  let arr=rowsForItemCity(ps,city,itemId).filter(x=>x.sell>0);
+  let live=arr.filter(x=>x.source==="atual");
+  if(live.length){let cur=live.reduce((a,b)=>b.sell<a.sell?b:a);return{v:cur.sell,d:cur.sellDate||"",quality:cur.quality,source:"atual",estimated:false,confidence:"alta"}}
+  let ext=arr.filter(x=>x.source==="albionmarket"||x.source==="codex");
+  if(ext.length){let cur=ext.reduce((a,b)=>b.sell<a.sell?b:a);return{v:cur.sell,d:cur.sellDate||"",quality:cur.quality,source:cur.source,estimated:false,confidence:"alta"}}
+  let h=historyReference(hist,itemId,city);if(h)return{...h,quality:0};
+  let cp=cachedSell(city,itemId);if(cp)return{...cp,confidence:"baixa"};
+  let ref=crossCitySell(ps,itemId);if(ref)return{...ref,quality:0};
+  return null;
+}
+function resolveBuy(ps,hist,city,itemId){
+  let arr=rowsForItemCity(ps,city,itemId).filter(x=>x.buy>0);
+  let live=arr.filter(x=>x.source==="atual");
+  if(live.length){let cur=live.reduce((a,b)=>b.buy>a.buy?b:a);return{v:cur.buy,d:cur.buyDate||"",quality:cur.quality,source:"atual",estimated:false,confidence:"alta"}}
+  let ext=arr.filter(x=>x.source==="albionmarket"||x.source==="codex");
+  if(ext.length){let cur=ext.reduce((a,b)=>b.buy>a.buy?b:a);return{v:cur.buy,d:cur.buyDate||"",quality:cur.quality,source:cur.source,estimated:false,confidence:"alta"}}
+  let ref=crossCityBuy(ps,itemId);if(ref)return{...ref,quality:0};
+  let sell=resolveSell(ps,hist,city,itemId);
+  return sell?estimatedBuyFromSell(ps,itemId,sell.v):null;
+}function coveragePrice(ps,hist,city,itemId){return resolveSell(ps,hist,city,itemId)}async function getPrices(ids,locations,quality){ids=[...new Set(ids.filter(Boolean))];let cities=Array.isArray(locations)?locations:(locations||"").split(",").map(x=>x.trim()).filter(Boolean);let key=JSON.stringify({ids,cities,quality:quality||""}),mem=priceMem.get(key),now=Date.now();if(mem&&now-mem.t<15000)return mem.data;let out=[];for(let i=0;i<ids.length;i+=35){let batch=ids.slice(i,i+35),u=API+"prices/"+batch.map(encodeURIComponent).join(",")+".json?locations="+encodeURIComponent(cities.join(","))+(quality?"&qualities="+encodeURIComponent(quality):"");let r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error("AODP "+r.status);let j=await r.json();if(Array.isArray(j))out.push(...j);else if(j&&Array.isArray(j.data))out.push(...j.data)}savePriceCache(out);priceMem.set(key,{t:now,data:out});return out}
+async function getHistory(ids,locations,quality){ids=[...new Set(ids.filter(Boolean))];let cities=Array.isArray(locations)?locations:(locations||"").split(",").map(x=>x.trim()).filter(Boolean),out=[];for(let i=0;i<ids.length;i+=35){let batch=ids.slice(i,i+35),u=API+"history/"+batch.map(encodeURIComponent).join(",")+".json?locations="+encodeURIComponent(cities.join(","))+"&time-scale=1"+(quality?"&qualities="+encodeURIComponent(quality):"");let r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error("AODP history "+r.status);let j=await r.json();if(Array.isArray(j))out.push(...j);else if(j&&Array.isArray(j.data))out.push(...j.data)}return out}
+async function safeHistory(ids,locations,quality){try{return await getHistory(ids,locations,quality)}catch(e){console.warn("AODP history indisponível:",e);return[]}}
+function latestHistoryPrice(data,id,city){let groups=data.filter(x=>(x.item_id||x.itemId||"")===id&&((x.location||x.city||"").toLowerCase()===city.toLowerCase()||!city));let points=[];for(const g of groups)if(Array.isArray(g.data))points.push(...g.data);points.sort((a,b)=>new Date(b.timestamp||b.time||0)-new Date(a.timestamp||a.time||0));let p=points.find(x=>+x.avg_price>0);return p?{v:+p.avg_price,d:p.timestamp||p.time||"",estimated:true}:null}
+function normPrice(p){if(!p)return null;return{item_id:p.item_id||p.itemId||p.itemID||"",city:p.city||p.location||"",quality:+(p.quality??p.Quality??0),sell:+(p.sell_price_min??p.sellPriceMin??p.sell??0)||0,sellDate:p.sell_price_min_date||p.sellPriceMinDate||p.sellDate||"",sellMax:+(p.sell_price_max??p.sellPriceMax??0)||0,buy:+(p.buy_price_max??p.buyPriceMax??p.buy??0)||0,buyDate:p.buy_price_max_date||p.buyPriceMaxDate||p.buyDate||"",buyMin:+(p.buy_price_min??p.buyPriceMin??0)||0,source:p.source||"atual",estimated:!!p.estimated,confidence:p.confidence||"alta"}}
+function choose(p,mode){let x=normPrice(p);if(!x)return{v:0,d:""};return mode==="buy"?{v:x.buy,d:x.buyDate}:{v:x.sell,d:x.sellDate}}
+function rowsForItemCity(ps,city,itemId){return ps.map(normPrice).filter(Boolean).filter(x=>(x.city||"").toLowerCase()===city.toLowerCase()&&(!itemId||x.item_id===itemId))}
+function findLowestSell(ps,city,itemId){let arr=rowsForItemCity(ps,city,itemId).filter(x=>x.sell>0);if(!arr.length)return null;return arr.reduce((a,b)=>b.sell<a.sell?b:a)}
+function findHighestBuy(ps,city,itemId){let arr=rowsForItemCity(ps,city,itemId).filter(x=>x.buy>0);if(!arr.length)return null;return arr.reduce((a,b)=>b.buy>a.buy?b:a)}
+function findBestPrice(ps,city,itemId){return{sell:findLowestSell(ps,city,itemId),buy:findHighestBuy(ps,city,itemId)}}
+function rowsForItem(ps,itemId){return ps.map(normPrice).filter(Boolean).filter(x=>(!itemId||x.item_id===itemId)&&x.sell>0)}
+function qualityName(q){return ({0:'—',1:'Normal',2:'Bom',3:'Excepcional',4:'Excelente',5:'Obra-prima'})[+q]||('Q'+q)}
+function renderMarketOrders(ps){let rows=rowsForItem(ps,selectedItem).sort((a,b)=>a.sell-b.sell||new Date(b.sellDate||0)-new Date(a.sellDate||0));$("marketOrders").innerHTML=`${rows.map(x=>`<tr><td><b>${safe(x.city||'—')}</b></td><td>${qualityName(x.quality)}</td><td class='gold'><b>${money(x.sell)}</b></td><td class='${cls(mins(x.sellDate))}'>${x.sellDate?age(mins(x.sellDate)):'sem data'}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nenhuma venda atual encontrada no AODP para este item.</td></tr>'}`}
+
+async function priceWithHistory(ps,itemId,city,hist){let best=findLowestSell(ps,city,itemId);if(best)return{v:best.sell,d:best.sellDate,source:"atual",quality:best.quality};let h=hist?latestHistoryPrice(hist,itemId,city):null;return h?{v:h.v,d:h.d,source:"histórico",estimated:true}:{v:0,d:"",source:"sem dado"}}
+async function loadMarket(){if(!selectedItem)return;$("status").textContent="● consultando";$("marketCities").innerHTML='<tr><td colspan="4" class="empty"><span class="loader"></span> consultando preços de todas as cidades…</td></tr>';try{let city=$("marketCity").value,basePs=await getPrices([selectedItem],CITIES,""),externalPs=await getExternalPrices([selectedItem]),ps=mergePriceSources(basePs,externalPs),histAll=await safeHistory([selectedItem],CITIES,""),sv=resolveSell(ps,histAll,city,selectedItem),bv=resolveBuy(ps,histAll,city,selectedItem);$("sellMin").textContent=sv?.v?money(sv.v):"Sem preço";$("buyMax").textContent=bv?.v?money(bv.v):"Sem preço";$("sellAge").textContent=sv?.v?(sv.source==="atual"?age(mins(sv.d)):sv.source+" • "+(sv.d?age(mins(sv.d)):"estimativa")):"—";$("buyAge").textContent=bv?.v?(bv.source==="atual"?age(mins(bv.d)):bv.source+" • estimativa"):"—";$("sellAge").className="tiny "+(sv?.source==="atual"?cls(mins(sv.d)):"orange");$("buyAge").className="tiny "+(bv?.source==="atual"?cls(mins(bv.d)):"orange");renderMarketCities(ps,histAll,city);renderMarketOrders(ps);await loadHistory();$("status").textContent=sv?.source==="atual"&&bv?.source==="atual"?"● preços atuais encontrados":sv?.v?"● preço com fallback de cobertura":"● sem cotação"}catch(e){$("marketCities").innerHTML='<tr><td colspan="4" class="empty">Erro ao consultar preços: '+safe(e.message||e)+'</td></tr>';$("sellMin").textContent="—";$("buyMax").textContent="—";$("status").textContent="● erro";console.error(e)}}
+async function loadHistory(){if(!selectedItem)return;let city=$("marketCity").value,scale=$("historyScale").value;try{let u=API+"history/"+encodeURIComponent(selectedItem)+".json?locations="+encodeURIComponent(city)+"&time-scale="+scale;let r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error(r.status);let j=await r.json();let data=(j[0]?.data||j.data||[]).slice(-30);let vals=data.map(x=>+x.avg_price||0).filter(v=>v>0),mx=Math.max(...vals,1);$("chart").innerHTML=vals.map(v=>`<i class="bar" style="height:${Math.max(3,v/mx*100)}%" title="${money(v)}"></i>`).join("")||'<div class="empty">Sem histórico.</div>';let avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;$("priceAvg").textContent=avg?money(avg):"Sem dado";$("historyInfo").textContent=data.length?`Últimos ${data.length} pontos • média: ${money(avg)}`:"Sem histórico disponível."}catch(e){$("priceAvg").textContent="Sem dado";$("chart").innerHTML='<div class="empty">Histórico indisponível.</div>';console.error(e)}}
+function sourceBadge(s){return s==="atual"?'<span class="green">Ao vivo</span>':s==="albionmarket"?'<span class="blue">AlbionMarket</span>':s==="codex"?'<span class="blue">Albion Codex</span>':s==="histórico"?'<span class="orange">Histórico</span>':s==="referência histórica"?'<span class="orange">Hist. global</span>':s==="cache"?'<span class="purple">Último dado</span>':s==="estimado"?'<span class="orange">Estimado</span>':'<span class="blue">Referência</span>'}function sourceClass(s){return s==="atual"?"current":s==="albionmarket"?"albionmarket":s==="codex"?"codex":s==="histórico"||s==="referência histórica"?"history":s==="cache"?"cache":s==="estimado"?"estimated":"reference"}function sourceLabel(s){return s==="atual"?"ao vivo":s==="albionmarket"?"AlbionMarket":s==="codex"?"Albion Codex":s==="histórico"?"histórico":s==="referência histórica"?"hist. global":s==="cache"?"último":s==="estimado"?"estimado":"referência"}function renderMarketCities(ps,hist,selectedCity){let rows=CITIES.map(city=>{let s=findLowestSell(ps,city,selectedItem),b=findHighestBuy(ps,city,selectedItem),sv=resolveSell(ps,hist,city,selectedItem)||{v:0,d:"",source:"sem dado"},bv=resolveBuy(ps,hist,city,selectedItem)||{v:0,d:"",source:"sem dado"},m=sv.v?mins(sv.d):Infinity;return{city,sv,bv,m}});$("marketCities").innerHTML=rows.map(x=>`<tr style="${x.city===selectedCity?"background:#14221b":""}"><td><b>${x.city}</b>${x.city===selectedCity?' <span class="pill green">selecionada</span>':""}</td><td class="${cls(x.m)}">${x.sv.v?money(x.sv.v)+` <span class="sourceTag ${sourceClass(x.sv.source)}">${sourceLabel(x.sv.source)}</span>`:"—"}</td><td class="${cls(x.m)}">${x.bv.v?money(x.bv.v):"—"}</td><td class="${cls(x.m)}">${isFinite(x.m)?age(x.m):"sem dado"}</td></tr>`).join("")}
+if($("marketCity"))$("marketCity").addEventListener("change",loadMarket);if($("historyScale"))$("historyScale").addEventListener("change",loadHistory);
+async function compareCities(){let id=$("arbItem").value.trim(),mode=$("arbMode").value;$("arbBody").innerHTML='<tr><td colspan="5" class="empty"><span class="loader"></span> consultando...</td></tr>';try{let ps=await getPrices([id],CITIES,"");$("arbBody").innerHTML=CITIES.map(c=>{let p=mode==="buy"?findHighestBuy(ps,c,id):findLowestSell(ps,c,id),x=p?(mode==="buy"?{v:p.buy,d:p.buyDate}:{v:p.sell,d:p.sellDate}):{v:0,d:""},m=mins(x.d);return`<tr><td>${c}</td><td class="${cls(m)}">${money(x.v)}</td><td>${x.d?new Date(x.d).toLocaleString("pt-BR"):"—"}</td><td class="${cls(m)}">${age(m)}</td><td><button class="btn" onclick="openItem('${id}')">Abrir</button></td></tr>`}).join("")}catch(e){$("arbBody").innerHTML=`<tr><td colspan="5" class="empty">Erro: ${e.message}</td></tr>`}}
+function selectCraft(id){if(!id)return;selectedCraft=id;$("craftSearch").value=displayName(id);let has=!!recipes[id];$("craftSelected").innerHTML=`<div class="itemhead"><img class="icon" src="${iconUrl(id,217)}"><div style="flex:1"><b>${safe(displayName(id))}</b><div class="tiny">${safe(id)} • ${tier(id)} • .${enchant(id)}</div></div><button id="craftFavBtn" class="favBtn" data-fav-page="craft" onclick="toggleFav()">⭐ Favorito</button></div>${has?"":'<div class="section note">Este item não possui receita no banco atual de crafting.</div>'}`;$("craftBtn").disabled=!has;if(has)calculateCraft();else{$("ccost").textContent="—";$("crev").textContent="—";$("cprofit").textContent="—";$("croi").textContent="—";$("craftMats").innerHTML='<tr><td colspan="7" class="empty">Sem receita para este item.</td></tr>';}updateFavButtons()}function craftFromSearch(){let q=$("craftSearch").value.trim().toLowerCase();let id=Object.keys(recipes).find(x=>x.toLowerCase().includes(q));if(!id){let o=filtered(q)[0];id=o&&itemId(o)}if(id)selectCraft(id);else alert("Receita/item não encontrado.");}
+async function calculateCraft(){if(!selectedCraft){alert("Selecione uma receita primeiro.");return}let rec=recipes[selectedCraft];if(!rec){alert("Esta receita não está disponível no banco atual.");return}let city=$("craftCity").value,qty=Math.max(1,+$("craftQty").value||1),rr=Math.max(0,Math.min(100,+$("craftRR").value||0))/100,tax=Math.max(0,Math.min(100,+$("craftTax").value||0))/100,setup=Math.max(0,Math.min(100,+$("craftSetup").value||0))/100,fee=Math.max(0,+$("craftFee").value||0);$("craftBtn").disabled=true;$("craftBtn").textContent="Calculando…";try{let mats=rec.materials||[],ids=[selectedCraft,...mats.map(x=>x.id)],ps=[];try{ps=await getPrices(ids,CITIES,"")}catch(e){console.warn("AODP prices indisponíveis, usando histórico/cache:",e)}try{ps=mergePriceSources(ps,await getExternalPrices(ids))}catch(e){console.warn("Fonte externa indisponível:",e)}let hist=await safeHistory(ids,CITIES,""),prod=resolveSell(ps,hist,city,selectedCraft)||{v:0,d:"",quality:0,source:"sem dado"},missing=!prod.v,cost=0,rows=[];for(let m of mats){let p=resolveSell(ps,hist,city,m.id)||{v:0,d:"",quality:0,source:"sem dado"},need=(+m.count||0)*qty,after=m.ret?need*(1-rr):need,has=!!p.v,line=has?after*p.v:0;if(!has)missing=true;cost+=line;rows.push({m,p,need,after,line,has,quality:p.quality||0,source:p.source||"sem dado"})}let gross=prod.v*qty,salesTax=gross*(tax+setup),rev=gross-salesTax,totalSpent=cost+fee*qty,hasEstimated=!!prod.estimated||rows.some(x=>!!x.p.estimated),profit=missing?null:rev-totalSpent,roi=profit!==null&&totalSpent?profit/totalSpent*100:null;$("ccost").textContent=missing?"Dados incompletos":money(cost);$("crev").textContent=prod.v?money(rev):"Sem preço";$("crev").title=prod.v?`Venda líquida ${money(rev)} • bruto ${money(gross)} • ${prod.source} • ${qualityName(prod.quality)}`:"Sem preço";$("cprofit").textContent=profit===null?"—":money(profit);$("cprofit").className="value "+(profit===null?"":profit>=0?"green":"red");$("croi").textContent=roi===null?"—":roi.toFixed(1)+"%";renderCraftSummary({materials:cost,fees:fee*qty,salesTax,spent:totalSpent,revenue:rev,profit,roi,qty,prod,rows,city,missing});$("craftMats").innerHTML=rows.map(x=>`<tr><td><img class="recipe-icon" src="${iconUrl(x.m.id,40)}" style="width:40px;height:40px;vertical-align:middle"> <b>${safe(displayName(x.m.id))}</b></td><td>${x.need}${x.after!==x.need?`<br><span class="tiny">efetivo: ${x.after.toFixed(2)}</span>`:""}</td><td>${x.has?money(x.p.v):'<span class="red">Sem preço</span>'}</td><td>${x.has?qualityName(x.quality):"—"}</td><td>${x.has?money(x.line):"—"}</td><td>${x.has?sourceBadge(x.source):"—"}</td><td class="${x.has?cls(mins(x.p.d)):"red"}">${x.has?(x.p.d?age(mins(x.p.d)):"estimativa"):"sem dado"}</td></tr>`).join("")||'<tr><td colspan="7" class="empty">Receita sem materiais.</td></tr>';if(profit!==null)saveHist(selectedCraft,profit,roi,city)}catch(e){console.error(e);$("craftMats").innerHTML=`<tr><td colspan="7" class="empty">Erro ao calcular: ${safe(e.message||e)}</td></tr>`;renderCraftSummary({materials:0,fees:0,salesTax:0,spent:0,revenue:0,profit:null,roi:null,qty,prod:{source:"erro"},rows:[],city,missing:true})}finally{$("craftBtn").disabled=!recipes[selectedCraft];$("craftBtn").textContent="Calcular operação"}}
+function renderCraftSummary(o){let q=$("craftCoverage"),v=$("craftVerdict");$("sumMaterials").textContent=o.missing?"Incompleto":money(o.materials);$("sumFees").textContent=money(o.salesTax+o.fees);$("sumSpent").textContent=o.missing?"—":money(o.spent);$("sumRevenue").textContent=o.revenue?money(o.revenue):"—";$("sumProfit").textContent=o.profit===null?"—":money(o.profit)+" • "+(o.roi===null?"—":o.roi.toFixed(1)+"%");let hasCache=o.rows.some(x=>x.source==="cache")||o.prod.source==="cache",hasHist=o.rows.some(x=>x.source==="histórico"||x.source==="referência histórica")||o.prod.source==="histórico"||o.prod.source==="referência histórica",hasRef=o.rows.some(x=>!!x.p.estimated&&x.source!=="histórico"&&x.source!=="referência histórica")||!!o.prod.estimated;q.textContent=o.missing?"dados incompletos":hasCache?"último dado ≤ 7 dias":hasHist?"inclui histórico":hasRef?"preço de referência":"dados atuais";q.className="sourceTag "+(o.missing?"":hasCache?"cache":hasHist?"history":hasRef?"reference":"current");if(o.missing){v.className="viceVerdict warn";v.textContent="⚠ Dados insuficientes: falta preço para um dos componentes."}else if(o.profit>0){v.className="viceVerdict good";v.textContent=(hasCache||hasHist||hasRef?"⚠ Estimativa: parte dos preços não é ao vivo. ":"")+"✓ Operação positiva • lucro estimado "+money(o.profit)+" por lote de "+o.qty+" unidade(s)."}else{v.className="viceVerdict bad";v.textContent="✕ Operação negativa após materiais, taxas e fee • prejuízo estimado "+money(Math.abs(o.profit))+" por lote."}}
+
+function favs(){let a=JSON.parse(localStorage.getItem(userStorageKey("acm_favs"))||"[]");return Array.isArray(a)?a:[]}
+function toggleSpecificFav(id){if(!id)return;let a=favs();a=a.includes(id)?a.filter(x=>x!==id):[...a,id];localStorage.setItem(userStorageKey("acm_favs"),JSON.stringify(a));renderFavs();updateFavButtons()}
+function removeFav(id){if(!id)return;let a=favs().filter(x=>x!==id);localStorage.setItem(userStorageKey("acm_favs"),JSON.stringify(a));renderFavs();updateFavButtons()}
+function toggleFav(){let id=selectedItem||selectedCraft;if(!id)return;toggleSpecificFav(id)}function favoriteAndOpen(id){if(!id)return;let a=favs();let on=a.includes(id);toggleSpecificFav(id);if(!on)go("favorites")}
+function favoriteKind(id){if(typeof id!=="string")return"item";if(window.getMountFavoriteInfo&&window.getMountFavoriteInfo(id))return"mount";if(window.getFarmFavoriteInfo&&window.getFarmFavoriteInfo(id))return"farm";return"item"}function favoriteName(id){let k=favoriteKind(id);if(k==="farm"){let a=window.getFarmFavoriteInfo&&window.getFarmFavoriteInfo(id);return a?a.name:pretty(id)}if(k==="mount"){let a=window.getMountFavoriteInfo&&window.getMountFavoriteInfo(id);return a?a.name:pretty(id)}return displayName(id)+" "+tier(id)+"."+enchant(id)}function favoriteIcon(id){return iconUrl(id,128)}function favoriteMeta(id){let k=favoriteKind(id);if(k==="farm"){let a=window.getFarmFavoriteInfo&&window.getFarmFavoriteInfo(id);return a?"Fazenda • T"+a.tier:"Fazenda"}if(k==="mount"){let a=window.getMountFavoriteInfo&&window.getMountFavoriteInfo(id);return a?"Montarias • T"+a.tier:"Montarias"}return "Mercado / Craft • "+tier(id)+" • ."+enchant(id)}function openFavorite(id){let k=favoriteKind(id);if(k==="farm"&&window.openFarmFavorite)return window.openFarmFavorite(id);if(k==="mount"&&window.openMountFavorite)return window.openMountFavorite(id);openItem(id)}function updateFavButtons(){const a=favs();[["marketFavBtn",selectedItem],["craftFavBtn",selectedCraft]].forEach(([id,item])=>{const b=$(id);if(!b)return;const on=!!item&&a.includes(item);b.textContent=on?"⭐ Favoritado":"⭐ Favorito";b.classList.toggle("isFav",on);b.title=on?"Remover dos favoritos":"Adicionar aos favoritos"});document.querySelectorAll("[data-farm-fav],[data-mount-fav]").forEach(b=>{const id=b.dataset.farmFav||b.dataset.mountFav,on=a.includes(id);b.textContent=on?"⭐ Favoritado":"⭐ Favorito";b.classList.toggle("isFav",on);b.title=on?"Remover dos favoritos":"Adicionar aos favoritos"})}
+function renderFavs(){let a=favs();$('favBody').innerHTML=a.length?a.map(id=>{let n=safe(favoriteName(id)),m=safe(favoriteMeta(id));return '<div class="row between" style="padding:10px;border-bottom:1px solid var(--line);gap:10px"><div class="row" style="gap:10px;min-width:0"><img class="icon" loading="lazy" decoding="async" src="'+favoriteIcon(id)+'" style="width:44px;height:44px"><div><b>'+n+'</b><div class="tiny">'+m+'</div></div></div><div class="row" style="gap:6px"><button class="btn" onclick="openFavorite(\''+id+'\')">Abrir</button><button class="btn" title="Remover dos favoritos" onclick="removeFav(\''+id+'\')">✕</button></div></div>'}).join(''):'<div class="empty">Nenhum favorito. Abra um item e toque em ⭐ Favorito.</div>';}
+function clearFavs(){localStorage.removeItem(userStorageKey("acm_favs"));renderFavs()}function saveHist(id,p,r,city){let a=JSON.parse(localStorage.getItem(userStorageKey("acm_hist"))||"[]");a.unshift({id,p,r,city,d:new Date().toLocaleString("pt-BR")});localStorage.setItem(userStorageKey("acm_hist"),JSON.stringify(a.slice(0,100)))}
+function renderHistory(){let a=JSON.parse(localStorage.getItem(userStorageKey("acm_hist"))||"[]");$("histBody").innerHTML=a.length?a.map(x=>`<div class="row between" style="padding:10px;border-bottom:1px solid var(--line)"><span>${pretty(x.id)}<br><span class="tiny">${x.city} • ${x.d}</span></span><span class="${x.p>=0?"green":"red"}">${money(x.p)}<br><span class="tiny">${(+x.r).toFixed(1)}% ROI</span></span></div>`).join(""):'<div class="empty">Nenhum cálculo registrado.</div>'}
+function saveSettings(){localStorage.setItem(userStorageKey("acm_city"),$("defaultCity").value);localStorage.setItem(userStorageKey("acm_rr"),$("defaultRR").value);localStorage.setItem(userStorageKey("acm_tax"),$("defaultTax").value);alert("Configurações salvas.")}
+function refreshData(){priceMem.clear();if(selectedItem)loadMarket()}
+function buildUnified(){const market=$("market"),search=$("search"),craft=$("craft");if(!market||!search||!craft||$("unifiedSearchHost"))return;const sh=document.createElement("div");sh.id="unifiedSearchHost";const ch=document.createElement("div");ch.id="unifiedCraftHost";const card=market.querySelector(".card");card.prepend(sh);card.appendChild(ch);Array.from(search.children).forEach(x=>sh.appendChild(x));Array.from(craft.children).forEach(x=>ch.appendChild(x));search.innerHTML="";craft.innerHTML=""}
+window.addEventListener("error",e=>{const s=document.getElementById("status");if(s)s.textContent="● erro JS";}); window.addEventListener("unhandledrejection",e=>{const s=document.getElementById("status");if(s)s.textContent="● erro";}); async function boot(){fillCities();renderFavs();renderHistory();buildUnified();$("status").innerHTML='<span class="loader"></span> Carregando catálogo e receitas…';try{await Promise.all([loadCatalog(),loadRecipes()]);renderItemBrowser();$("status").textContent="Catálogo "+(catalog.length?"carregado":"indisponível")+" • "+catalog.length.toLocaleString("pt-BR")+" itens • "+Object.keys(recipes).length.toLocaleString("pt-BR")+" receitas."}catch(e){$("status").textContent="Catálogo parcialmente carregado.";console.error(e)}}
+boot();
+setInterval(()=>{if(selectedItem&&$("market").classList.contains("active"))loadMarket().catch(()=>{});},15000);
+if($("filterTier"))$("filterTier").onchange=renderItemBrowser;if($("filterEnchant"))$("filterEnchant").onchange=renderItemBrowser;
+</script><script id="acm-intelligence">
+(function(){
+"use strict";
+
+/* PRICE INTELLIGENCE v2
+   Regras:
+   1) preço observado nunca é substituído por estimativa;
+   2) histórico recente é referência, não "ao vivo";
+   3) estimativas são calibradas por erros observados posteriormente;
+   4) somente preços realmente observados alimentam o aprendizado;
+   5) cidade/item/encantamento permanecem separados.
+*/
+var OBS_KEY="acm_price_observations_v2";
+var FORECAST_KEY="acm_price_forecasts_v2";
+var LEARN_KEY="acm_price_learning_v2";
+var OBS_MAX=1600, FORECAST_MAX=1200, LEARN_MAX=1200;
+var LIVE_MAX_MIN=90, RECENT_MAX_MIN=24*60, HIST_MAX_DAYS=30;
+var intelBusy=false, intelTimer=null;
+
+var oldResolveSell=window.resolveSell;
+var oldResolveBuy=window.resolveBuy;
+var oldLoadMarket=window.loadMarket;
+var oldCalculateCraft=window.calculateCraft;
+var oldCompareCities=window.compareCities;
+
+function n(v){v=Number(v);return isFinite(v)&&v>0?v:0}
+function arr(a){return (a||[]).map(n).filter(Boolean).sort(function(a,b){return a-b})}
+function med(a){a=arr(a);if(!a.length)return 0;var m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2}
+function pct(a,p){a=arr(a);if(!a.length)return 0;var i=(a.length-1)*p,l=Math.floor(i),h=Math.ceil(i);return l===h?a[l]:a[l]+(a[h]-a[l])*(i-l)}
+function ageMin(d){if(!d)return Infinity;var t=new Date(d).getTime();return isFinite(t)?Math.max(0,(Date.now()-t)/60000):Infinity}
+function observedSource(s){return s==="atual"||s==="albionmarket"||s==="codex"}
+function localRead(k){try{return JSON.parse(localStorage.getItem(k)||"[]")}catch(e){return[]}}
+function localWrite(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function sourceText(s){
+ if(s==="atual")return "AO ao vivo";
+ if(s==="albionmarket")return "AlbionMarket";
+ if(s==="codex")return "Albion Codex";
+ if(s==="histórico-recente")return "Histórico recente";
+ if(s==="histórico")return "Histórico";
+ if(s==="seu-histórico")return "Seu histórico";
+ if(s==="referência-cidade")return "Referência ajustada";
+ if(s==="estimado-aprendido")return "Estimativa aprendida";
+ if(s==="estimado")return "Estimativa";
+ if(s==="cache")return "Cache";
+ return s||"Sem fonte";
+}
+function sourceCls(s){
+ if(observedSource(s))return s==="atual"?"current":s;
+ if(s==="histórico-recente"||s==="histórico"||s==="seu-histórico")return "history";
+ if(s==="estimado-aprendido"||s==="estimado")return "estimated";
+ if(s==="referência-cidade")return "reference";
+ return "cache";
+}
+function result(v,source,d,extra){
+ if(!v)return null;
+ var o={v:Math.round(v),source:source||"estimado",d:d||"",estimated:!observedSource(source)};
+ if(extra)Object.assign(o,extra);
+ return o;
+}
+
+function saveObserved(item,city,v,source,d,quality){
+ if(!item||!city||!n(v)||!observedSource(source))return;
+ var a=localRead(OBS_KEY),now=Date.now();
+ a.unshift({item:item,city:city,v:Math.round(v),source:source,t:d?new Date(d).getTime():now,quality:quality||"normal"});
+ var seen={},out=[];
+ for(var i=0;i<a.length&&out.length<OBS_MAX;i++){
+   var x=a[i],k=[x.item,x.city,x.v,Math.floor((x.t||0)/300000)].join("|");
+   if(!seen[k]){seen[k]=1;out.push(x)}
+ }
+ localWrite(OBS_KEY,out);
+ learnAgainstObserved(item,city,v,source);
+}
+function ownObserved(item,city,maxAge){
+ var now=Date.now(),cut=maxAge==null?RECENT_MAX_MIN:maxAge;
+ return localRead(OBS_KEY).filter(function(x){
+   return x.item===item&&x.city===city&&n(x.v)&&((now-(x.t||0))/60000)<=cut;
+ });
+}
+
+function histRows(hist,item,city,maxAge){
+ if(typeof historyPoints!=="function")return[];
+ var now=Date.now(),cut=maxAge==null?HIST_MAX_DAYS*1440:maxAge;
+ try{
+   return historyPoints(hist||[],item,city).filter(function(x){
+     var v=n(x.v),t=new Date(x.d||x.date||x.time||0).getTime();
+     return v&&isFinite(t)&&((now-t)/60000)<=cut;
+   });
+ }catch(e){return[]}
+}
+function weightedRecent(rows){
+ if(!rows.length)return 0;
+ var vals=[];
+ rows.slice(0,36).forEach(function(x,i){
+   var v=n(x.v),t=new Date(x.d||x.date||0).getTime(),a=isFinite(t)?Math.max(0,(Date.now()-t)/60000):99999;
+   var w=Math.exp(-a/(12*60));
+   vals.push({v:v,w:w});
+ });
+ vals.sort(function(a,b){return a.v-b.v});
+ var total=vals.reduce(function(s,x){return s+x.w},0),acc=0;
+ for(var i=0;i<vals.length;i++){acc+=vals[i].w;if(acc>=total/2)return vals[i].v}
+ return med(vals.map(function(x){return x.v}));
+}
+
+function currentObserved(ps,item,city,side){
+ var field=side==="buy"?"buy":"sell",dateField=side==="buy"?"buyDate":"sellDate";
+ return (ps||[]).map(normPrice).filter(function(x){
+   return x&&x.item_id===item&&String(x.city).toLowerCase()===String(city).toLowerCase()&&n(x[field])>0;
+ }).map(function(x){return {v:n(x[field]),d:x[dateField]||"",source:x.source||"atual",row:x}}).sort(function(a,b){
+   return side==="buy"?b.v-a.v:a.v-b.v;
+ });
+}
+function bestObserved(ps,item,city,side){
+ var rows=currentObserved(ps,item,city,side);
+ if(!rows.length)return null;
+ var fresh=rows.filter(function(x){return ageMin(x.d)<=LIVE_MAX_MIN});
+ var external=fresh.filter(function(x){return x.source==="albionmarket"||x.source==="codex"});
+ var a=fresh.filter(function(x){return x.source==="atual"});
+ var pick=(side==="buy"?function(x,y){return x.v>y.v?x:y}:function(x,y){return x.v<y.v?x:y});
+ var pool=a.length?a:(external.length?external:[]);
+ if(pool.length){
+   var p=pool.reduce(pick);
+   return result(p.v,p.source,p.d,{quality:"live",observed:true});
+ }
+ /* Ainda é um preço observado, mas já não é suficientemente fresco para ser chamado de ao vivo. */
+ var stale=rows.filter(function(x){return ageMin(x.d)<=RECENT_MAX_MIN});
+ if(stale.length){
+   var p2=stale.reduce(pick);
+   return result(p2.v,p2.source,p2.d,{quality:"recent-observed",observed:true});
+ }
+ return null;
+}
+
+function cityRecent(item,city,hist){
+ var own=ownObserved(item,city,RECENT_MAX_MIN);
+ if(own.length)return {v:med(own.map(function(x){return x.v})),d:new Date(Math.max.apply(null,own.map(function(x){return x.t||0}))).toISOString(),source:"seu-histórico"};
+ var h=histRows(hist,item,city,RECENT_MAX_MIN);
+ if(h.length){
+   var v=weightedRecent(h),latest=h.reduce(function(a,b){
+     return new Date(a.d||0)>new Date(b.d||0)?a:b;
+   });
+   return result(v,"histórico-recente",latest.d,{quality:"recent-history"});
+ }
+ return null;
+}
+
+function cityHistory(item,city,hist){
+ var h=histRows(hist,item,city,HIST_MAX_DAYS*1440);
+ if(!h.length)return null;
+ var v=med(h.slice(0,72).map(function(x){return x.v}));
+ var latest=h.reduce(function(a,b){return new Date(a.d||0)>new Date(b.d||0)?a:b});
+ return result(v,"histórico",latest.d,{quality:"history"});
+}
+
+function globalReference(item,hist){
+ var vals=[];
+ CITIES.forEach(function(city){
+   var h=histRows(hist,item,city,7*1440);
+   if(h.length)vals.push(med(h.slice(0,24).map(function(x){return x.v})));
+ });
+ var own=localRead(OBS_KEY).filter(function(x){return x.item===item&&(Date.now()-(x.t||0))/60000<=7*1440});
+ vals=vals.concat(own.map(function(x){return n(x.v)}));
+ return med(vals);
+}
+function cityFactor(item,city,hist){
+ var target=histRows(hist,item,city,14*1440).map(function(x){return x.v});
+ var peers=[];
+ CITIES.forEach(function(c){
+   var h=histRows(hist,item,c,14*1440);
+   if(h.length)peers.push(med(h.map(function(x){return x.v})));
+ });
+ if(target.length<3||peers.length<2)return 1;
+ var tm=med(target),gm=med(peers);
+ return Math.max(.65,Math.min(1.5,tm/gm));
+}
+
+function learningStats(item,city){
+ var a=localRead(LEARN_KEY).filter(function(x){return x.item===item&&x.city===city&&n(x.absPct)>=0});
+ if(!a.length)return null;
+ var errors=a.map(function(x){return x.absPct});
+ var ratios=a.map(function(x){return n(x.ratio)}).filter(Boolean);
+ return {samples:a.length,medianError:med(errors),medianRatio:med(ratios)||1};
+}
+function saveForecast(item,city,v,source){
+ if(!item||!city||!n(v)||observedSource(source))return;
+ var a=localRead(FORECAST_KEY),now=Date.now();
+ var dup=a.find(function(x){return x.item===item&&x.city===city&&Math.abs(x.v-v)/v<.01&&(now-x.t)<30*60000&&!x.checked});
+ if(dup)return;
+ a.unshift({item:item,city:city,v:Math.round(v),source:source,t:now,checked:false});
+ localWrite(FORECAST_KEY,a.slice(0,FORECAST_MAX));
+}
+function learnAgainstObserved(item,city,actual,source){
+ if(!n(actual))return;
+ var a=localRead(FORECAST_KEY),now=Date.now(),changed=false,learn=localRead(LEARN_KEY);
+ a.forEach(function(f){
+   if(f.checked||f.item!==item||f.city!==city||!n(f.v))return;
+   var age=(now-f.t)/60000;
+   if(age<10||age>7*1440)return;
+   var absPct=Math.abs(actual-f.v)/f.v*100;
+   var ratio=actual/f.v;
+   learn.unshift({item:item,city:city,source:f.source,absPct:Math.round(absPct*100)/100,ratio:Math.round(ratio*1000)/1000,t:now});
+   f.checked=true;f.actual=Math.round(actual);f.error=absPct;changed=true;
+ });
+ if(changed){
+   localWrite(FORECAST_KEY,a.slice(0,FORECAST_MAX));
+   localWrite(LEARN_KEY,learn.slice(0,LEARN_MAX));
+ }
+}
+function calibrate(item,city,v){
+ var st=learningStats(item,city);
+ if(!st||st.samples<2)return {v:v,error:null,samples:0};
+ var factor=Math.max(.75,Math.min(1.25,st.medianRatio));
+ return {v:v*factor,error:st.medianError,samples:st.samples,factor:factor};
+}
+
+function safeSell(ps,hist,city,item){
+ var live=bestObserved(ps,item,city,"sell");
+ if(live)return live;
+
+ var rec=cityRecent(item,city,hist);
+ if(rec)return rec;
+
+ var ch=cityHistory(item,city,hist);
+ if(ch)return ch;
+
+ var base=globalReference(item,hist);
+ if(base){
+   var adj=base*cityFactor(item,city,hist);
+   var cal=calibrate(item,city,adj);
+   saveForecast(item,city,cal.v,"referência-cidade");
+   return result(cal.v,"referência-cidade","",{quality:"modeled",calibrated:cal.samples>0,learningSamples:cal.samples,forecastError:cal.error});
+ }
+
+ var old=oldResolveSell?oldResolveSell(ps,hist,city,item):null;
+ if(old&&old.v){
+   var cal2=calibrate(item,city,old.v);
+   saveForecast(item,city,cal2.v,old.source||"estimado");
+   return result(cal2.v,"estimado-aprendido",old.d||"",{quality:"estimate",calibrated:cal2.samples>0,learningSamples:cal2.samples,forecastError:cal2.error});
+ }
+ return null;
+}
+function safeBuy(ps,hist,city,item){
+ var live=bestObserved(ps,item,city,"buy");
+ if(live)return live;
+ var rec=cityRecent(item,city,hist);
+ if(rec)return Object.assign({},rec,{side:"buy"});
+ var old=oldResolveBuy?oldResolveBuy(ps,hist,city,item):null;
+ if(old&&old.v){
+   var cal=calibrate(item,city,old.v);
+   saveForecast(item,city,cal.v,old.source||"estimado");
+   return result(cal.v,"estimado-aprendido",old.d||"",{quality:"estimate",calibrated:cal.samples>0,learningSamples:cal.samples,forecastError:cal.error});
+ }
+ var ch=cityHistory(item,city,hist);
+ if(ch)return Object.assign({},ch,{side:"buy"});
+ return null;
+}
+
+/* Substitui a resolução central: qualquer tela que usa resolveSell/Buy passa pela mesma inteligência. */
+window.resolveSell=safeSell;
+window.resolveBuy=safeBuy;
+
+function intelConfidence(p){
+ if(!p||!p.v)return 0;
+ var a=ageMin(p.d);
+ var base=observedSource(p.source)?75:p.source==="histórico-recente"||p.source==="seu-histórico"?58:p.source==="histórico"?42:p.source==="referência-cidade"?28:20;
+ if(a<=15)base+=20;else if(a<=60)base+=12;else if(a<=360)base+=5;else if(isFinite(a))base-=5;
+ if(p.calibrated)base+=Math.min(12,(p.learningSamples||0)*2);
+ if(p.forecastError!=null)base-=Math.min(20,p.forecastError*.35);
+ return Math.max(0,Math.min(100,Math.round(base)));
+}
+function confidenceLabel(x){return x>=80?"Alta":x>=55?"Média":x>=35?"Baixa":"Muito baixa"}
+
+function saveFromPrice(item,city,p){
+ if(!p||!p.v)return;
+ if(observedSource(p.source))saveObserved(item,city,p.v,p.source,p.d,p.quality);
+ else saveForecast(item,city,p.v,p.source);
+}
+
+async function refreshItemIntelligence(item,city){
+ if(!item||intelBusy)return;
+ intelBusy=true;
+ try{
+   var ps=await getPrices([item],CITIES,"");
+   var ext=await getExternalPrices([item]);
+   var all=mergePriceSources(ps,ext);
+   var hist=await safeHistory([item],CITIES,"");
+   var p=safeSell(all,hist,city,item);
+   saveFromPrice(item,city,p);return p;
+ }catch(e){console.warn("Price intelligence v2:",e)}
+ finally{intelBusy=false}
+}
+
+/* Market: carrega novamente com o resolvedor seguro e salva somente observações reais. */
+window.loadMarket=async function(){
+ await oldLoadMarket();
+ try{
+   if(selectedItem){
+     var city=document.getElementById("marketCity").value;
+     await refreshItemIntelligence(selectedItem,city);
+   }
+ }catch(e){console.warn(e)}
+};
+/* Craft: não substitui a matemática existente; apenas audita as fontes usadas e impede que
+   a interface trate estimativa como se fosse preço ao vivo. */
+window.calculateCraft=async function(){
+ await oldCalculateCraft();
+ try{
+   if(!selectedCraft||!recipes[selectedCraft])return;
+   var city=document.getElementById("craftCity").value,rec=recipes[selectedCraft];
+   var ids=[selectedCraft].concat((rec.materials||[]).map(function(x){return x.id}));
+   var ps=await getPrices(ids,CITIES,""),ext=await getExternalPrices(ids),all=mergePriceSources(ps,ext),hist=await safeHistory(ids,CITIES,"");
+   var prod=safeSell(all,hist,city,selectedCraft),rows=(rec.materials||[]).map(function(m){
+     var p=safeSell(all,hist,city,m.id);return {id:m.id,p:p};
+   });
+   saveFromPrice(selectedCraft,city,prod);
+   rows.forEach(function(x){saveFromPrice(x.id,city,x.p)});
+   var allPrices=[prod].concat(rows.map(function(x){return x.p})).filter(Boolean);
+   var weak=allPrices.filter(function(p){return !observedSource(p.source)});
+   
+ }catch(e){console.warn("Craft intelligence v2:",e)}
+};
+
+/* Comparador: mantém uma fonte diferente por cidade; não mascara ausência com o preço de outra. */
+window.compareCities=async function(){
+ var id=document.getElementById("arbItem").value.trim(),mode=document.getElementById("arbMode").value;
+ try{
+   var ps=await getPrices([id],CITIES,""),ext=await getExternalPrices([id]),all=mergePriceSources(ps,ext),hist=await safeHistory([id],CITIES,"");
+   var rows=CITIES.map(function(city){
+     var p=mode==="buy"?safeBuy(all,hist,city,id):safeSell(all,hist,city,id);
+     if(p)saveFromPrice(id,city,p);
+     return {city:city,p:p,v:p&&p.v||0,d:p&&p.d||"",source:p&&p.source||"sem dado"};
+   });
+   var th=document.querySelector("#arb thead");if(th)th.innerHTML="<tr><th>Cidade</th><th>Preço</th><th>Data</th><th>Fonte</th><th></th></tr>";
+   document.getElementById("arbBody").innerHTML=rows.map(function(x){
+     return "<tr><td>"+safe(x.city)+"</td><td class='"+(x.v?"":"red")+"'>"+(x.v?money(x.v):"—")+"</td><td>"+(x.d?new Date(x.d).toLocaleString("pt-BR"):"—")+"</td><td><span class='sourceTag "+sourceCls(x.source)+"'>"+sourceText(x.source)+"</span></td><td><button class='btn' onclick=\"openItem("+JSON.stringify(id)+")\">Abrir</button></td></tr>";
+   }).join("");
+ }catch(e){console.warn("Compare intelligence v2:",e);if(oldCompareCities)oldCompareCities()}
+};
+
+/* Varredura leve e automática: enquanto o site estiver aberto, aprende favoritos + item selecionado
+   sem varrer o universo inteiro nem ultrapassar desnecessariamente o limite da AODP. */
+async function backgroundSweep(){
+ if(intelBusy)return;
+ var ids=[];
+ if(selectedItem)ids.push(selectedItem);
+ if(selectedCraft)ids.push(selectedCraft);
+ localRead("acm_favs").forEach(function(x){if(ids.length<20&&!ids.includes(x))ids.push(x)});
+ if(!ids.length)return;
+ var city=document.getElementById("marketCity")?.value||"Martlock";
+ try{
+   var ps=await getPrices(ids,CITIES,""),ext=await getExternalPrices(ids),all=mergePriceSources(ps,ext),hist=await safeHistory(ids,CITIES,"");
+   ids.forEach(function(id){
+     var p=safeSell(all,hist,city,id);
+     if(p)saveFromPrice(id,city,p);
+   });
+ }catch(e){console.warn("Background sweep:",e)}
+}
+function startLearningLoop(){
+ clearInterval(intelTimer);
+ intelTimer=setInterval(function(){backgroundSweep().catch(function(){})},5*60*1000);
+}startLearningLoop();
+setTimeout(function(){if(selectedItem)refreshItemIntelligence(selectedItem,document.getElementById("marketCity")?.value||"Martlock")},400);
+})();
+</script><script id="farm-module">(function(){"use strict";
+const FARM_CROPS=[
+["T1_CARROT","T1_FARM_CARROT_SEED",1,"Cenoura","Lymhurst","Culinária e alimentação de animais","0%","200%"],
+["T2_BEAN","T2_FARM_BEAN_SEED",2,"Feijão","Bridgewatch","Culinária e alimentação de animais","33%","167%"],
+["T3_WHEAT","T3_FARM_WHEAT_SEED",3,"Trigo","Martlock","Culinária, farinha e alimentação de animais","60%","140%"],
+["T4_TURNIP","T4_FARM_TURNIP_SEED",4,"Nabo","Fort Sterling","Culinária e alimentação de animais","73%","127%"],
+["T5_CABBAGE","T5_FARM_CABBAGE_SEED",5,"Repolho","Thetford","Culinária e alimentação de animais","80%","120%"],
+["T6_POTATO","T6_FARM_POTATO_SEED",6,"Batata","Martlock","Culinária e alimentação de animais","87%","113%"],
+["T7_CORN","T7_FARM_CORN_SEED",7,"Milho","Bridgewatch","Culinária e alimentação de animais","91%","109%"],
+["T8_PUMPKIN","T8_FARM_PUMPKIN_SEED",8,"Abóbora","Lymhurst","Culinária e alimentação de animais","93%","107%"]
+].map(a=>({id:a[0],seed:a[1],tier:a[2],name:a[3],bonusCity:a[4],use:a[5],time:22,noFocus:a[6],focus:a[7],yieldBase:"6–12 por semente"}));
+const FARM_ANIMALS=[
+["T3_FARM_CHICKEN_BABY","T3_FARM_CHICKEN_GROWN",3,"Galinha","T3_WHEAT","Trigo","T3_EGG","Ovos de Galinha","T3_MEAT",60,"Fort Sterling",18],
+["T4_FARM_GOAT_BABY","T4_FARM_GOAT_GROWN",4,"Cabra","T4_TURNIP","Nabo","T4_MILK","Leite de Cabra","T4_MEAT",73.33,"Bridgewatch",18],
+["T5_FARM_GOOSE_BABY","T5_FARM_GOOSE_GROWN",5,"Ganso","T5_CABBAGE","Repolho","T5_EGG","Ovos de Ganso","T5_MEAT",80,"Lymhurst",18],
+["T6_FARM_SHEEP_BABY","T6_FARM_SHEEP_GROWN",6,"Ovelha","T6_POTATO","Batata","T6_MILK","Leite de Ovelha","T6_MEAT",86.67,"Fort Sterling",18],
+["T7_FARM_PIG_BABY","T7_FARM_PIG_GROWN",7,"Porco","T7_CORN","Milho",null,"","T7_MEAT",91.11,"Thetford",18],
+["T8_FARM_COW_BABY","T8_FARM_COW_GROWN",8,"Vaca","T8_PUMPKIN","Abóbora","T8_MILK","Leite de Vaca","T8_MEAT",93.33,"Martlock",18]
+].map(a=>({id:a[0],grown:a[1],tier:a[2],name:a[3],favorite:a[4],favoriteName:a[5],secondary:a[6],secondaryName:a[7],meat:a[8],offspring:a[9],bonusCity:a[10],butcherYield:a[11],time:44,feedQty:18,feed:"culturas ou ervas",place:"Pasto",source:"Mercador de Agricultura"}));
+const FARM_CROP_BONUSES=[["T1_CARROT",1,"Cenoura","Lymhurst"],["T2_BEAN",2,"Feijão","Bridgewatch"],["T3_WHEAT",3,"Trigo","Martlock"],["T4_TURNIP",4,"Nabo","Fort Sterling"],["T5_CABBAGE",5,"Repolho","Thetford"],["T6_POTATO",6,"Batata","Martlock"],["T7_CORN",7,"Milho","Bridgewatch"],["T8_PUMPKIN",8,"Abóbora","Lymhurst"]];
+const FARM_ANIMAL_BONUSES=[["T3_FARM_CHICKEN_GROWN",3,"Galinha","Fort Sterling"],["T4_FARM_GOAT_GROWN",4,"Cabra","Bridgewatch"],["T5_FARM_GOOSE_GROWN",5,"Ganso","Lymhurst"],["T6_FARM_SHEEP_GROWN",6,"Ovelha","Fort Sterling"],["T7_FARM_PIG_GROWN",7,"Porco","Thetford"],["T8_FARM_COW_GROWN",8,"Vaca","Martlock"]];
+let farmType="crop",farmTier="all",farmSelected=FARM_CROPS[0].id;
+const fIcon=id=>typeof iconUrl==="function"?iconUrl(id,128):"https://render.albiononline.com/v1/item/"+encodeURIComponent(id)+".png?size=128";
+const fName=(id,f)=>typeof displayName==="function"?displayName(id):f||id;
+const fHours=h=>{const d=Math.floor(h/24),r=h%24;return d?d+"d "+r+"h":h+"h"};
+function farmFilters(){const t=$("farmTypes"),z=$("farmTiers");if(!t||!z)return;t.innerHTML='<button class="breedTier '+(farmType==="crop"?"active":"")+'" data-type="crop">🌱 Verduras</button><button class="breedTier '+(farmType==="animal"?"active":"")+'" data-type="animal">🐔 Animais</button>';z.innerHTML=(farmType==="animal"?["all",3,4,5,6,7,8]:["all",1,2,3,4,5,6,7,8]).map(v=>'<button class="breedTier '+(String(v)===String(farmTier)?"active":"")+'" data-tier="'+v+'">'+(v==="all"?"Todos":"T"+v)+"</button>").join("");if(!t.dataset.bound){t.dataset.bound=1;t.onclick=e=>{const b=e.target.closest("[data-type]");if(b){farmType=b.dataset.type;farmTier="all";farmSelected=(farmType==="crop"?FARM_CROPS:FARM_ANIMALS)[0].id;farmRender()}}}if(!z.dataset.bound){z.dataset.bound=1;z.onclick=e=>{const b=e.target.closest("[data-tier]");if(b){farmTier=b.dataset.tier;farmRender()}}}}
+function farmRender(){farmFilters();const list=(farmType==="crop"?FARM_CROPS:FARM_ANIMALS).filter(x=>farmTier==="all"||+x.tier===+farmTier),g=$("farmGrid");if(!g)return;g.innerHTML=list.map(x=>'<button class="breedTile '+(x.id===farmSelected?"active":"")+'" data-id="'+x.id+'"><img loading="lazy" decoding="async" src="'+fIcon(x.id)+'"><div class="btName">'+safe(x.name)+'</div><div class="btMeta">T'+x.tier+' • '+x.place+'</div><button class="favBtn" data-mount-fav="' + x.id + '" onclick="toggleSpecificFav(this.dataset.mountFav)">⭐ Favorito</button></button>').join("");if(!g.dataset.bound){g.dataset.bound=1;g.onclick=e=>{const b=e.target.closest("[data-id]");if(b){farmSelected=b.dataset.id;farmRender()}}}farmDetail()}
+function farmBonusList(animal){
+const rows=animal?FARM_ANIMAL_BONUSES:FARM_CROP_BONUSES;
+return '<div class="breedCraft" style="margin-top:12px"><h2 style="margin-bottom:4px">🏙️ Cidades com bônus de rendimento</h2><div class="tiny" style="margin-bottom:8px">Bônus local: <b>+10%</b>. Esta lista fica sempre visível.</div>'+rows.map(r=>'<div class="breedCraftRow"><img loading="lazy" decoding="async" src="'+fIcon(r[0])+'"><div><b>T'+r[1]+' • '+safe(r[2])+' — '+safe(r[3])+' <span class="green">+10%</span></b><div class="tiny">'+(animal?"Produção/abate do animal":"Rendimento da cultura")+'</div></div></div>').join('')+'</div>';
+}
+function farmDetail(){
+const el=$("farmDetail");if(!el)return;
+const list=farmType==="crop"?FARM_CROPS:FARM_ANIMALS,x=list.find(a=>a.id===farmSelected)||list[0];if(!x)return;
+if(farmType==="crop"){
+el.innerHTML='<div><div class="breedHero"><img loading="eager" decoding="async" src="'+fIcon(x.seed)+'"><div style="flex:1"><h2>'+safe(x.name)+' • T'+x.tier+'</h2><div class="muted">🌱 Semente → plantio → colheita</div><div style="margin-top:8px"></div><div class="tiny" style="margin-top:5px">Bônus de cidade: <b>'+safe(x.bonusCity)+' +10%</b></div></div></div><div class="breedNotice">Crescimento de 22 horas. O Foco é usado para regar e aumentar o retorno de sementes, não a quantidade colhida.</div></div><div><div class="breedStats"><div class="breedStat breedFoodStat"><div class="label">Semente</div><div class="breedFoodLine"><img loading="eager" decoding="async" src="'+fIcon(x.seed)+'"><div><div class="val">1×</div><div class="tiny">'+safe(fName(x.seed,"Semente de "+x.name))+'</div></div><button class="favBtn farmInlineFav" data-farm-fav="'+x.id+'" onclick="favoriteAndOpen(this.dataset.farmFav)">⭐ Favorito</button></div></div><div class="breedStat"><div class="label">Crescimento</div><div class="val">22h</div><div class="tiny">1 ciclo</div></div><div class="breedStat"><div class="label">Colheita</div><div class="val">'+safe(x.yieldBase)+'</div><div class="tiny">sem Premium</div></div><div class="breedStat"><div class="label">Retorno de sementes</div><div class="tiny">Sem Foco</div><div class="val">'+x.noFocus+'</div><div class="tiny">Com Foco</div><div class="val green">'+x.focus+'</div></div></div><div class="breedCraft"><h2 style="margin-bottom:4px">Possíveis utilizações</h2><div class="breedCraftRow"><img src="'+fIcon(x.id)+'"><div><b>'+safe(x.name)+'</b><div class="tiny">'+safe(x.use)+'</div></div></div><div class="breedCraftRow"><img src="'+fIcon(x.seed)+'"><div><b>Sementes → novo plantio</b><div class="tiny">O retorno permite repor sementes para o próximo ciclo.</div></div></div></div>'+farmBonusList(false)+'</div>';
+}else{
+const sec=x.secondary?'<div class="breedCraftRow"><img loading="lazy" decoding="async" src="'+fIcon(x.secondary)+'"><div><b>Produção secundária: '+safe(fName(x.secondary,x.secondaryName))+'</b><div class="tiny">Manter o adulto vivo para produção contínua.</div></div></div>':"";
+const focus=Number(x.offspring)+40;
+el.innerHTML='<div><div class="breedHero"><img loading="eager" decoding="async" src="'+fIcon(x.id)+'"><div style="flex:1"><h2>'+safe(x.name)+' • T'+x.tier+'</h2><div class="muted">🐣 Filhote → alimentação → adulto</div><div style="margin-top:8px"></div><div class="tiny" style="margin-top:5px">Bônus de cidade: <b>'+safe(x.bonusCity)+' +10%</b> • <b>não selável</b></div></div></div><div class="breedNotice">Animal de produção — não é montaria. Cresce no Pasto em 44 horas sem Premium. A comida favorita dobra a nutrição recebida, reduzindo pela metade a quantidade de culturas necessária.</div></div><div><div class="breedStats"><div class="breedStat breedFoodStat"><div class="label">Filhote</div><div class="breedFoodLine"><img loading="eager" decoding="async" src="'+fIcon(x.id)+'"><div><div class="val">T'+x.tier+'</div><div class="tiny">'+safe(fName(x.id,x.name))+'</div></div><button class="favBtn farmInlineFav" data-farm-fav="'+x.id+'" onclick="favoriteAndOpen(this.dataset.farmFav)">⭐ Favorito</button></div></div><div class="breedStat"><div class="label">Crescimento</div><div class="val">1d 20h</div><div class="tiny">Premium reduz para 22h</div></div><div class="breedStat"><div class="label">Comida favorita</div><div class="breedFoodLine"><img loading="eager" decoding="async" src="'+fIcon(x.favorite)+'"><div><div class="val">'+safe(x.favoriteName)+'</div><div class="tiny">9 culturas quando usada como favorita</div></div></div></div><div class="breedStat"><div class="label">Retorno de prole</div><div class="tiny">Sem Foco</div><div class="val">'+String(x.offspring).replace(".",",")+'%</div><div class="tiny">Com Foco</div><div class="val green">'+String(focus).replace(".",",")+'%</div></div></div><div class="breedCraft"><h2 style="margin-bottom:4px">Possíveis utilizações</h2><div class="breedCraftRow"><img src="'+fIcon(x.grown)+'"><div><b>Adulto → produção ou abate</b><div class="tiny">Pode ser mantido para produção secundária ou levado ao Açougue.</div></div></div>'+sec+'<div class="breedCraftRow"><img src="'+fIcon(x.meat)+'"><div><b>Abate → '+safe(fName(x.meat,"Carne"))+'</b><div class="tiny">Produção do Açougue: <b>'+x.butcherYield+'×</b> por animal</div></div></div></div>'+farmBonusList(true)+'</div>';
+}}
+window.getFarmFavoriteInfo=function(id){const a=[...FARM_CROPS,...FARM_ANIMALS].find(x=>x.id===id);return a?{name:a.name,tier:a.tier}:null};window.openFarmFavorite=function(id){const a=[...FARM_CROPS,...FARM_ANIMALS].find(x=>x.id===id);if(!a)return;farmType=FARM_CROPS.includes(a)?"crop":"animal";farmSelected=id;go("farm");farmRender();updateFavButtons()};window.renderFarm=farmRender;farmRender();updateFavButtons();
+})();</script>
+<script id="mount-breeding">
+(function(){
+"use strict";
+const MOUNT_BREEDS=[
+{id:"T3_FARM_HORSE_BABY",tier:3,grown:"T3_FARM_HORSE_GROWN",mounts:["T3_MOUNT_HORSE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:10,time:44,offspring:104,place:"Pasto"},
+{id:"T3_FARM_OX_BABY",tier:3,grown:"T3_FARM_OX_GROWN",mounts:["T3_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:10,time:44,offspring:104,place:"Pasto"},
+{id:"T4_FARM_HORSE_BABY",tier:4,grown:"T4_FARM_HORSE_GROWN",mounts:["T4_MOUNT_HORSE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:31,time:92,offspring:105,place:"Pasto"},
+{id:"T4_FARM_OX_BABY",tier:4,grown:"T4_FARM_OX_GROWN",mounts:["T4_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:31,time:92,offspring:105,place:"Pasto"},
+{id:"T4_FARM_GIANTSTAG_BABY",tier:4,grown:"T4_FARM_GIANTSTAG_GROWN",mounts:["T4_MOUNT_GIANTSTAG"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:31,time:92,offspring:36,place:"Pasto"},
+{id:"T5_FARM_HORSE_BABY",tier:5,grown:"T5_FARM_HORSE_GROWN",mounts:["T5_MOUNT_HORSE","T5_MOUNT_ARMORED_HORSE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:91,time:140,offspring:105,place:"Pasto"},
+{id:"T5_FARM_COUGAR_BABY",tier:5,grown:"T5_FARM_COUGAR_GROWN",mounts:["T5_MOUNT_COUGAR_KEEPER@1"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_MOABIRD_FW_BRIDGEWATCH_BABY",tier:5,grown:"T5_FARM_MOABIRD_FW_BRIDGEWATCH_GROWN",mounts:["T5_MOUNT_MOABIRD_FW_BRIDGEWATCH"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_DIREBEAR_FW_FORTSTERLING_BABY",tier:5,grown:"T5_FARM_DIREBEAR_FW_FORTSTERLING_GROWN",mounts:["T5_MOUNT_DIREBEAR_FW_FORTSTERLING"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_DIREBOAR_FW_LYMHURST_BABY",tier:5,grown:"T5_FARM_DIREBOAR_FW_LYMHURST_GROWN",mounts:["T5_MOUNT_DIREBOAR_FW_LYMHURST"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_RAM_FW_MARTLOCK_BABY",tier:5,grown:"T5_FARM_RAM_FW_MARTLOCK_GROWN",mounts:["T5_MOUNT_RAM_FW_MARTLOCK"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_SWAMPDRAGON_FW_THETFORD_BABY",tier:5,grown:"T5_FARM_SWAMPDRAGON_FW_THETFORD_GROWN",mounts:["T5_MOUNT_SWAMPDRAGON_FW_THETFORD"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_GREYWOLF_FW_CAERLEON_BABY",tier:5,grown:"T5_FARM_GREYWOLF_FW_CAERLEON_GROWN",mounts:["T5_MOUNT_GREYWOLF_FW_CAERLEON"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_OWL_FW_BRECILIEN_BABY",tier:5,grown:"T5_FARM_OWL_FW_BRECILIEN_GROWN",mounts:["T5_MOUNT_OWL_FW_BRECILIEN"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T5_FARM_SPIDER_HELL_BABY",tier:5,grown:"T5_FARM_SPIDER_HELL_GROWN",mounts:["T5_MOUNT_SPIDER_HELL"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:91,time:140,offspring:36,place:"Canil"},
+{id:"T6_FARM_HORSE_BABY",tier:6,grown:"T6_FARM_HORSE_GROWN",mounts:["T6_MOUNT_HORSE","T6_MOUNT_ARMORED_HORSE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:271,time:188,offspring:105,place:"Pasto"},
+{id:"T6_FARM_OX_BABY",tier:6,grown:"T6_FARM_OX_GROWN",mounts:["T6_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:271,time:188,offspring:105,place:"Pasto"},
+{id:"T6_FARM_DIREWOLF_BABY",tier:6,grown:"T6_FARM_DIREWOLF_GROWN",mounts:["T6_MOUNT_DIREWOLF"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:271,time:188,offspring:23.6,place:"Canil"},
+{id:"T6_FARM_GIANTSTAG_MOOSE_BABY",tier:6,grown:"T6_FARM_GIANTSTAG_MOOSE_GROWN",mounts:["T6_MOUNT_GIANTSTAG_MOOSE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:271,time:188,offspring:23.6,place:"Pasto"},
+{id:"T7_FARM_HORSE_BABY",tier:7,grown:"T7_FARM_HORSE_GROWN",mounts:["T7_MOUNT_HORSE","T7_MOUNT_ARMORED_HORSE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:812,time:236,offspring:104,place:"Pasto"},
+{id:"T7_FARM_OX_BABY",tier:7,grown:"T7_FARM_OX_GROWN",mounts:["T7_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:812,time:236,offspring:104,place:"Pasto"},
+{id:"T7_FARM_DIREBOAR_BABY",tier:7,grown:"T7_FARM_DIREBOAR_GROWN",mounts:["T7_MOUNT_DIREBOAR"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:812,time:236,offspring:20,place:"Canil"},
+{id:"T7_FARM_SWAMPDRAGON_BABY",tier:7,grown:"T7_FARM_SWAMPDRAGON_GROWN",mounts:["T7_MOUNT_SWAMPDRAGON"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:812,time:236,offspring:20,place:"Canil"},
+{id:"T8_FARM_HORSE_BABY",tier:8,grown:"T8_FARM_HORSE_GROWN",mounts:["T8_MOUNT_HORSE","T8_MOUNT_ARMORED_HORSE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:2432,time:284,offspring:103,place:"Pasto"},
+{id:"T8_FARM_OX_BABY",tier:8,grown:"T8_FARM_OX_GROWN",mounts:["T8_MOUNT_OX"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:2432,time:284,offspring:103,place:"Pasto"},
+{id:"T8_FARM_DIREBEAR_BABY",tier:8,grown:"T8_FARM_DIREBEAR_GROWN",mounts:["T8_MOUNT_DIREBEAR"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_MAMMOTH_BABY",tier:8,grown:"T8_FARM_MAMMOTH_GROWN",mounts:["T8_MOUNT_MAMMOTH_TRANSPORT"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_DIREWOLF_BABY",tier:8,grown:"T8_FARM_DIREWOLF_GROWN",mounts:["T8_MOUNT_DIREWOLF_WHITE"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_MOABIRD_FW_BRIDGEWATCH_BABY",tier:8,grown:"T8_FARM_MOABIRD_FW_BRIDGEWATCH_GROWN",mounts:["T8_MOUNT_MOABIRD_FW_BRIDGEWATCH_ELITE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_DIREBEAR_FW_FORTSTERLING_BABY",tier:8,grown:"T8_FARM_DIREBEAR_FW_FORTSTERLING_GROWN",mounts:["T8_MOUNT_DIREBEAR_FW_FORTSTERLING_ELITE"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_DIREBOAR_FW_LYMHURST_BABY",tier:8,grown:"T8_FARM_DIREBOAR_FW_LYMHURST_GROWN",mounts:["T8_MOUNT_DIREBOAR_FW_LYMHURST_ELITE"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_RAM_FW_MARTLOCK_BABY",tier:8,grown:"T8_FARM_RAM_FW_MARTLOCK_GROWN",mounts:["T8_MOUNT_RAM_FW_MARTLOCK_ELITE"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_SWAMPDRAGON_FW_THETFORD_BABY",tier:8,grown:"T8_FARM_SWAMPDRAGON_FW_THETFORD_GROWN",mounts:["T8_MOUNT_SWAMPDRAGON_FW_THETFORD_ELITE"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_GREYWOLF_FW_CAERLEON_BABY",tier:8,grown:"T8_FARM_GREYWOLF_FW_CAERLEON_GROWN",mounts:["T8_MOUNT_GREYWOLF_FW_CAERLEON_ELITE"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_OWL_FW_BRECILIEN_BABY",tier:8,grown:"T8_FARM_OWL_FW_BRECILIEN_GROWN",mounts:["T8_MOUNT_OWL_FW_BRECILIEN_ELITE"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_SPIDER_HELL_BABY",tier:8,grown:"T8_FARM_SPIDER_HELL_GROWN",mounts:["T8_MOUNT_SPIDER_HELL"],food:"meat",foodName:"Carne",foodId:"T3_MEAT",foodQty:2432,time:284,offspring:15,place:"Canil"},
+{id:"T8_FARM_DRAKE_BABY",tier:8,grown:"T8_FARM_DRAKE_GROWN",mounts:["T8_MOUNT_DRAKE"],food:"mount",foodName:"Montarias T8",foodId:"T8_MOUNT_HORSE",foodQty:35,time:667,offspring:5.6,place:"Canil"},
+{id:"T6_FARM_GIANTSTAG_BABY",tier:6,grown:"T6_FARM_GIANTSTAG_GROWN",mounts:["T6_MOUNT_GIANTSTAG"],food:"plant",foodName:"Cenoura",foodId:"T1_CARROT",foodQty:271,time:188,offspring:23.6,place:"Pasto"},
+{id:"T8_FARM_RABBIT_EASTER_BABY",tier:8,grown:"T8_FARM_RABBIT_EASTER_GROWN",mounts:["T8_MOUNT_RABBIT_EASTER"],food:"special",foodName:"Chocolate",foodId:"T8_FARM_RABBIT_EASTER_BABY",foodQty:500,time:44,offspring:10,place:"Canil"},
+{id:"T8_FARM_RABBIT_EASTER_BABY_DARK",tier:8,grown:"T8_FARM_RABBIT_EASTER_GROWN_DARK",mounts:["T8_MOUNT_RABBIT_EASTER_DARK@1"],food:"special",foodName:"Chocolate",foodId:"T8_FARM_RABBIT_EASTER_BABY",foodQty:500,time:44,offspring:10,place:"Canil"}
+];
+
+const BREED_SOURCES={"T3_FARM_HORSE_BABY":{source:"Mercador de Agricultura",biome:"Cidades / Ilhas",sourceIcon:"T3_FARM_HORSE_BABY"},"T4_FARM_HORSE_BABY":{source:"Mercador de Agricultura",biome:"Cidades / Ilhas",sourceIcon:"T4_FARM_HORSE_BABY"},"T5_FARM_HORSE_BABY":{source:"Mercador de Agricultura",biome:"Cidades / Ilhas",sourceIcon:"T5_FARM_HORSE_BABY"},"T6_FARM_HORSE_BABY":{source:"Mercador de Agricultura",biome:"Cidades / Ilhas",sourceIcon:"T6_FARM_HORSE_BABY"},"T7_FARM_HORSE_BABY":{source:"Mercador de Agricultura",biome:"Cidades / Ilhas",sourceIcon:"T7_FARM_HORSE_BABY"},"T8_FARM_HORSE_BABY":{source:"Mercador de Agricultura",biome:"Cidades / Ilhas",sourceIcon:"T8_FARM_HORSE_BABY"},"T3_FARM_OX_BABY":{source:"Mercador de Agricultura",biome:"Cidades / Ilhas",sourceIcon:"T3_FARM_OX_BABY"},"T4_FARM_GIANTSTAG_BABY":{source:"Animais selvagens",biome:"Estepe",sourceIcon:"T4_FARM_GIANTSTAG_BABY"},"T5_FARM_COUGAR_BABY":{source:"Animais selvagens / Guardiões",biome:"Estepe",sourceIcon:"T5_FARM_COUGAR_BABY"},"T5_FARM_MOABIRD_FW_BRIDGEWATCH_BABY":{source:"Criaturas da facção de Bridgewatch",biome:"Estepe",sourceIcon:"T5_FARM_MOABIRD_FW_BRIDGEWATCH_BABY"},"T5_FARM_DIREBEAR_FW_FORTSTERLING_BABY":{source:"Criaturas da facção de Fort Sterling",biome:"Montanha",sourceIcon:"T5_FARM_DIREBEAR_FW_FORTSTERLING_BABY"},"T5_FARM_DIREBOAR_FW_LYMHURST_BABY":{source:"Criaturas da facção de Lymhurst",biome:"Floresta",sourceIcon:"T5_FARM_DIREBOAR_FW_LYMHURST_BABY"},"T5_FARM_RAM_FW_MARTLOCK_BABY":{source:"Criaturas da facção de Martlock",biome:"Planalto",sourceIcon:"T5_FARM_RAM_FW_MARTLOCK_BABY"},"T5_FARM_SWAMPDRAGON_FW_THETFORD_BABY":{source:"Criaturas da facção de Thetford",biome:"Pântano",sourceIcon:"T5_FARM_SWAMPDRAGON_FW_THETFORD_BABY"},"T5_FARM_GREYWOLF_FW_CAERLEON_BABY":{source:"Criaturas da facção de Caerleon",biome:"Zona Vermelha / Caerleon",sourceIcon:"T5_FARM_GREYWOLF_FW_CAERLEON_BABY"},"T5_FARM_OWL_FW_BRECILIEN_BABY":{source:"Criaturas da facção de Brecilien",biome:"Névoas",sourceIcon:"T5_FARM_OWL_FW_BRECILIEN_BABY"},"T5_FARM_SPIDER_HELL_BABY":{source:"Criaturas do Inferno",biome:"Inferno",sourceIcon:"T5_FARM_SPIDER_HELL_BABY"},"T6_FARM_DIREWOLF_BABY":{source:"Animais selvagens",biome:"Floresta",sourceIcon:"T6_FARM_DIREWOLF_BABY"},"T6_FARM_GIANTSTAG_BABY":{source:"Animais selvagens",biome:"Floresta",sourceIcon:"T6_FARM_GIANTSTAG_BABY"},"T6_FARM_GIANTSTAG_MOOSE_BABY":{source:"Animais selvagens",biome:"Floresta",sourceIcon:"T6_FARM_GIANTSTAG_MOOSE_BABY"},"T7_FARM_DIREBOAR_BABY":{source:"Animais selvagens",biome:"Floresta / Pântano",sourceIcon:"T7_FARM_DIREBOAR_BABY"},"T7_FARM_SWAMPDRAGON_BABY":{source:"Animais selvagens",biome:"Pântano",sourceIcon:"T7_FARM_SWAMPDRAGON_BABY"},"T8_FARM_DIREBEAR_BABY":{source:"Animais selvagens",biome:"Floresta / Pântano",sourceIcon:"T8_FARM_DIREBEAR_BABY"},"T8_FARM_MAMMOTH_BABY":{source:"Animais selvagens",biome:"Estepe",sourceIcon:"T8_FARM_MAMMOTH_BABY"},"T8_FARM_DIREWOLF_BABY":{source:"Item removido do loot atual",biome:"Floresta",sourceIcon:"T8_FARM_DIREWOLF_BABY"},"T8_FARM_MOABIRD_FW_BRIDGEWATCH_BABY":{source:"Criaturas da facção de Bridgewatch",biome:"Estepe",sourceIcon:"T8_FARM_MOABIRD_FW_BRIDGEWATCH_BABY"},"T8_FARM_DIREBEAR_FW_FORTSTERLING_BABY":{source:"Criaturas da facção de Fort Sterling",biome:"Montanha",sourceIcon:"T8_FARM_DIREBEAR_FW_FORTSTERLING_BABY"},"T8_FARM_DIREBOAR_FW_LYMHURST_BABY":{source:"Criaturas da facção de Lymhurst",biome:"Floresta",sourceIcon:"T8_FARM_DIREBOAR_FW_LYMHURST_BABY"},"T8_FARM_RAM_FW_MARTLOCK_BABY":{source:"Criaturas da facção de Martlock",biome:"Planalto",sourceIcon:"T8_FARM_RAM_FW_MARTLOCK_BABY"},"T8_FARM_SWAMPDRAGON_FW_THETFORD_BABY":{source:"Criaturas da facção de Thetford",biome:"Pântano",sourceIcon:"T8_FARM_SWAMPDRAGON_FW_THETFORD_BABY"},"T8_FARM_GREYWOLF_FW_CAERLEON_BABY":{source:"Criaturas da facção de Caerleon",biome:"Zona Vermelha / Caerleon",sourceIcon:"T8_FARM_GREYWOLF_FW_CAERLEON_BABY"},"T8_FARM_OWL_FW_BRECILIEN_BABY":{source:"Criaturas da facção de Brecilien",biome:"Névoas",sourceIcon:"T8_FARM_OWL_FW_BRECILIEN_BABY"},"T8_FARM_SPIDER_HELL_BABY":{source:"Criaturas do Inferno",biome:"Inferno",sourceIcon:"T8_FARM_SPIDER_HELL_BABY"},"T8_FARM_DRAKE_BABY":{source:"Baús de Dragões",biome:"Conteúdo de Dragões / mundo aberto",sourceIcon:"T8_FARM_DRAKE_BABY"},"T8_FARM_RABBIT_EASTER_BABY":{source:"Evento de Páscoa",biome:"Evento",sourceIcon:"T8_FARM_RABBIT_EASTER_BABY"},"T8_FARM_RABBIT_EASTER_BABY_DARK":{source:"Evento de Páscoa",biome:"Evento",sourceIcon:"T8_FARM_RABBIT_EASTER_BABY_DARK"}};
+const BREED_SPECIALS={"T5_FARM_HORSE_BABY":[{id:"T5_MOUNT_ARMORED_HORSE_SKIN_01",rows:[["T5_MOUNT_ARMORED_HORSE",1]],label:"Cavalo de Guerra do Perito"},{id:"T5_MOUNT_ARMORED_HORSE_MORGANA@1",rows:[["T5_MOUNT_ARMORED_HORSE",1],["T5_MOUNTUPGRADE_HORSE_MORGANA",1]],label:"Cavalo de Morgana"},{id:"T5_MOUNT_HORSE_UNDEAD@1",rows:[["T5_MOUNT_HORSE",1],["T5_MOUNTUPGRADE_HORSE_CURSE",1]],label:"Cavalo Morto-vivo"}],"T6_FARM_HORSE_BABY":[{id:"T6_MOUNT_ARMORED_HORSE_SKIN_01",rows:[["T6_MOUNT_ARMORED_HORSE",1]],label:"Cavalo de Guerra do Mestre"}],"T7_FARM_HORSE_BABY":[{id:"T7_MOUNT_ARMORED_HORSE_SKIN_01",rows:[["T7_MOUNT_ARMORED_HORSE",1]],label:"Cavalo de Guerra do Grão-mestre"}],"T8_FARM_HORSE_BABY":[{id:"T8_MOUNT_ARMORED_HORSE_SKIN_01",rows:[["T8_MOUNT_ARMORED_HORSE",1]],label:"Cavalo de Guerra do Ancião"},{id:"T8_MOUNT_ARMORED_HORSE_MORGANA@1",rows:[["T8_MOUNT_ARMORED_HORSE",1],["T8_MOUNTUPGRADE_HORSE_MORGANA",1]],label:"Cavalo de Morgana / Pesadelo de Morgana"},{id:"T8_MOUNT_HORSE_UNDEAD@1",rows:[["T8_MOUNT_HORSE",1],["T8_MOUNTUPGRADE_HORSE_CURSE",1]],label:"Cavalo Espectral"}],"T5_FARM_COUGAR_BABY":[{id:"T8_MOUNT_COUGAR_KEEPER@1",rows:[["T5_MOUNT_COUGAR_KEEPER@1",1],["T8_MOUNTUPGRADE_COUGAR_KEEPER",1]],label:"Garra-ligeira Feroz de Elite"}],"T7_FARM_SWAMPDRAGON_BABY":[{id:"T7_MOUNT_SWAMPDRAGON_AVALON_BASILISK",rows:[["T7_MOUNT_SWAMPDRAGON",1],["T8_MOUNTUPGRADE_SWAMPDRAGON_AVALON_BASILISK",5000]],label:"Basilisco Avaloniano"}]};
+const BREED_RECIPES={
+"T3_MOUNT_HORSE":[["T3_FARM_HORSE_GROWN",1],["T3_LEATHER",10]],"T4_MOUNT_HORSE":[["T4_FARM_HORSE_GROWN",1],["T4_LEATHER",20]],"T5_MOUNT_HORSE":[["T5_FARM_HORSE_GROWN",1],["T5_LEATHER",20]],"T6_MOUNT_HORSE":[["T6_FARM_HORSE_GROWN",1],["T6_LEATHER",20]],"T7_MOUNT_HORSE":[["T7_FARM_HORSE_GROWN",1],["T7_LEATHER",20]],"T8_MOUNT_HORSE":[["T8_FARM_HORSE_GROWN",1],["T8_LEATHER",20]],
+"T3_MOUNT_OX":[["T3_FARM_OX_GROWN",1],["T3_LEATHER",10]],"T4_MOUNT_OX":[["T4_FARM_OX_GROWN",1],["T4_LEATHER",20]],"T5_MOUNT_OX":[["T5_FARM_OX_GROWN",1],["T5_LEATHER",20]],"T6_MOUNT_OX":[["T6_FARM_OX_GROWN",1],["T6_LEATHER",20]],"T7_MOUNT_OX":[["T7_FARM_OX_GROWN",1],["T7_LEATHER",20]],"T8_MOUNT_OX":[["T8_FARM_OX_GROWN",1],["T8_LEATHER",20]],
+"T4_MOUNT_GIANTSTAG":[["T4_FARM_GIANTSTAG_GROWN",1],["T4_LEATHER",20]],"T6_MOUNT_GIANTSTAG":[["T6_FARM_GIANTSTAG_GROWN",1],["T6_LEATHER",20]],"T6_MOUNT_GIANTSTAG_MOOSE":[["T6_FARM_GIANTSTAG_MOOSE_GROWN",1],["T6_LEATHER",20]],
+"T6_MOUNT_DIREWOLF":[["T6_FARM_DIREWOLF_GROWN",1],["T6_LEATHER",20]],"T7_MOUNT_DIREBOAR":[["T7_FARM_DIREBOAR_GROWN",1],["T7_LEATHER",20]],"T7_MOUNT_SWAMPDRAGON":[["T7_FARM_SWAMPDRAGON_GROWN",1],["T7_LEATHER",20]],"T8_MOUNT_DIREBEAR":[["T8_FARM_DIREBEAR_GROWN",1],["T8_LEATHER",20]],"T8_MOUNT_MAMMOTH_TRANSPORT":[["T8_FARM_MAMMOTH_GROWN",1],["T8_LEATHER",20]],"T8_MOUNT_DIREWOLF_WHITE":[["T8_FARM_DIREWOLF_GROWN",1],["T8_LEATHER",20]],"T5_MOUNT_ARMORED_HORSE":[["T5_FARM_HORSE_GROWN",1],["T5_CLOTH",10],["T5_METALBAR",20]],"T6_MOUNT_ARMORED_HORSE":[["T6_FARM_HORSE_GROWN",1],["T6_CLOTH",10],["T6_METALBAR",20]],"T7_MOUNT_ARMORED_HORSE":[["T7_FARM_HORSE_GROWN",1],["T7_CLOTH",10],["T7_METALBAR",20]],"T8_MOUNT_ARMORED_HORSE":[["T8_FARM_HORSE_GROWN",1],["T8_CLOTH",10],["T8_METALBAR",20]],
+"T5_MOUNT_COUGAR_KEEPER":[["T5_FARM_COUGAR_GROWN",1],["T5_LEATHER",20]],
+"T5_MOUNT_MOABIRD_FW_BRIDGEWATCH":[["T5_FARM_MOABIRD_FW_BRIDGEWATCH_GROWN",1],["T5_LEATHER",20],["T1_FACTION_STEPPE_TOKEN_1",5]],"T5_MOUNT_DIREBEAR_FW_FORTSTERLING":[["T5_FARM_DIREBEAR_FW_FORTSTERLING_GROWN",1],["T5_LEATHER",20],["T1_FACTION_MOUNTAIN_TOKEN_1",5]],"T5_MOUNT_DIREBOAR_FW_LYMHURST":[["T5_FARM_DIREBOAR_FW_LYMHURST_GROWN",1],["T5_LEATHER",20],["T1_FACTION_FOREST_TOKEN_1",5]],"T5_MOUNT_RAM_FW_MARTLOCK":[["T5_FARM_RAM_FW_MARTLOCK_GROWN",1],["T5_LEATHER",20],["T1_FACTION_HIGHLAND_TOKEN_1",5]],"T5_MOUNT_SWAMPDRAGON_FW_THETFORD":[["T5_FARM_SWAMPDRAGON_FW_THETFORD_GROWN",1],["T5_LEATHER",20],["T1_FACTION_SWAMP_TOKEN_1",5]],"T5_MOUNT_GREYWOLF_FW_CAERLEON":[["T5_FARM_GREYWOLF_FW_CAERLEON_GROWN",1],["T5_LEATHER",20],["T1_FACTION_CAERLEON_TOKEN_1",5]],"T5_MOUNT_OWL_FW_BRECILIEN":[["T5_FARM_OWL_FW_BRECILIEN_GROWN",1],["T5_LEATHER",20],["QUESTITEM_TOKEN_MISTS",5]],"T5_MOUNT_SPIDER_HELL":[["T5_FARM_SPIDER_HELL_GROWN",1],["T5_LEATHER",20],["T1_FACTION_CAERLEON_TOKEN_1",5]],
+"T8_MOUNT_MOABIRD_FW_BRIDGEWATCH_ELITE":[["T8_FARM_MOABIRD_FW_BRIDGEWATCH_GROWN",1],["T8_LEATHER",20],["T1_FACTION_STEPPE_TOKEN_1",20]],"T8_MOUNT_DIREBEAR_FW_FORTSTERLING_ELITE":[["T8_FARM_DIREBEAR_FW_FORTSTERLING_GROWN",1],["T8_LEATHER",20],["T1_FACTION_MOUNTAIN_TOKEN_1",20]],"T8_MOUNT_DIREBOAR_FW_LYMHURST_ELITE":[["T8_FARM_DIREBOAR_FW_LYMHURST_GROWN",1],["T8_LEATHER",20],["T1_FACTION_FOREST_TOKEN_1",20]],"T8_MOUNT_RAM_FW_MARTLOCK_ELITE":[["T8_FARM_RAM_FW_MARTLOCK_GROWN",1],["T8_LEATHER",20],["T1_FACTION_HIGHLAND_TOKEN_1",20]],"T8_MOUNT_SWAMPDRAGON_FW_THETFORD_ELITE":[["T8_FARM_SWAMPDRAGON_FW_THETFORD_GROWN",1],["T8_LEATHER",20],["T1_FACTION_SWAMP_TOKEN_1",20]],"T8_MOUNT_GREYWOLF_FW_CAERLEON_ELITE":[["T8_FARM_GREYWOLF_FW_CAERLEON_GROWN",1],["T8_LEATHER",20],["T1_FACTION_CAERLEON_TOKEN_1",20]],"T8_MOUNT_OWL_FW_BRECILIEN_ELITE":[["T8_FARM_OWL_FW_BRECILIEN_GROWN",1],["T8_LEATHER",20],["QUESTITEM_TOKEN_MISTS",20]],"T8_MOUNT_SPIDER_HELL":[["T8_FARM_SPIDER_HELL_GROWN",1],["T8_LEATHER",20],["T1_FACTION_CAERLEON_TOKEN_1",20]],
+"T8_MOUNT_RABBIT_EASTER":[["T8_FARM_RABBIT_EASTER_GROWN",1],["T8_LEATHER",20]],"T8_MOUNT_RABBIT_EASTER_DARK@1":[["T8_FARM_RABBIT_EASTER_GROWN_DARK",1],["T8_LEATHER",20]],"T8_MOUNT_DRAKE":[["T8_FARM_DRAKE_GROWN",1],["T8_LEATHER",20]]
+};
+
+function brName(id){return typeof displayName==="function"?displayName(id):id}
+function brIcon(id){return typeof iconUrl==="function"?iconUrl(id,128):"https://render.albiononline.com/v1/item/"+encodeURIComponent(id)+".png?size=128"}
+function brHours(h){let d=Math.floor(h/24),r=h%24;return d?d+"d "+r+"h":h+"h"}
+function brRecipe(id,tier){
+ let base=BREED_RECIPES[id]; if(base)return base;
+ let grown=id.replace(/^T(\d+)_MOUNT_/,"T$1_FARM_")+"";
+ return null;
+}
+function addRareRecipes(){
+ const tierLeather={4:"T4_LEATHER",5:"T5_LEATHER",6:"T6_LEATHER",7:"T7_LEATHER",8:"T8_LEATHER"};
+ MOUNT_BREEDS.forEach(x=>x.mounts.forEach(m=>{
+   if(!BREED_RECIPES[m]){
+     let mt=/^T(\d+)_/.exec(m),t=mt?+mt[1]:x.tier;
+     if(tierLeather[t])BREED_RECIPES[m]=[[x.grown,1],[tierLeather[t],20]];
+   }
+ }));
+}
+addRareRecipes();
+
+let breedTier="all",breedSelected=MOUNT_BREEDS[0].id;
+function renderBreedTiers(){
+ const el=$("breedTiers");if(!el)return;
+ el.innerHTML=["all",3,4,5,6,7,8].map(t=>'<button class="breedTier '+(String(t)===String(breedTier)?'active':'')+'" data-t="'+t+'">'+(t==="all"?"Todos":"T"+t)+'</button>').join("");
+ if(!el.dataset.bound){el.dataset.bound="1";el.onclick=e=>{const b=e.target.closest("[data-t]");if(b){breedTier=b.dataset.t;renderBreed()}}}
+}
+function renderBreed(){
+ renderBreedTiers();
+ const list=MOUNT_BREEDS.filter(x=>breedTier==="all"||+x.tier===+breedTier);
+ const grid=$("breedGrid");if(!grid)return;
+ grid.innerHTML=list.map(x=>'<button class="breedTile '+(x.id===breedSelected?'active':'')+'" data-id="'+x.id+'"><img loading="lazy" decoding="async" src="'+brIcon(x.id)+'"><div class="btName">'+safe(brName(x.id))+'</div><div class="btMeta">T'+x.tier+' • '+x.place+'</div></button>').join("");
+ if(!grid.dataset.bound){grid.dataset.bound="1";grid.onclick=e=>{const b=e.target.closest("[data-id]");if(b){breedSelected=b.dataset.id;renderBreed()}}}
+ renderBreedDetail();
+}
+function renderBreedDetail(){
+ const x=MOUNT_BREEDS.find(a=>a.id===breedSelected)||MOUNT_BREEDS[0],el=$("breedDetail");if(!el)return;
+ const source=BREED_SOURCES[x.id];
+ const sourceIcons={"Estepe":"🌾","Montanha":"❄️","Floresta":"🌲","Planalto":"⛰️","Pântano":"🌿","Névoas":"🌫️","Inferno":"🔥","Cidades / Ilhas":"🏝️","Zona Vermelha / Caerleon":"🔴","Evento":"🎉","Conteúdo de Dragões / mundo aberto":"🐉","Floresta / Pântano":"🌲🌿"};
+ const sourceHtml=source?'<div class="breedSource"><h3>📍 Onde obter o filhote</h3><div class="breedSourceRow"><div class="breedSourceIcon">'+(sourceIcons[source.biome]||"📍")+'</div><div><b>'+safe(source.source)+'</b><div class="tiny">'+(sourceIcons[source.biome]||"📍")+' '+safe(source.biome)+' • Tier '+x.tier+'</div></div></div></div>':"";
+ const grownName=brName(x.grown), food=x.food==="plant"?"Plantas":(x.food==="meat"?"Carne":(x.food==="mount"?"Montarias":"Especial"));
+ const premiumTime=Math.round(x.time/2);
+ const mountIds=x.mounts.filter(Boolean);
+ const recipes=mountIds.map(m=>({id:m,rows:BREED_RECIPES[m]||[]}));
+ const first=recipes[0];
+ let craftHtml=recipes.map(r=>{
+   let n=brName(r.id);
+   return '<div class="breedCraft"><div class="row"><img loading="lazy" decoding="async" src="'+brIcon(r.id)+'"><div><b>'+safe(n)+'</b><div class="tiny">Selaria • T'+x.tier+'</div></div></div>'+
+     r.rows.map(q=>'<div class="breedCraftRow"><img loading="lazy" decoding="async" src="'+brIcon(q[0])+'"><div><b>'+q[1]+'× '+safe(brName(q[0]))+'</b><div class="tiny">'+(q[0]===x.grown?"Animal crescido":"Material de selaria")+'</div></div></div>').join("")+
+   '</div>';
+ }).join("");
+ el.innerHTML=
+ sourceHtml+'<div><div class="breedHero"><img loading="eager" decoding="async" src="'+brIcon(x.id)+'"><div style="flex:1"><h2>'+safe(brName(x.id))+'</h2><div class="muted">T'+x.tier+' • '+x.place+'</div><div style="margin-top:8px"></div><div class="tiny" style="margin-top:5px">Depois de crescido: <b>'+safe(grownName)+'</b></div></div></div><div class="breedCraftRow" style="margin-top:8px"><img loading="eager" decoding="async" src="'+brIcon(x.id)+'"><div style="flex:1"><b>Filhote: '+safe(brName(x.id))+'</b><div class="tiny">Favoritar esta montaria</div></div><button class="favBtn" data-mount-fav="'+x.id+'" onclick="favoriteAndOpen(this.dataset.mountFav)">⭐ Favorito</button></div>'+
+ '<div class="breedNotice">A alimentação é mostrada em unidades do alimento usado para completar a nutrição. A quantidade é a referência desta ficha; o jogo calcula o crescimento por nutrição.</div></div>'+
+ '<div><div class="breedStats">'+
+ '<div class="breedStat breedFoodStat"><div class="label">Alimentação total</div><div class="breedFoodLine"><img loading="eager" decoding="async" src="'+brIcon(x.foodId||x.id)+'"><div><div class="val">'+x.foodQty.toLocaleString("pt-BR")+'×</div><div class="tiny">'+safe(x.foodName)+' • dieta '+food+'</div></div></div></div>'+
+ '<div class="breedStat"><div class="label">Tempo de criação</div><div class="val">'+brHours(x.time)+'</div><div class="tiny">Premium: ~'+brHours(premiumTime)+'</div></div>'+
+ '<div class="breedStat"><div class="label">Foco</div><div class="val">1.000</div><div class="tiny">por filhote / ciclo de nurture</div></div>'+
+ '<div class="breedStat"><div class="label">Rendimento de prole</div><div class="val green">'+String(x.offspring).replace(".",",")+"%"+'</div><div class="tiny">média com foco</div></div>'+
+ '</div><div class="breedCraft"><h2 style="margin-bottom:4px">Depois de crescido</h2><div class="tiny">Use o animal adulto abaixo para produzir a montaria na Selaria.</div></div>'+craftHtml+
+ (function(){const sp=BREED_SPECIALS[x.id]||[];if(!sp.length)return "";return '<div class="breedCraft breedSpecial"><h2 style="margin-bottom:4px">✨ Montarias especiais / evoluções</h2><div class="tiny">Rotas adicionais a partir da montaria adulta.</div>'+sp.map(r=>'<div class="breedCraftRow"><img loading="lazy" decoding="async" src="'+brIcon(r.id)+'"><div><b>'+safe(brName(r.id))+'</b><div class="tiny">'+safe(r.label)+'</div>'+r.rows.map(q=>'<div class="breedCraftRow"><img loading="lazy" decoding="async" src="'+brIcon(q[0])+'"><div><b>'+q[1]+'× '+safe(brName(q[0]))+'</b><div class="tiny">Ingrediente da evolução</div></div></div>').join("")+'</div></div>').join("")+'</div>'})()+
+ '</div>';
+}
+window.getMountFavoriteInfo=function(id){const a=MOUNT_BREEDS.find(x=>x.id===id);return a?{name:brName(a.id),tier:a.tier}:null};window.openMountFavorite=function(id){const a=MOUNT_BREEDS.find(x=>x.id===id);if(!a)return;breedSelected=id;go("breeding");renderBreed();updateFavButtons()};window.renderMountBreeding=renderBreed;
+renderBreed();updateFavButtons();
+})();
+</script>
+<script id="acmAuthJs">
+(function(){
+  // TROQUE este código antes de compartilhar o site. Como esta é uma V1 100% estática,
+  // qualquer pessoa com conhecimento técnico pode inspecionar o JavaScript.
+  const AUTH_APPROVAL_CODE="ACM-2026-COLEGAS";
+  const AUTH_USERS_KEY="acm_auth_users_v1";
+  const AUTH_SESSION_KEY="acm_auth_session_v1";
+  const AUTH_MAX_USERS=20;
+
+  function authUsers(){try{const a=JSON.parse(localStorage.getItem(AUTH_USERS_KEY)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
+  function saveAuthUsers(a){localStorage.setItem(AUTH_USERS_KEY,JSON.stringify(a))}
+  function normalizeUser(v){return String(v||"").trim().toLowerCase().replace(/[^a-z0-9_-]/g,"").slice(0,24)}
+  function userStorageKey(key){const u=localStorage.getItem(AUTH_SESSION_KEY);return u?"acm_u_"+u+"_"+key:key}
+  window.userStorageKey=userStorageKey;
+
+  async function hashPassword(pass){
+    const data=new TextEncoder().encode(pass);
+    const buf=await crypto.subtle.digest("SHA-256",data);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+  function setMsg(text,kind){const el=document.getElementById("acmAuthMsg");if(!el)return;el.textContent=text;el.className="authMsg "+kind}
+  function migrateOldData(user){
+    const keys=["acm_favs","acm_hist","acm_city","acm_rr","acm_tax"];
+    keys.forEach(k=>{
+      const old=k, fresh="acm_u_"+user+"_"+k;
+      if(localStorage.getItem(old)!==null && localStorage.getItem(fresh)===null){
+        localStorage.setItem(fresh,localStorage.getItem(old));
+        localStorage.removeItem(old);
+      }
+    });
+  }
+  function refreshApp(){
+    document.body.classList.remove("acmLocked");
+    const a=document.getElementById("acmAuth");if(a)a.remove();
+    const bar=document.getElementById("acmSessionBar"),su=document.getElementById("acmSessionUser"),u=sessionUser();
+    if(bar)bar.style.display="flex";if(su)su.textContent="👤 "+u;
+    try{if(typeof renderFavs==="function")renderFavs();if(typeof updateFavButtons==="function")updateFavButtons();}catch(e){}
+  }
+  function showAuth(){
+    document.body.classList.add("acmLocked");
+    const a=document.getElementById("acmAuth");if(a)a.style.display="flex";
+    const bar=document.getElementById("acmSessionBar");if(bar)bar.style.display="none";
+  }
+  function switchTab(tab){
+    document.querySelectorAll("#acmAuth .authTab").forEach(b=>b.classList.toggle("active",b.dataset.authTab===tab));
+    document.getElementById("acmLoginForm").style.display=tab==="login"?"block":"none";
+    document.getElementById("acmRegisterForm").style.display=tab==="register"?"block":"none";
+    setMsg("","");
+  }
+  function sessionUser(){return localStorage.getItem(AUTH_SESSION_KEY)}
+  function bind(){
+    document.querySelectorAll("[data-auth-tab]").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.authTab)));
+    document.getElementById("acmLoginForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const user=normalizeUser(document.getElementById("acmLoginUser").value),pass=document.getElementById("acmLoginPass").value;
+      const rec=authUsers().find(x=>x.user===user);
+      if(!rec){setMsg("Usuário não encontrado ou ainda não autorizado.","err");return}
+      if((await hashPassword(pass))!==rec.hash){setMsg("Senha incorreta.","err");return}
+      localStorage.setItem(AUTH_SESSION_KEY,user);migrateOldData(user);refreshApp();
+    });
+    document.getElementById("acmRegisterForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      const user=normalizeUser(document.getElementById("acmRegUser").value),pass=document.getElementById("acmRegPass").value,code=document.getElementById("acmRegCode").value.trim();
+      if(user.length<3){setMsg("Use pelo menos 3 caracteres no usuário.","err");return}
+      if(pass.length<4){setMsg("Use pelo menos 4 caracteres na senha.","err");return}
+      if(code!==AUTH_APPROVAL_CODE){setMsg("Código de autorização inválido. Peça autorização ao administrador.","err");return}
+      const users=authUsers();
+      if(users.length>=AUTH_MAX_USERS){setMsg("Limite local de contas atingido nesta V1.","err");return}
+      if(users.some(x=>x.user===user)){setMsg("Esse usuário já existe neste aparelho.","err");return}
+      users.push({user,hash:await hashPassword(pass),createdAt:new Date().toISOString()});saveAuthUsers(users);
+      localStorage.setItem(AUTH_SESSION_KEY,user);migrateOldData(user);refreshApp();
+    });
+  }
+  window.acmLogout=function(){
+    localStorage.removeItem(AUTH_SESSION_KEY);
+    location.reload();
+  };
+  document.addEventListener("DOMContentLoaded",()=>{
+    if(sessionUser())refreshApp();else showAuth();
+    bind();
+  });
+})();
+</script></body></html>
