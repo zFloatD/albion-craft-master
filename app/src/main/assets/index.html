@@ -334,19 +334,14 @@ function weaponMatches(o,name){
  return false;
 }
 function explicitWeaponGroups(eq){
- const index=new Map();
- for(const o of eq){
-   const candidates=[itemName(o),itemId(o)];
-   const maps=[o.LocalizedNames,o.localizedNames,o.names];
-   maps.forEach(m=>{if(m&&typeof m==="object")candidates.push(...Object.values(m))});
-   for(const v of candidates){
-     if(typeof v==="string"&&v.trim())index.set(normWeaponName(v),o);
+ return Object.entries(WEAPON_FAMILIES).map(([family,names])=>{
+   const items=[];
+   for(const name of names){
+     const found=eq.filter(o=>weaponMatches(o,name));
+     if(found.length)items.push(found[0]);
    }
- }
- return Object.entries(WEAPON_FAMILIES).map(([family,names])=>[
-   family,
-   names.map(name=>index.get(normWeaponName(name))||index.get(normWeaponName(WEAPON_NAME_ALIASES[normWeaponName(name)]))).filter(Boolean)
- ]);
+   return [family,items];
+ });
 }
 function renderItemBrowser(targetId="browserGroups",clickMode="market"){
  let h=$(targetId);if(!h||!catalog.length)return;
