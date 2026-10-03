@@ -300,35 +300,34 @@ function browserLeatherGroup(title,items){let slots=[["Capuz",/HEAD_/],["Casaco"
 function browserPlateGroup(title,items){let slots=[["Elmo",/HEAD_/],["Armadura",/ARMOR_/],["Botas",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
 function browserWeaponsGroup(groups){return '<details class="browserRoot"><summary>⚔️ Armas</summary>'+groups.map(x=>browserGroup(x[0],x[1])).filter(Boolean).join("")+'</details>'}
 function browserWeaponFamily(id,obj){
-  let x=browserBaseId(id).replace(/^2H_/,"").replace(/^MAIN_/,"").toUpperCase();
-  let meta="";
-  try{meta=JSON.stringify(obj||{}).toUpperCase()}catch(e){}
-  let hay=x+" "+meta;
-  if(/CROSSBOW|BOW_CROSS|CROSSBOW/.test(hay))return "Bestas";
-  if(/SHAPESHIFTER|TRANSFORM|WILDFIRE_BEAST|SHIFTER/.test(hay))return "Metamorfos";
-  if(/WARGLOVE|WAR_GLOVE|GAUNTLET|BRAWLER|FIST|BRACER|MAULER|CESTUS/.test(hay))return "Armas de Punho";
-  if(/BOW|WARBOW|LONGBOW|MISTPIERCER|SKYSTRIDER|WHISPERING|WAILING/.test(hay))return "Arcos";
-  if(/AXE|DUALAXE|HALBERD|SCYTHE|SICKLE|TWINSCYTHE|CRYSTALREAPER|REALMBREAKER|CARRIONCALLER/.test(hay))return "Machados";
-  if(/SWORD|CLAYMORE|DUALSWORD|DUALSCIMITAR|SCIMITAR|CLEAVER|KINGMAKER|INFINITYBLADE|CLARENT|CARVING|GALATINE/.test(hay))return "Espadas";
-  if(/MACE|ROCKMACE|MORNINGSTAR|CAM LANN|CAMLANN|INCUBUS|BEDROCK|OATHKEEPER|DREADSTORM/.test(hay))return "Maças";
-  if(/DAGGER|DAGGERPAIR|CLAWPAIR|RAPIER|BLOODLETTER|DEATHGIVER|BLACKHANDS|TWINS|BRIDLEDFURY/.test(hay))return "Adagas";
-  if(/SPEAR|GLAIVE|TRIDENT|HARPOON|PIKE|DAYBREAKER|SPIRITHUNTER|HERONSPEAR|TRINITY/.test(hay))return "Lanças";
-  if(/FIRESTAFF|INFERNOSTAFF|BRIMSTONE|WILDFIRE|BLAZING|DAWNSONG|FLAMEWALKER|FALLENSTAFF/.test(hay))return "Cajados de Fogo";
-  if(/FROSTSTAFF|ICECRYSTAL|CHILLHOWL|ARCTIC|GLACIAL|ICICLE|HOARFROST|PERMAFROST/.test(hay))return "Cajados de Gelo";
-  if(/CURSEDSTAFF|SKULLORB|SHADOWCALLER|ROTCALLER|DEMONIC|DAMNATION|LIFECURSE|CURSEDSKULL/.test(hay))return "Cajados Amaldiçoados";
-  if(/NATURESTAFF|WILDSTAFF|IRONROOT|FORGEBARK|GREATNATURE|BLIGHT|DRUIDIC|RAMPANT/.test(hay))return "Cajados da Natureza";
-  if(/HOLYSTAFF|HALLOWFALL|EXALTED|DIVINE|GREATHOLY|LIFETOUCH|REDEMPTION/.test(hay))return "Cajados Sagrados";
-  if(/ARCANESTAFF|ENIGMATICORB|EVENSONG|ASTRALSTAFF|GREATARCANE|OCCULT|MALEVOLENT|WITCHWORK/.test(hay))return "Cajados Arcanos";
-  if(/HAMMER|POLEHAMMER|TOMBHAMMER|GREAT HAMMER|FORGEHAMMER|GROVEKEEPER|HANDOFJUSTICE|TRUEBOLT/.test(hay))return "Martelos";
-  if(/QUARTERSTAFF|IRONCLAD|DOUBLEBLADED|COMBATSTAFF|GRAILSEEKER|PHANTOMTWINBLADE|SOULSCYTHE|STAFFOFBALANCE|BLACKMONK|BLACKMONKSTAVE/.test(hay))return "Bordões";
-  return null;
+  const base=browserBaseId(id).replace(/^2H_/,"").replace(/^MAIN_/,"").toUpperCase();
+  let name=""; try{name=String(itemName(obj)||"").toUpperCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"")}catch(e){}
+  const hay=base+" "+name;
+  const rules=[
+    ["Bestas",/CROSSBOW|BOW_CROSS|BESTA|BESTAS/],["Metamorfos",/SHAPESHIFTER|TRANSFORM|WILDFIRE_BEAST|SHIFTER|METAMORF/],
+    ["Armas de Punho",/WARGLOVE|WAR_GLOVE|GAUNTLET|BRAWLER|FIST|BRACER|MAULER|CESTUS|LUVAS|BRACERS|MAULERS|HELLFIRE HANDS|RAVENSTRIKE|FORCEPULSE|FISTS OF AVALON/],
+    ["Arcos",/BOW|WARBOW|LONGBOW|MISTPIERCER|SKYSTRIDER|WHISPERING|WAILING|ARCO/],
+    ["Machados",/AXE|HALBERD|SCYTHE|CARRIONCALLER|BEAR PAWS|REALMBREAKER|CRYSTAL REAPER|MACHADO|MACHADOS|SEGADERA|ALABARDA|PATAS DE URSO|QUEBRA-REINOS/],
+    ["Espadas",/SWORD|CLAYMORE|DUALSWORD|SCIMITAR|CLEAVER|KINGMAKER|INFINITYBLADE|CLARENT|CARVING|GALATINE|ESPADA|ESPADAS|MONTANTE|GALATINAS|CRIA-REIS|LAMINA DA INFINIDADE/],
+    ["Maças",/MACE|ROCKMACE|MORNINGSTAR|CAMLANN|INCUBUS|BEDROCK|OATHKEEPER|DREADSTORM|MACA|MACAS/],
+    ["Adagas",/DAGGER|DAGGERPAIR|CLAWPAIR|RAPIER|BLOODLETTER|DEATHGIVER|BLACKHANDS|TWINS|BRIDLEDFURY|DEMONFANG|ADAGA|ADAGAS|GARRAS|GEMEAS/],
+    ["Lanças",/SPEAR|GLAIVE|TRIDENT|HARPOON|PIKE|DAYBREAKER|SPIRITHUNTER|HERONSPEAR|TRINITY|RIFTGLAIVE|LANCA|LANCAS/],
+    ["Cajados de Fogo",/FIRESTAFF|INFERNOSTAFF|BRIMSTONE|WILDFIRE|BLAZING|DAWNSONG|FLAMEWALKER|FIRE STAFF|CAJADO DE FOGO|CAJADOS DE FOGO/],
+    ["Cajados de Gelo",/FROSTSTAFF|ICECRYSTAL|CHILLHOWL|ARCTIC|GLACIAL|ICICLE|HOARFROST|PERMAFROST|FROST STAFF|CAJADO DE GELO|CAJADOS DE GELO/],
+    ["Cajados Amaldiçoados",/CURSEDSTAFF|SKULLORB|SHADOWCALLER|ROTCALLER|DEMONIC|DAMNATION|LIFECURSE|CURSEDSKULL|CURSED STAFF|CAJADO AMALDICOADO|CAJADOS AMALDICOADOS/],
+    ["Cajados da Natureza",/NATURESTAFF|WILDSTAFF|IRONROOT|FORGEBARK|GREATNATURE|BLIGHT|DRUIDIC|RAMPANT|NATURE STAFF|CAJADO DA NATUREZA|CAJADOS DA NATUREZA/],
+    ["Cajados Sagrados",/HOLYSTAFF|HALLOWFALL|EXALTED|DIVINE|GREATHOLY|LIFETOUCH|REDEMPTION|HOLY STAFF|CAJADO SAGRADO|CAJADOS SAGRADOS/],
+    ["Cajados Arcanos",/ARCANESTAFF|ENIGMATICORB|EVENSONG|ASTRALSTAFF|GREATARCANE|OCCULT|MALEVOLENT|WITCHWORK|ARCANE STAFF|CAJADO ARCANO|CAJADOS ARCANOS/],
+    ["Martelos",/HAMMER|POLEHAMMER|TOMBHAMMER|GREAT HAMMER|FORGEHAMMER|GROVEKEEPER|HANDOFJUSTICE|TRUEBOLT|MARTELO|MARTELOS/],
+    ["Bordões",/QUARTERSTAFF|IRONCLAD|DOUBLEBLADED|COMBATSTAFF|GRAILSEEKER|PHANTOMTWINBLADE|SOULSCYTHE|STAFFOFBALANCE|BLACKMONK|BLACKMONKSTAVE|QUARTER STAFF|BORDAO|BORDOES/]
+  ]; for(const [family,re] of rules)if(re.test(hay))return family; return null;
 }
 function renderItemBrowser(targetId="browserGroups",clickMode="market"){
  let h=$(targetId);if(!h||!catalog.length)return;
  let tierFilter=$("filterTier")?.value||"",enchantFilter=$("filterEnchant")?.value||"";
  let eq=catalog.filter(o=>{let id=itemId(o);return /^T[4-8]_/.test(id)&&(!tierFilter||tier(id)===tierFilter)&&(!enchantFilter||enchant(id)===enchantFilter)});
  let armor=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(HEAD|ARMOR|SHOES)_/.test(itemId(o)));
- let weap=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(MAIN|2H)_/.test(itemId(o)));
+ let weap=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(MAIN|2H)_/.test(itemId(o)) && browserWeaponFamily(itemId(o),o));
  let off=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?OFF_/.test(itemId(o)));
  let bags=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(BAG|CAPE)/.test(itemId(o)));
  let g=[];
@@ -419,8 +418,14 @@ async function loadHistory(){if(!selectedItem)return;let city=$("marketCity").va
 function sourceBadge(s){return s==="atual"?'<span class="green">Ao vivo</span>':s==="albionmarket"?'<span class="blue">AlbionMarket</span>':s==="codex"?'<span class="blue">Albion Codex</span>':s==="histórico"?'<span class="orange">Histórico</span>':s==="referência histórica"?'<span class="orange">Hist. global</span>':s==="cache"?'<span class="purple">Último dado</span>':s==="estimado"?'<span class="orange">Estimado</span>':'<span class="blue">Referência</span>'}function sourceClass(s){return s==="atual"?"current":s==="albionmarket"?"albionmarket":s==="codex"?"codex":s==="histórico"||s==="referência histórica"?"history":s==="cache"?"cache":s==="estimado"?"estimated":"reference"}function sourceLabel(s){return s==="atual"?"ao vivo":s==="albionmarket"?"AlbionMarket":s==="codex"?"Albion Codex":s==="histórico"?"histórico":s==="referência histórica"?"hist. global":s==="cache"?"último":s==="estimado"?"estimado":"referência"}function renderMarketCities(ps,hist,selectedCity){let rows=CITIES.map(city=>{let s=findLowestSell(ps,city,selectedItem),b=findHighestBuy(ps,city,selectedItem),sv=resolveSell(ps,hist,city,selectedItem)||{v:0,d:"",source:"sem dado"},bv=resolveBuy(ps,hist,city,selectedItem)||{v:0,d:"",source:"sem dado"},m=sv.v?mins(sv.d):Infinity;return{city,sv,bv,m}});$("marketCities").innerHTML=rows.map(x=>`<tr style="${x.city===selectedCity?"background:#14221b":""}"><td><b>${x.city}</b>${x.city===selectedCity?' <span class="pill green">selecionada</span>':""}</td><td class="${cls(x.m)}">${x.sv.v?money(x.sv.v)+` <span class="sourceTag ${sourceClass(x.sv.source)}">${sourceLabel(x.sv.source)}</span>`:"—"}</td><td class="${cls(x.m)}">${x.bv.v?money(x.bv.v):"—"}</td><td class="${cls(x.m)}">${isFinite(x.m)?age(x.m):"sem dado"}</td></tr>`).join("")}
 if($("marketCity"))$("marketCity").addEventListener("change",loadMarket);if($("historyScale"))$("historyScale").addEventListener("change",loadHistory);
 async function compareCities(){let id=$("arbItem").value.trim(),mode=$("arbMode").value;$("arbBody").innerHTML='<tr><td colspan="5" class="empty"><span class="loader"></span> consultando...</td></tr>';try{let ps=await getPrices([id],CITIES,"");$("arbBody").innerHTML=CITIES.map(c=>{let p=mode==="buy"?findHighestBuy(ps,c,id):findLowestSell(ps,c,id),x=p?(mode==="buy"?{v:p.buy,d:p.buyDate}:{v:p.sell,d:p.sellDate}):{v:0,d:""},m=mins(x.d);return`<tr><td>${c}</td><td class="${cls(m)}">${money(x.v)}</td><td>${x.d?new Date(x.d).toLocaleString("pt-BR"):"—"}</td><td class="${cls(m)}">${age(m)}</td><td><button class="btn" onclick="openItem('${id}')">Abrir</button></td></tr>`}).join("")}catch(e){$("arbBody").innerHTML=`<tr><td colspan="5" class="empty">Erro: ${e.message}</td></tr>`}}
-function selectCraft(id){if(!id)return;selectedCraft=id;$("craftSearch").value=displayName(id);let has=!!recipes[id];$("craftSelected").innerHTML=`<div class="itemhead"><img class="icon" src="${iconUrl(id,217)}"><div style="flex:1"><b>${safe(displayName(id))}</b><div class="tiny">${safe(id)} • ${tier(id)} • .${enchant(id)}</div></div><button id="craftFavBtn" class="favBtn" data-fav-page="craft" onclick="toggleFav()">⭐ Favorito</button></div>${has?"":'<div class="section note">Este item não possui receita no banco atual de crafting.</div>'}`;$("craftBtn").disabled=!has;if(has)calculateCraft();else{$("ccost").textContent="—";$("crev").textContent="—";$("cprofit").textContent="—";$("croi").textContent="—";$("craftMats").innerHTML='<tr><td colspan="7" class="empty">Sem receita para este item.</td></tr>';}updateFavButtons()}function craftFromSearch(){let q=$("craftSearch").value.trim().toLowerCase();let id=Object.keys(recipes).find(x=>x.toLowerCase().includes(q));if(!id){let o=filtered(q)[0];id=o&&itemId(o)}if(id)selectCraft(id);else alert("Receita/item não encontrado.");}
-
+function craftBaseId(id){return String(id||"").replace(/^T[4-8]_/, "").replace(/@\\d$/,"")}
+function craftMakeId(base,t,e){let id=String(base||"").replace(/^T[4-8]_/, "T"+t+"_").replace(/@\\d$/,"");return e>0?id+"@"+e:id}
+function craftRecipeIdFor(base,t,e){const wanted=craftMakeId(base,t,e);if(recipes[wanted])return wanted;const same=Object.keys(recipes).find(k=>craftBaseId(k)===craftBaseId(wanted)&&tier(k)==="T"+t&&enchant(k)===String(e));return same||wanted}
+function craftRenderSelectors(){const el=$("craftSelectors");if(!el)return;const t=String(tier(selectedCraft)||"T4").replace("T",""),e=String(enchant(selectedCraft)||"0");el.innerHTML='<div class="tiny">Tier:</div><div class="row" style="gap:5px">'+[4,5,6,7,8].map(x=>'<button class="btn '+(String(x)===t?"primary":"")+'" onclick="craftSetTier('+x+')">T'+x+'</button>').join("")+'</div><div class="tiny" style="margin-left:8px">Encantamento:</div><div class="row" style="gap:5px">'+[0,1,2,3,4].map(x=>'<button class="btn '+(String(x)===e?"primary":"")+'" onclick="craftSetEnchant('+x+')">'+(x===0?"0":"."+x)+'</button>').join("")+'</div>'}
+function craftSetTier(t){if(!selectedCraft)return;const base=craftBaseId(selectedCraft),e=enchant(selectedCraft)||"0";selectedCraft=craftRecipeIdFor(base,t,e);selectCraft(selectedCraft)}
+function craftSetEnchant(e){if(!selectedCraft)return;const base=craftBaseId(selectedCraft),t=(tier(selectedCraft)||"T4").replace("T","");selectedCraft=craftRecipeIdFor(base,t,e);selectCraft(selectedCraft)}
+function selectCraft(id){if(!id)return;selectedCraft=id;$("craftSearch").value=displayName(id);const has=!!recipes[id];$("craftSelected").innerHTML='<div class="itemhead"><img class="icon" src="'+iconUrl(id,217)+'"><div style="flex:1"><b>'+safe(displayName(id))+'</b><div class="tiny">'+safe(id)+' • '+tier(id)+' • '+(enchant(id)==="0"?"sem encantamento":"."+enchant(id))+'</div></div><button id="craftFavBtn" class="favBtn" data-fav-page="craft" onclick="toggleFav()">⭐ Favorito</button></div><div id="craftSelectors" class="section"></div>';craftRenderSelectors();$("craftBtn").disabled=!has;if(has)calculateCraft();else{$("ccost").textContent="—";$("crev").textContent="—";$("cprofit").textContent="—";$("croi").textContent="—";$("craftMats").innerHTML='<tr><td colspan="7" class="empty">Sem receita para este item.</td></tr>';}updateFavButtons()}
+function craftFromSearch(){let q=$("craftSearch").value.trim().toLowerCase();let a=filtered(q),id=a[0]&&itemId(a[0]);if(!id)id=Object.keys(recipes).find(x=>x.toLowerCase().includes(q));if(id)selectCraft(id);else alert("Receita/item não encontrado.")}
 let manualCraftSelected=null;
 function manualCraftBaseId(id){return String(id||"").replace(/@\d$/,"")}
 function manualCraftMakeId(base,t,e){
