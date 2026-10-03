@@ -29,3 +29,5 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+# Pages: trigger a fresh deployment after enabling GitHub Pages.
