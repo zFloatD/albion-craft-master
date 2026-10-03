@@ -301,7 +301,7 @@ function browserPlateGroup(title,items){let slots=[["Elmo",/HEAD_/],["Armadura",
 function browserWeaponsGroup(groups){return '<details class="browserRoot"><summary>⚔️ Armas</summary>'+groups.map(x=>browserGroup(x[0],x[1])).filter(Boolean).join("")+'</details>'}
 function browserWeaponFamily(id,obj){
   const base=browserBaseId(id).replace(/^2H_/,"").replace(/^MAIN_/,"").toUpperCase();
-  let name=""; try{name=String(itemName(obj)||"").toUpperCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"")}catch(e){}
+  let name=""; try{name=String(itemName(obj)||"").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}catch(e){}
   const hay=base+" "+name;
   const rules=[
     ["Bestas",/CROSSBOW|BOW_CROSS|BESTA|BESTAS/],["Metamorfos",/SHAPESHIFTER|TRANSFORM|WILDFIRE_BEAST|SHIFTER|METAMORF/],
