@@ -1,0 +1,9 @@
+{
+  "name":"Albion Craft Master",
+  "short_name":"ACM",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#080D12",
+  "theme_color":"#39D98A",
+  "icons":[{"src":"acm-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
