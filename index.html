@@ -448,7 +448,7 @@ function craftRenderSelectors(){const el=$("craftSelectors");if(!el)return;const
 function craftSetTier(t){if(!selectedCraft)return;const base=craftBaseId(selectedCraft),e=enchant(selectedCraft)||"0";selectedCraft=craftRecipeIdFor(base,t,e);selectCraft(selectedCraft)}
 function craftSetEnchant(e){if(!selectedCraft)return;const base=craftBaseId(selectedCraft),t=(tier(selectedCraft)||"T4").replace("T","");selectedCraft=craftRecipeIdFor(base,t,e);selectCraft(selectedCraft)}
 function selectCraft(id){if(!id)return;selectedCraft=id;const has=!!recipes[id];$("craftSelected").innerHTML='<div class="itemhead"><img class="icon" src="'+iconUrl(id,217)+'"><div style="flex:1"><b>'+safe(displayName(id))+'</b><div class="tiny">'+safe(id)+' • '+tier(id)+' • '+(enchant(id)==="0"?"sem encantamento":"."+enchant(id))+'</div></div><button id="craftFavBtn" class="favBtn" data-fav-page="craft" onclick="toggleFav()">⭐ Favorito</button></div><div id="craftSelectors" class="section"></div>';craftRenderSelectors();$("craftBtn").disabled=!has;if(has)calculateCraft();else{$("ccost").textContent="—";$("crev").textContent="—";$("cprofit").textContent="—";$("croi").textContent="—";$("craftMats").innerHTML='<tr><td colspan="7" class="empty">Sem receita para este item.</td></tr>';}updateFavButtons()}
-function craftFromSearch(){let q=$("craftSearch").value.trim().toLowerCase();let a=filtered(q),id=a[0]&&itemId(a[0]);if(!id)id=Object.keys(recipes).find(x=>x.toLowerCase().includes(q));if(id)selectCraft(id);else alert("Receita/item não encontrado.")}
+
 let manualCraftSelected=null;
 function manualCraftBaseId(id){return String(id||"").replace(/@\d$/,"")}
 function manualCraftMakeId(base,t,e){
