@@ -227,7 +227,7 @@ body.acmLocked .app{display:none!important}
 </div>
 </section>
 
-<section id="craft" class="page"><div class="card"><h2>⚒ Calculadora de crafting</h2><div class="bigsearch"><div class="searchwrap" style="flex:1"><input id="craftSearch" placeholder="Pesquise o item pelo nome ou ID e clique no resultado..."><div id="craftSuggest" class="suggest" hidden></div></div><button class="btn primary" onclick="craftFromSearch()">Selecionar primeiro</button></div><div class="tiny" style="margin-top:6px">Digite pelo menos 2 letras: os resultados aparecem com ícone e podem ser clicados, igual ao Mercado & Craft.</div><div class="section" id="craftSelected"></div><div class="section card itemBrowser"><div class="row between"><h2>📚 Escolher item para Craft</h2><span class="tiny">T4–T8 • clique no item</span></div><div id="craftBrowserGroups" class="browserGroups"></div><div class="browserHint">Você pode pesquisar acima ou escolher diretamente uma arma/equipamento aqui. Ao clicar, a receita é carregada no Craft.</div></div><div class="section form"><div class="field"><label>Cidade</label><select id="craftCity"></select></div><div class="field"><label>Preço do produto</label><input value="Menor venda disponível (qualquer qualidade)" disabled></div><div class="field"><label>RR materiais (%)</label><input id="craftRR" type="number" value="15"></div><div class="field"><label>Taxa venda (%)</label><input id="craftTax" type="number" value="4"></div><div class="field"><label>Setup (%)</label><input id="craftSetup" type="number" value="2.5"></div><div class="field"><label>Fee estação</label><input id="craftFee" type="number" value="0"></div><div class="field"><label>Quantidade</label><input id="craftQty" type="number" value="1"></div></div><div class="section"><button id="craftBtn" class="btn primary" disabled onclick="calculateCraft()">Calcular operação</button></div><div class="section grid"><div class="card kpi"><div class="muted">Materiais</div><div id="ccost" class="value">—</div></div><div class="card kpi"><div class="muted">Venda líquida</div><div id="crev" class="value">—</div></div><div class="card kpi"><div class="muted">Lucro</div><div id="cprofit" class="value green">—</div></div><div class="card kpi"><div class="muted">ROI</div><div id="croi" class="value blue">—</div></div></div><div class="section scroll"><table><thead><tr><th>Material</th><th>Quantidade</th><th>Menor venda</th><th>Qualidade</th><th>Custo</th><th>Fonte</th><th>Atualização</th></tr></thead><tbody id="craftMats"></tbody></table></div><div id="craftSummary" class="section card viceSummary"><div class="viceTop"><div><div class="viceTitle">💎 Resumo da operação <b>VICE</b></div><div class="viceSub">Compra dos materiais → crafting → venda • valores para a cidade selecionada</div></div><span id="craftCoverage" class="sourceTag">aguardando</span></div><div class="viceGrid"><div class="viceMetric"><div class="l">Materiais</div><div id="sumMaterials" class="v gold">—</div></div><div class="viceMetric"><div class="l">Taxas + setup</div><div id="sumFees" class="v">—</div></div><div class="viceMetric"><div class="l">Total gasto</div><div id="sumSpent" class="v gold">—</div></div><div class="viceMetric"><div class="l">Venda líquida</div><div id="sumRevenue" class="v blue">—</div></div><div class="viceMetric"><div class="l">Lucro / ROI</div><div id="sumProfit" class="v">—</div></div></div><div id="craftVerdict" class="viceVerdict">Selecione uma receita e calcule a operação.</div></div></div></section>
+<section id="craft" class="page"><div class="card"><h2>⚒ Calculadora de crafting</h2><div class="bigsearch"><div class="searchwrap" style="flex:1"><input id="craftSearch" placeholder="Pesquise pelo nome do item e clique no resultado..."><div id="craftSuggest" class="suggest" hidden></div></div></div><div class="tiny" style="margin-top:6px">Digite pelo menos 2 letras: os resultados aparecem com ícone e podem ser clicados, igual ao Mercado & Craft.</div><div class="section" id="craftSelected"></div><div class="section card itemBrowser"><div class="row between"><h2>📚 Escolher item para Craft</h2><span class="tiny">T4–T8 • clique no item</span></div><div id="craftBrowserGroups" class="browserGroups"></div><div class="browserHint">Você pode pesquisar acima ou escolher diretamente uma arma/equipamento aqui. Ao clicar, a receita é carregada no Craft.</div></div><div class="section form"><div class="field"><label>Cidade</label><select id="craftCity"></select></div><div class="field"><label>Preço do produto</label><input value="Menor venda disponível (qualquer qualidade)" disabled></div><div class="field"><label>RR materiais (%)</label><input id="craftRR" type="number" value="15"></div><div class="field"><label>Taxa venda (%)</label><input id="craftTax" type="number" value="4"></div><div class="field"><label>Setup (%)</label><input id="craftSetup" type="number" value="2.5"></div><div class="field"><label>Fee estação</label><input id="craftFee" type="number" value="0"></div><div class="field"><label>Quantidade</label><input id="craftQty" type="number" value="1"></div></div><div class="section"><button id="craftBtn" class="btn primary" disabled onclick="calculateCraft()">Calcular operação</button></div><div class="section grid"><div class="card kpi"><div class="muted">Materiais</div><div id="ccost" class="value">—</div></div><div class="card kpi"><div class="muted">Venda líquida</div><div id="crev" class="value">—</div></div><div class="card kpi"><div class="muted">Lucro</div><div id="cprofit" class="value green">—</div></div><div class="card kpi"><div class="muted">ROI</div><div id="croi" class="value blue">—</div></div></div><div class="section scroll"><table><thead><tr><th>Material</th><th>Quantidade</th><th>Menor venda</th><th>Qualidade</th><th>Custo</th><th>Fonte</th><th>Atualização</th></tr></thead><tbody id="craftMats"></tbody></table></div><div id="craftSummary" class="section card viceSummary"><div class="viceTop"><div><div class="viceTitle">💎 Resumo da operação <b>VICE</b></div><div class="viceSub">Compra dos materiais → crafting → venda • valores para a cidade selecionada</div></div><span id="craftCoverage" class="sourceTag">aguardando</span></div><div class="viceGrid"><div class="viceMetric"><div class="l">Materiais</div><div id="sumMaterials" class="v gold">—</div></div><div class="viceMetric"><div class="l">Taxas + setup</div><div id="sumFees" class="v">—</div></div><div class="viceMetric"><div class="l">Total gasto</div><div id="sumSpent" class="v gold">—</div></div><div class="viceMetric"><div class="l">Venda líquida</div><div id="sumRevenue" class="v blue">—</div></div><div class="viceMetric"><div class="l">Lucro / ROI</div><div id="sumProfit" class="v">—</div></div></div><div id="craftVerdict" class="viceVerdict">Selecione uma receita e calcule a operação.</div></div></div></section>
 
 <section id="breeding" class="page">
 <div class="card">
@@ -299,30 +299,34 @@ function browserArmorGroup(title,items){let slots=[["Capote",/HEAD_/],["Robe",/A
 function browserLeatherGroup(title,items){let slots=[["Capuz",/HEAD_/],["Casaco",/ARMOR_/],["Sapatos",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
 function browserPlateGroup(title,items){let slots=[["Elmo",/HEAD_/],["Armadura",/ARMOR_/],["Botas",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
 function browserWeaponsGroup(groups){return '<details class="browserRoot"><summary>⚔️ Armas</summary>'+groups.map(x=>browserGroup(x[0],x[1])).filter(Boolean).join("")+'</details>'}
-function browserWeaponFamily(id){
-  let x=browserBaseId(id).replace(/^2H_/,"").replace(/^MAIN_/,"");
-  if(/^CROSSBOW/.test(x))return "Bestas";
-  if(/^(BOW|WARBOW|LONGBOW)/.test(x))return "Arcos";
-  if(/^(AXE|DUALAXE|HALBERD|SCYTHE|SICKLE|TWINSCYTHE|CRYSTALREAPER|REALMBREAKER|CARRIONCALLER)/.test(x))return "Machados";
-  if(/^(SWORD|CLAYMORE|DUALSWORD|DUALSCIMITAR|SCIMITAR|CLEAVER|KINGMAKER|INFINITYBLADE|CLARENT|CARVING)/.test(x))return "Espadas";
-  if(/^(MACE|ROCKMACE)/.test(x))return "Maças";
-  if(/^(DAGGER|DAGGERPAIR|CLAWPAIR|RAPIER)/.test(x))return "Adagas";
-  if(/^(SPEAR|GLAIVE|TRIDENT|HARPOON)/.test(x))return "Lanças";
-  if(/^(FIRESTAFF|INFERNOSTAFF)/.test(x))return "Cajados de Fogo";
-  if(/^(FROSTSTAFF|ICECRYSTAL)/.test(x))return "Cajados de Gelo";
-  if(/^(CURSEDSTAFF|SKULLORB)/.test(x))return "Cajados Amaldiçoados";
-  if(/^(NATURESTAFF|WILDSTAFF)/.test(x))return "Cajados da Natureza";
-  if(/^(HOLYSTAFF)/.test(x))return "Cajados Sagrados";
-  if(/^(ARCANESTAFF|ROCKSTAFF|ENIGMATICORB)/.test(x))return "Cajados Arcanos";
-  if(/^(HAMMER|DUALHAMMER)/.test(x))return "Martelos";
-  if(/^(QUARTERSTAFF|IRONCLAD|DOUBLEBLADED|COMBATSTAFF)/.test(x))return "Bordões";
-  if(/(GAUNTLETS|FIST|BRAWLER|IRONGAUNTLETS)/.test(x))return "Armas de Punho";
+function browserWeaponFamily(id,obj){
+  let x=browserBaseId(id).replace(/^2H_/,"").replace(/^MAIN_/,"").toUpperCase();
+  let meta="";
+  try{meta=JSON.stringify(obj||{}).toUpperCase()}catch(e){}
+  let hay=x+" "+meta;
+  if(/CROSSBOW|BOW_CROSS|CROSSBOW/.test(hay))return "Bestas";
+  if(/SHAPESHIFTER|TRANSFORM|WILDFIRE_BEAST|SHIFTER/.test(hay))return "Metamorfos";
+  if(/WARGLOVE|WAR_GLOVE|GAUNTLET|BRAWLER|FIST|BRACER|MAULER|CESTUS/.test(hay))return "Armas de Punho";
+  if(/BOW|WARBOW|LONGBOW|MISTPIERCER|SKYSTRIDER|WHISPERING|WAILING/.test(hay))return "Arcos";
+  if(/AXE|DUALAXE|HALBERD|SCYTHE|SICKLE|TWINSCYTHE|CRYSTALREAPER|REALMBREAKER|CARRIONCALLER/.test(hay))return "Machados";
+  if(/SWORD|CLAYMORE|DUALSWORD|DUALSCIMITAR|SCIMITAR|CLEAVER|KINGMAKER|INFINITYBLADE|CLARENT|CARVING|GALATINE/.test(hay))return "Espadas";
+  if(/MACE|ROCKMACE|MORNINGSTAR|CAM LANN|CAMLANN|INCUBUS|BEDROCK|OATHKEEPER|DREADSTORM/.test(hay))return "Maças";
+  if(/DAGGER|DAGGERPAIR|CLAWPAIR|RAPIER|BLOODLETTER|DEATHGIVER|BLACKHANDS|TWINS|BRIDLEDFURY/.test(hay))return "Adagas";
+  if(/SPEAR|GLAIVE|TRIDENT|HARPOON|PIKE|DAYBREAKER|SPIRITHUNTER|HERONSPEAR|TRINITY/.test(hay))return "Lanças";
+  if(/FIRESTAFF|INFERNOSTAFF|BRIMSTONE|WILDFIRE|BLAZING|DAWNSONG|FLAMEWALKER|FALLENSTAFF/.test(hay))return "Cajados de Fogo";
+  if(/FROSTSTAFF|ICECRYSTAL|CHILLHOWL|ARCTIC|GLACIAL|ICICLE|HOARFROST|PERMAFROST/.test(hay))return "Cajados de Gelo";
+  if(/CURSEDSTAFF|SKULLORB|SHADOWCALLER|ROTCALLER|DEMONIC|DAMNATION|LIFECURSE|CURSEDSKULL/.test(hay))return "Cajados Amaldiçoados";
+  if(/NATURESTAFF|WILDSTAFF|IRONROOT|FORGEBARK|GREATNATURE|BLIGHT|DRUIDIC|RAMPANT/.test(hay))return "Cajados da Natureza";
+  if(/HOLYSTAFF|HALLOWFALL|EXALTED|DIVINE|GREATHOLY|LIFETOUCH|REDEMPTION/.test(hay))return "Cajados Sagrados";
+  if(/ARCANESTAFF|ENIGMATICORB|EVENSONG|ASTRALSTAFF|GREATARCANE|OCCULT|MALEVOLENT|WITCHWORK/.test(hay))return "Cajados Arcanos";
+  if(/HAMMER|POLEHAMMER|TOMBHAMMER|GREAT HAMMER|FORGEHAMMER|GROVEKEEPER|HANDOFJUSTICE|TRUEBOLT/.test(hay))return "Martelos";
+  if(/QUARTERSTAFF|IRONCLAD|DOUBLEBLADED|COMBATSTAFF|GRAILSEEKER|PHANTOMTWINBLADE|SOULSCYTHE|STAFFOFBALANCE|BLACKMONK|BLACKMONKSTAVE/.test(hay))return "Bordões";
   return null;
 }
 function renderItemBrowser(targetId="browserGroups",clickMode="market"){
  let h=$(targetId);if(!h||!catalog.length)return;
  let tierFilter=$("filterTier")?.value||"",enchantFilter=$("filterEnchant")?.value||"";
- let eq=catalog.filter(o=>{let id=itemId(o);return /^T[4-8]_/.test(id)&&(!tierFilter||tier(id)===tierFilter)&&(!enchantFilter||enchant(id)===enchantFilter)&&recipes[id]});
+ let eq=catalog.filter(o=>{let id=itemId(o);return /^T[4-8]_/.test(id)&&(!tierFilter||tier(id)===tierFilter)&&(!enchantFilter||enchant(id)===enchantFilter)});
  let armor=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(HEAD|ARMOR|SHOES)_/.test(itemId(o)));
  let weap=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(MAIN|2H)_/.test(itemId(o)));
  let off=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?OFF_/.test(itemId(o)));
@@ -331,8 +335,8 @@ function renderItemBrowser(targetId="browserGroups",clickMode="market"){
  g.push(browserArmorGroup("Pano",armor.filter(o=>/CLOTH/.test(itemId(o)))));
  g.push(browserLeatherGroup("Couro",armor.filter(o=>/LEATHER/.test(itemId(o)))));
  g.push(browserPlateGroup("Placa",armor.filter(o=>/PLATE/.test(itemId(o)))));
- let familyNames=["Machados","Espadas","Arcos","Maças","Adagas","Lanças","Cajados de Fogo","Cajados de Gelo","Cajados Amaldiçoados","Cajados da Natureza","Cajados Sagrados","Cajados Arcanos","Bestas","Martelos","Bordões","Armas de Punho","Gadanhas e Foices"];
- let groups=familyNames.map(n=>[n,weap.filter(o=>browserWeaponFamily(itemId(o))===n)]);
+ let familyNames=["Machados","Espadas","Arcos","Bestas","Adagas","Lanças","Maças","Martelos","Bordões","Armas de Punho","Metamorfos","Cajados de Fogo","Cajados de Gelo","Cajados Amaldiçoados","Cajados da Natureza","Cajados Sagrados","Cajados Arcanos"];
+ let groups=familyNames.map(n=>[n,weap.filter(o=>browserWeaponFamily(itemId(o),o)===n)]);
  g.push(browserWeaponsGroup(groups));
  g.push(browserGroup("Off-hands",off),browserGroup("Bolsas e Capas",bags));
  h.innerHTML=g.filter(Boolean).join("");
