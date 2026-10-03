@@ -324,9 +324,13 @@ const WEAPON_NAME_ALIASES={
 "blackhands":"Black Hands","forgehammers":"Forge Hammers","truebolthammer":"Truebolt Hammer"
 };
 function weaponMatches(o,name){
- const n=normWeaponName(itemName(o)), target=normWeaponName(name);
- if(n===target)return true;
- const alias=WEAPON_NAME_ALIASES[target]; if(alias&&n===normWeaponName(alias))return true;
+ const target=normWeaponName(name), alias=WEAPON_NAME_ALIASES[target], candidates=[];
+ const push=v=>{if(typeof v==="string"&&v.trim())candidates.push(normWeaponName(v))};
+ push(itemName(o)); push(itemId(o));
+ const maps=[o.LocalizedNames,o.localizedNames,o.names];
+ maps.forEach(m=>{if(m&&typeof m==="object")Object.values(m).forEach(push)});
+ if(candidates.includes(target))return true;
+ if(alias&&candidates.includes(normWeaponName(alias)))return true;
  return false;
 }
 function explicitWeaponGroups(eq){
