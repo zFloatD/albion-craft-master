@@ -299,44 +299,58 @@ function browserArmorGroup(title,items){let slots=[["Capote",/HEAD_/],["Robe",/A
 function browserLeatherGroup(title,items){let slots=[["Capuz",/HEAD_/],["Casaco",/ARMOR_/],["Sapatos",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
 function browserPlateGroup(title,items){let slots=[["Elmo",/HEAD_/],["Armadura",/ARMOR_/],["Botas",/SHOES_/]];let inner=slots.map(x=>browserGroup(x[0],items.filter(o=>x[1].test(itemId(o))))).filter(Boolean).join("");return inner?'<details class="browserRoot"><summary>'+safe(title)+'</summary>'+inner+'</details>':""}
 function browserWeaponsGroup(groups){return '<details class="browserRoot"><summary>⚔️ Armas</summary>'+groups.map(x=>browserGroup(x[0],x[1])).filter(Boolean).join("")+'</details>'}
-function browserWeaponFamily(id,obj){
-  const base=browserBaseId(id).replace(/^2H_/,"").replace(/^MAIN_/,"").toUpperCase();
-  let name=""; try{name=String(itemName(obj)||"").toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}catch(e){}
-  const hay=base+" "+name;
-  const rules=[
-    ["Bestas",/CROSSBOW|BOW_CROSS|BESTA|BESTAS|WEEPING REPEATER|BOLTCASTERS|SIEGE BOW|SIEGEBOW|ENERGY SHAPER|ARCLIGHT BLASTERS/],["Metamorfos",/SHAPESHIFTER|TRANSFORM|WILDFIRE_BEAST|SHIFTER|PROWLING STAFF|ROOTBOUND STAFF|PRIMAL STAFF|BLOODMOON STAFF|HELLSPAWN STAFF|EARTHRUNE STAFF|LIGHTCALLER|STILLGAZE STAFF|METAMORF/],
-    ["Armas de Punho",/WARGLOVE|WAR_GLOVE|GAUNTLET|BRAWLER|FIST|BRACER|MAULER|CESTUS|LUVAS|BRACERS|MAULERS|HELLFIRE HANDS|RAVENSTRIKE|FORCEPULSE|FISTS OF AVALON/],
-    ["Arcos",/BOW|WARBOW|LONGBOW|MISTPIERCER|SKYSTRIDER|WHISPERING|WAILING|ARCO/],
-    ["Machados",/AXE|HALBERD|INFERNAL SCYTHE|CRYSTAL REAPER|CARRIONCALLER|BEAR PAWS|REALMBREAKER|CRYSTAL REAPER|MACHADO|MACHADOS|SEGADERA|ALABARDA|PATAS DE URSO|QUEBRA-REINOS/],
-    ["Espadas",/SWORD|CLAYMORE|DUALSWORD|SCIMITAR|CLEAVER|KINGMAKER|INFINITYBLADE|INFINITY BLADE|CLARENT|CARVING|GALATINE|ESPADA|ESPADAS|MONTANTE|GALATINAS|CRIA-REIS|LAMINA DA INFINIDADE/],
-    ["Maças",/MACE|ROCKMACE|MORNINGSTAR|MORNING STAR|CAMLANN|INCUBUS|BEDROCK|OATHKEEPER|DREADSTORM|MACA|MACAS/],
-    ["Adagas",/DAGGER|DAGGERPAIR|CLAWPAIR|RAPIER|BLOODLETTER|DEATHGIVER|BLACKHANDS|TWINS|BRIDLEDFURY|DEMONFANG|CLAWS|BRIDLED FURY|TWIN SLAYERS|ADAGA|ADAGAS|GARRAS|GEMEAS/],
-    ["Lanças",/SPEAR|GLAIVE|TRIDENT|HARPOON|PIKE|DAYBREAKER|SPIRITHUNTER|HERONSPEAR|TRINITY|RIFTGLAIVE|LANCA|LANCAS/],
-    ["Cajados de Fogo",/FIRESTAFF|INFERNOSTAFF|INFERNAL STAFF|BRIMSTONE|WILDFIRE|BLAZING|DAWNSONG|FLAMEWALKER|FIRE STAFF|CAJADO DE FOGO|CAJADOS DE FOGO/],
-    ["Cajados de Gelo",/FROSTSTAFF|ICECRYSTAL|CHILLHOWL|ARCTIC|GLACIAL|ICICLE|HOARFROST|PERMAFROST|FROST STAFF|CAJADO DE GELO|CAJADOS DE GELO/],
-    ["Cajados Amaldiçoados",/CURSEDSTAFF|SKULLORB|SHADOWCALLER|ROTCALLER|DEMONIC|DAMNATION|LIFECURSE|CURSEDSKULL|CURSED SKULL|CURSED STAFF|CAJADO AMALDICOADO|CAJADOS AMALDICOADOS/],
-    ["Cajados da Natureza",/NATURESTAFF|WILDSTAFF|WILD STAFF|IRONROOT|FORGEBARK|GREATNATURE|BLIGHT|DRUIDIC|RAMPANT|NATURE STAFF|CAJADO DA NATUREZA|CAJADOS DA NATUREZA/],
-    ["Cajados Sagrados",/HOLYSTAFF|HALLOWFALL|EXALTED|DIVINE|GREATHOLY|LIFETOUCH|REDEMPTION|FALLEN STAFF|HOLY STAFF|CAJADO SAGRADO|CAJADOS SAGRADOS/],
-    ["Cajados Arcanos",/ARCANESTAFF|ENIGMATICORB|ENIGMATIC STAFF|EVENSONG|ASTRALSTAFF|ASTRAL STAFF|GREATARCANE|OCCULT|MALEVOLENT|WITCHWORK|ARCANE STAFF|CAJADO ARCANO|CAJADOS ARCANOS/],
-    ["Martelos",/HAMMER|POLEHAMMER|TOMBHAMMER|GREAT HAMMER|FORGEHAMMER|GROVEKEEPER|HANDOFJUSTICE|HAND OF JUSTICE|TRUEBOLT|MARTELO|MARTELOS/],
-    ["Bordões",/QUARTERSTAFF|IRONCLAD|IRON-CLAD STAFF|DOUBLEBLADED|DOUBLE BLADED STAFF|COMBATSTAFF|GRAILSEEKER|PHANTOMTWINBLADE|PHANTOM TWINBLADE|SOULSCYTHE|STAFFOFBALANCE|STAFF OF BALANCE|BLACKMONK|BLACK MONK STAFF|BLACKMONKSTAVE|QUARTER STAFF|BORDAO|BORDOES/]
-  ]; for(const [family,re] of rules)if(re.test(hay))return family; return null;
+const WEAPON_FAMILIES={
+"Machados":["Battleaxe","Greataxe","Halberd","Carrioncaller","Infernal Scythe","Bear Paws","Realmbreaker","Crystal Reaper"],
+"Espadas":["Broadsword","Claymore","Dual Swords","Clarent Blade","Carving Sword","Galatine Pair","Kingmaker","Infinity Blade"],
+"Arcos":["Bow","Warbow","Longbow","Whispering Bow","Wailing Bow","Bow of Badon","Mistpiercer","Skystrider Bow"],
+"Bestas":["Crossbow","Heavy Crossbow","Light Crossbow","Weeping Repeater","Boltcasters","Siegebow","Energy Shaper","Arclight Blasters"],
+"Adagas":["Dagger","Dagger Pair","Claws","Bloodletter","Demonfang","Deathgivers","Bridled Fury","Twin Slayers"],
+"Lanças":["Spear","Pike","Glaive","Heron Spear","Spirithunter","Trinity Spear","Daybreaker","Rift Glaive"],
+"Maças":["Mace","Heavy Mace","Morning Star","Bedrock Mace","Incubus Mace","Camlann Mace","Oathkeepers","Dreadstorm Monarch"],
+"Martelos":["Hammer","Polehammer","Great Hammer","Tombhammer","Forge Hammers","Grovekeeper","Hand of Justice","Truebolt Hammer"],
+"Bordões":["Quarterstaff","Iron-clad Staff","Double Bladed Staff","Black Monk Staff","Soulscythe","Staff of Balance","Grailseeker","Phantom Twinblade"],
+"Armas de Punho":["Brawler Gloves","Battle Bracers","Spiked Gauntlets","Ursine Maulers","Hellfire Hands","Ravenstrike Cestus","Fists of Avalon","Forcepulse Bracers","Black Hands"],
+"Metamorfos":["Prowling Staff","Rootbound Staff","Primal Staff","Bloodmoon Staff","Hellspawn Staff","Earthrune Staff","Lightcaller","Stillgaze Staff"],
+"Cajados de Fogo":["Fire Staff","Great Fire Staff","Infernal Staff","Wildfire Staff","Brimstone Staff","Blazing Staff","Dawnsong","Flamewalker Staff"],
+"Cajados de Gelo":["Frost Staff","Great Frost Staff","Glacial Staff","Hoarfrost Staff","Icicle Staff","Permafrost Prism","Chillhowl","Arctic Staff"],
+"Cajados Amaldiçoados":["Cursed Staff","Great Cursed Staff","Demonic Staff","Lifecurse Staff","Cursed Skull","Damnation Staff","Shadowcaller","Rotcaller Staff"],
+"Cajados da Natureza":["Nature Staff","Great Nature Staff","Wild Staff","Druidic Staff","Blight Staff","Rampant Staff","Ironroot Staff","Forgebark Staff"],
+"Cajados Sagrados":["Holy Staff","Great Holy Staff","Divine Staff","Lifetouch Staff","Fallen Staff","Redemption Staff","Hallowfall","Exalted Staff"],
+"Cajados Arcanos":["Arcane Staff","Great Arcane Staff","Enigmatic Staff","Witchwork Staff","Occult Staff","Malevolent Locus","Evensong","Astral Staff"]
+};
+function normWeaponName(v){return String(v||"").toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[^a-z0-9]+/g,"")}
+const WEAPON_NAME_ALIASES={
+"realmbreaker":"Realm breaker","oathkeepers":"Oathkeepers","dreadstormmonarch":"Dreadstorm Monarch",
+"blackhands":"Black Hands","forgehammers":"Forge Hammers","truebolthammer":"Truebolt Hammer"
+};
+function weaponMatches(o,name){
+ const n=normWeaponName(itemName(o)), target=normWeaponName(name);
+ if(n===target)return true;
+ const alias=WEAPON_NAME_ALIASES[target]; if(alias&&n===normWeaponName(alias))return true;
+ return false;
+}
+function explicitWeaponGroups(eq){
+ return Object.entries(WEAPON_FAMILIES).map(([family,names])=>{
+   const items=[];
+   for(const name of names){
+     const found=eq.filter(o=>weaponMatches(o,name));
+     if(found.length)items.push(found[0]);
+   }
+   return [family,items];
+ });
 }
 function renderItemBrowser(targetId="browserGroups",clickMode="market"){
  let h=$(targetId);if(!h||!catalog.length)return;
  let tierFilter=$("filterTier")?.value||"",enchantFilter=$("filterEnchant")?.value||"";
  let eq=catalog.filter(o=>{let id=itemId(o);return /^T[4-8]_/.test(id)&&(!tierFilter||tier(id)===tierFilter)&&(!enchantFilter||enchant(id)===enchantFilter)});
  let armor=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(HEAD|ARMOR|SHOES)_/.test(itemId(o)));
- let weap=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(MAIN|2H)_/.test(itemId(o)) && browserWeaponFamily(itemId(o),o));
  let off=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?OFF_/.test(itemId(o)));
  let bags=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(BAG|CAPE)/.test(itemId(o)));
  let g=[];
  g.push(browserArmorGroup("Pano",armor.filter(o=>/CLOTH/.test(itemId(o)))));
  g.push(browserLeatherGroup("Couro",armor.filter(o=>/LEATHER/.test(itemId(o)))));
  g.push(browserPlateGroup("Placa",armor.filter(o=>/PLATE/.test(itemId(o)))));
- let familyNames=["Machados","Espadas","Arcos","Bestas","Adagas","Lanças","Maças","Martelos","Bordões","Armas de Punho","Metamorfos","Cajados de Fogo","Cajados de Gelo","Cajados Amaldiçoados","Cajados da Natureza","Cajados Sagrados","Cajados Arcanos"];
- let groups=familyNames.map(n=>[n,weap.filter(o=>browserWeaponFamily(itemId(o),o)===n)]);
- g.push(browserWeaponsGroup(groups));
+ g.push(browserWeaponsGroup(explicitWeaponGroups(eq)));
  g.push(browserGroup("Off-hands",off),browserGroup("Bolsas e Capas",bags));
  h.innerHTML=g.filter(Boolean).join("");
  h.querySelectorAll("[data-browser-id]").forEach(x=>x.onclick=()=>{let id=x.dataset.browserId;if(clickMode==="craft")selectCraft(id);else openItem(id)});
