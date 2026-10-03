@@ -3,6 +3,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
+        android:icon="@drawable/ic_acm"
+        android:roundIcon="@drawable/ic_acm"
         android:label="Albion Craft Master"
         android:theme="@style/Theme.AlbionCraftMaster"
         android:usesCleartextTraffic="true">
