@@ -44,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Garante foco e recebimento de toque no WebView em diferentes versões do Android/WebView.
+        webView.setFocusable(true);
+        webView.setFocusableInTouchMode(true);
+        webView.setClickable(true);
+        webView.setLongClickable(true);
+        webView.requestFocusFromTouch();
+
         setContentView(webView);
         webView.loadUrl(ONLINE_URL + "?acm=" + System.currentTimeMillis());
     }
