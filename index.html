@@ -294,6 +294,7 @@ function bindSearch(input,box,mode="market"){
 }
 function filtered(q){let t=$("filterTier")?.value||"",e=$("filterEnchant")?.value||"";return catalog.filter(o=>{let id=itemId(o),n=itemName(o)||"";return (id.toLowerCase().includes(q)||n.toLowerCase().includes(q))&&(!t||tier(id)===t)&&(!e||enchant(id)===e)})}
 
+function isOrnamentedArtifact(id){const s=String(id||"").toUpperCase().replace(/@\\d+$/,"");return /(?:^|_)ARTEFACT(?:_|$)/.test(s)||/^T[4-8]_(?:HEAD|ARMOR|SHOES|OFF|BAG|CAPE)(?:_[A-Z0-9]+)*_(?:HELL|KEEPER|MORGANA|AVALON|CRYSTAL|UNDEAD|ROYAL|DEMON|HERETIC|UNDERTAKER|RAVEN)(?:_|$)/.test(s)||/^T[4-8]_(?:OFF|BAG|CAPE)[A-Z0-9_]*_(?:HELL|KEEPER|MORGANA|AVALON|CRYSTAL|UNDEAD|ROYAL|DEMON|HERETIC|UNDERTAKER|RAVEN)(?:_|$)/.test(s)}
 function browserBaseId(id){return id.replace(/^T[4-8]_/, "").replace(/@\d+$/, "")}
 function browserItemButton(o){let id=itemId(o);return '<button class="browserItem" data-browser-id="'+safe(id)+'"><img src="'+iconUrl(id,128)+'"><span>'+safe(itemName(o))+'</span></button>'}
 function browserGroup(title,items){if(!items.length)return "";let m=new Map();items.forEach(o=>{let base=browserBaseId(itemId(o));if(!m.has(base))m.set(base,o)});let arr=[...m.values()].sort((x,y)=>itemName(x).localeCompare(itemName(y),"pt-BR"));return '<details class="browserGroup"><summary>'+safe(title)+' <span class="tiny">('+arr.length+')</span></summary><div class="browserItems">'+arr.map(browserItemButton).join("")+'</div></details>'}
@@ -349,9 +350,10 @@ function renderItemBrowser(targetId="browserGroups",clickMode="market"){
  let h=$(targetId);if(!h||!catalog.length)return;
  let tierFilter=$("filterTier")?.value||"",enchantFilter=$("filterEnchant")?.value||"";
  let eq=catalog.filter(o=>{let id=itemId(o);return /^T[4-8]_/.test(id)&&(!tierFilter||tier(id)===tierFilter)&&(!enchantFilter||enchant(id)===enchantFilter)});
- let armor=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(HEAD|ARMOR|SHOES)_/.test(itemId(o)));
- let off=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?OFF_/.test(itemId(o)));
- let bags=eq.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(BAG|CAPE)/.test(itemId(o)));
+ const selectableGear=eq.filter(o=>!isOrnamentedArtifact(itemId(o)));
+ let armor=selectableGear.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(HEAD|ARMOR|SHOES)_/.test(itemId(o)));
+ let off=selectableGear.filter(o=>/^(T[4-8]_)(ARTEFACT_)?OFF_/.test(itemId(o)));
+ let bags=selectableGear.filter(o=>/^(T[4-8]_)(ARTEFACT_)?(BAG|CAPE)/.test(itemId(o)));
  let g=[];
  g.push(browserArmorGroup("Pano",armor.filter(o=>/CLOTH/.test(itemId(o)))));
  g.push(browserLeatherGroup("Couro",armor.filter(o=>/LEATHER/.test(itemId(o)))));
